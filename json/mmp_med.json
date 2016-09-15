@@ -1,0 +1,1984 @@
+{
+    "design_name": "mmp_med",
+    "is_proportional": true,
+    "provinces": [
+        {
+            "prov": "AB",
+            "regions": [
+                {
+                    "region_id": "NorthAlberta",
+                    "top_up_seats": 6,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NorthAlberta.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48024, 67, Grande Prairie-Mackenzie",
+                                "48028, 100, Peace River-Westlock"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.10",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48015, 67, Edmonton Griesbach",
+                                "48016, 100, Edmonton Manning"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48024, 33, Grande Prairie-Mackenzie",
+                                "48034, 100, Yellowhead"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48023, 100, Fort McMurray-Cold Lake",
+                                "48025, 67, Lakeland"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48025, 33, Lakeland",
+                                "48032, 100, Sherwood Park-Fort Saskatchewan",
+                                "48033, 33, Sturgeon River-Parkland"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48031, 100, St. Albert-Edmonton",
+                                "48033, 67, Sturgeon River-Parkland"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48014, 100, Edmonton Centre",
+                                "48020, 67, Edmonton West"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48018, 100, Edmonton Riverbend",
+                                "48020, 33, Edmonton West"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48017, 67, Edmonton Mill Woods",
+                                "48021, 100, Edmonton-Wetaskiwin"
+                            ]
+                        },
+                        {
+                            "riding_id": "NorthAlberta.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48015, 33, Edmonton Griesbach",
+                                "48017, 33, Edmonton Mill Woods",
+                                "48019, 100, Edmonton Strathcona"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "SouthAlberta",
+                    "top_up_seats": 7,
+                    "new_ridings": [
+                        {
+                            "riding_id": "SouthAlberta.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48002, 100, Battle River-Crowfoot",
+                                "48030, 67, Red Deer-Lacombe"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.10",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48009, 100, Calgary Nose Hill",
+                                "48010, 67, Calgary Rocky Ridge"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.11",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48006, 100, Calgary Forest Lawn",
+                                "48013, 100, Calgary Skyview"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48001, 33, Banff-Airdrie",
+                                "48030, 33, Red Deer-Lacombe",
+                                "48029, 100, Red Deer-Mountain View"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48001, 67, Banff-Airdrie",
+                                "48022, 100, Foothills"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48003, 100, Bow river",
+                                "48027, 67, Medicine Hat-Cardston-Warner"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48026, 100, Lethbridge",
+                                "48027, 33, Medicine Hat-Cardston-Warner"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48007, 100, Calgary Heritage",
+                                "48008, 67, Calgary Midnapore"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48008, 33, Calgary Midnapore",
+                                "48011, 100, Calgary Shepard"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48004, 67, Calgary Centre",
+                                "48005, 100, Calgary Confederation"
+                            ]
+                        },
+                        {
+                            "riding_id": "SouthAlberta.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "48004, 33, Calgary Centre",
+                                "48010, 33, Calgary Rocky Ridge",
+                                "48012, 100, Calgary Signal Hill"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "BC",
+            "regions": [
+                {
+                    "region_id": "BCIntNorth",
+                    "top_up_seats": 3,
+                    "new_ridings": [
+                        {
+                            "riding_id": "BCIntNorth.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59024, 67, Prince George-Peace River-Northern Rockies",
+                                "59028, 100, Skeena-Bulkley Valley"
+                            ]
+                        },
+                        {
+                            "riding_id": "BCIntNorth.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59004, 100, Cariboo-Prince George",
+                                "59013, 33, Kamloops-Thompson-Cariboo",
+                                "59024, 33, Prince George-Peace River-Northern Rockies"
+                            ]
+                        },
+                        {
+                            "riding_id": "BCIntNorth.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59013, 67, Kamloops-Thompson-Cariboo",
+                                "59020, 100, North Okanagan-Shuswap"
+                            ]
+                        },
+                        {
+                            "riding_id": "BCIntNorth.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59005, 100, Central Okanagan-Similkameen-Nicola",
+                                "59014, 67, Kelowna-Lake Country"
+                            ]
+                        },
+                        {
+                            "riding_id": "BCIntNorth.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59014, 33, Kelowna-Lake Country",
+                                "59029, 67, South Okanagan-West Kootenay"
+                            ]
+                        },
+                        {
+                            "riding_id": "BCIntNorth.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59015, 100, Kootenay-Columbia",
+                                "59029, 33, South Okanagan-West Kootenay"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "SurRichAbbLang",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "SurRichAbbLang.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59006, 67, Chilliwack-Hope",
+                                "59017, 100, Mission-Matsqui-Fraser Canyon"
+                            ]
+                        },
+                        {
+                            "riding_id": "SurRichAbbLang.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59001, 100, Abbotsford",
+                                "59006, 33, Chilliwack-Hope",
+                                "59016, 33, Langley-Aldergrove"
+                            ]
+                        },
+                        {
+                            "riding_id": "SurRichAbbLang.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59007, 33, Cloverdale-Langley City",
+                                "59012, 33, Fleetwood-Port Kells",
+                                "59016, 67, Langley-Aldergrove",
+                                "59030, 34, South Surrey-White Rock"
+                            ]
+                        },
+                        {
+                            "riding_id": "SurRichAbbLang.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59007, 67, Cloverdale-Langley City",
+                                "59012, 67, Fleetwood-Port Kells",
+                                "59030, 33, South Surrey-White Rock"
+                            ]
+                        },
+                        {
+                            "riding_id": "SurRichAbbLang.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59032, 100, Surrey Centre",
+                                "59033, 100, Surrey-Newton"
+                            ]
+                        },
+                        {
+                            "riding_id": "SurRichAbbLang.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59011, 100, Delta",
+                                "59030, 33, South Surrey-White Rock",
+                                "59031, 33, Steveston-Richmond East"
+                            ]
+                        },
+                        {
+                            "riding_id": "SurRichAbbLang.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59025, 100, Richmond Centre",
+                                "59031, 67, Steveston-Richmond East"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "VanBurNShMR",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "VanBurNShMR.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59022, 33, Pitt Meadows-Maple Ridge",
+                                "59042, 100, West Vancouver-Sunshine Coast-Sea to Sky Country"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59008, 100, Coquitlam-Port Coquitlam",
+                                "59022, 67, Pitt Meadows-Maple Ridge"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59002, 67, Burnaby North-Seymour",
+                                "59021, 100, North Vancouver"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59002, 33, Burnaby North-Seymour",
+                                "59023, 100, Port Moody-Coquitlam"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59003, 100, Burnaby South",
+                                "59019, 100, New Westminster-Burnaby"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59038, 67, Vancouver Kingsway",
+                                "59040, 100, Vancouver South"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59035, 100, Vancouver East",
+                                "59038, 33, Vancouver Kingsway"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59034, 100, Vancouver Centre",
+                                "59036, 67, Vancouver Granville"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanBurNShMR.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59036, 33, Vancouver Granville",
+                                "59039, 100, Vancouver Quadra"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "VanIsland",
+                    "top_up_seats": 3,
+                    "new_ridings": [
+                        {
+                            "riding_id": "VanIsland.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59009, 67, Courtenay-Alberni",
+                                "59037, 100, North Island-Powell River"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanIsland.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59009, 33, Courtenay-Alberni",
+                                "59010, 33, Cowichan-Malahat-Langford",
+                                "59018, 100, Nanaimo-Ladysmith"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanIsland.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59010, 67, Cowichan-Malahat-Langford",
+                                "59026, 100, Esquimalt-Saanich-Sooke"
+                            ]
+                        },
+                        {
+                            "riding_id": "VanIsland.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "59027, 100, Saanich-Gulf Islands",
+                                "59041, 100, Victoria"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "MB",
+            "regions": [
+                {
+                    "region_id": "MB",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "MB.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46003, 100, Churchill-Keewatinook Aski",
+                                "46004, 33, Dauphin-Swan River-Neepawa",
+                                "46010, 33, Selkirk-Interlake-Eastman"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46004, 67, Dauphin-Swan River-Neepawa",
+                                "46010, 67, Selkirk-Interlake-Eastman"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46001, 100, Brandon-Souris",
+                                "46007, 67, Portage-Lisgar"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46007, 33, Portage-Lisgar",
+                                "46008, 100, Provencher"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46009, 67, Saint Boniface-Saint Vital",
+                                "46013, 100, Winnipeg South"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46009, 33, Saint Boniface-Saint Vital",
+                                "46011, 33, Winnipeg Centre",
+                                "46014, 100, Winnipeg South Centre"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46002, 100, Charleswood-St. James-Assiniboia-Headingley",
+                                "46011, 67, Winnipeg Centre"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46005, 67, Elmwood-Transcona",
+                                "46006, 100, Kildonan-St. Paul"
+                            ]
+                        },
+                        {
+                            "riding_id": "MB.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "46005, 33, Elmwood-Transcona",
+                                "46012, 100, Winnipeg North"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "NB",
+            "regions": [
+                {
+                    "region_id": "NB",
+                    "top_up_seats": 4,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NB.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "13001, 67, Acadie-Bathurst",
+                                "13005, 100, Madawaska-Restigouche"
+                            ]
+                        },
+                        {
+                            "riding_id": "NB.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "13001, 33, Acadie-Bathurst",
+                                "13006, 100, Miramichi-Grand Lake",
+                                "13010, 33, Tobique-Mactaquac"
+                            ]
+                        },
+                        {
+                            "riding_id": "NB.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "13003, 100, Fredericton",
+                                "13010, 67, Tobique-Mactaquac"
+                            ]
+                        },
+                        {
+                            "riding_id": "NB.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "13008, 67, New Brunswick Southwest",
+                                "13009, 100, Saint John-Rothesay"
+                            ]
+                        },
+                        {
+                            "riding_id": "NB.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "13002, 33, Beauséjour",
+                                "13004, 100, Fundy Royal",
+                                "13008, 33, New Brunswick Southwest"
+                            ]
+                        },
+                        {
+                            "riding_id": "NB.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "13002, 67, Beauséjour",
+                                "13007, 100, Moncton-Riverview-Dieppe"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "NL",
+            "regions": [
+                {
+                    "region_id": "NL",
+                    "top_up_seats": 2,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NL.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "10004, 100, Labrador"
+                            ]
+                        },
+                        {
+                            "riding_id": "NL.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "10003, 67, Coast of Bays-Central-Notre Dame",
+                                "10005, 100, Long Range Mountains"
+                            ]
+                        },
+                        {
+                            "riding_id": "NL.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "10002, 100, Bonavista-Burin-Trinity",
+                                "10003, 33, Coast of Bays-Central-Notre Dame"
+                            ]
+                        },
+                        {
+                            "riding_id": "NL.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "10006, 100, St. John's East",
+                                "10007, 33, St. John's South-Mount Pearl"
+                            ]
+                        },
+                        {
+                            "riding_id": "NL.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "10001, 100, Avalon",
+                                "10007, 67, St. John's South-Mount Pearl"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "NS",
+            "regions": [
+                {
+                    "region_id": "NS",
+                    "top_up_seats": 4,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NS.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "12001, 67, Cape Breton-Canso",
+                                "12010, 100, Sydney-Victoria"
+                            ]
+                        },
+                        {
+                            "riding_id": "NS.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "12001, 33, Cape Breton-Canso",
+                                "12002, 100, Central Nova",
+                                "12003, 33, Cumberland-Colchester"
+                            ]
+                        },
+                        {
+                            "riding_id": "NS.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "12003, 67, Cumberland-Colchester",
+                                "12007, 100, Kings-Hants"
+                            ]
+                        },
+                        {
+                            "riding_id": "NS.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "12009, 67, South Shore-St. Margarets",
+                                "12011, 100, West Nova"
+                            ]
+                        },
+                        {
+                            "riding_id": "NS.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "12006, 100, Halifax West",
+                                "12009, 33, South Shore-St. Margarets"
+                            ]
+                        },
+                        {
+                            "riding_id": "NS.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "12004, 33, Dartmouth-Cole Harbour",
+                                "12005, 100, Halifax"
+                            ]
+                        },
+                        {
+                            "riding_id": "NS.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "12004, 67, Dartmouth-Cole Harbour",
+                                "12008, 100, Sackville-Preston-Chezzetcook"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "NT",
+            "regions": [
+                {
+                    "region_id": "NT",
+                    "top_up_seats": 0,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NT.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "61001, 100, Northwest Territories"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "NU",
+            "regions": [
+                {
+                    "region_id": "NU",
+                    "top_up_seats": 0,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NU.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "62001, 100, Nunavut"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "ON",
+            "regions": [
+                {
+                    "region_id": "CenTorScar",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "CenTorScar.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35095, 67, Scarborough-Guildwood",
+                                "35097, 100, Scarborough-Rouge Park"
+                            ]
+                        },
+                        {
+                            "riding_id": "CenTorScar.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35096, 100, Scarborough North",
+                                "35093, 33, Scarborough-Agincourt",
+                                "35095, 33, Scarborough-Guildwood"
+                            ]
+                        },
+                        {
+                            "riding_id": "CenTorScar.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35094, 100, Scarborough Centre",
+                                "35093, 67, Scarborough-Agincourt"
+                            ]
+                        },
+                        {
+                            "riding_id": "CenTorScar.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35007, 67, Beaches-East York",
+                                "35098, 100, Scarborough Southwest"
+                            ]
+                        },
+                        {
+                            "riding_id": "CenTorScar.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35007, 33, Beaches-East York",
+                                "35101, 33, Spadina-Fort York",
+                                "35109, 100, Toronto-Danforth"
+                            ]
+                        },
+                        {
+                            "riding_id": "CenTorScar.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35101, 67, Spadina-Fort York",
+                                "35108, 100, Toronto Centre"
+                            ]
+                        },
+                        {
+                            "riding_id": "CenTorScar.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35090, 67, Toronto-St. Paul's",
+                                "35110, 100, University-Rosedale"
+                            ]
+                        },
+                        {
+                            "riding_id": "CenTorScar.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35018, 100, Davenport",
+                                "35090, 33, Toronto-St. Paul's"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "EOntario",
+                    "top_up_seats": 7,
+                    "new_ridings": [
+                        {
+                            "riding_id": "EOntario.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35031, 100, Glengarry-Prescott-Russell",
+                                "35102, 67, Stormont-Dundas-South Glengarry"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.10",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35006, 67, Bay of Quinte",
+                                "35039, 67, Hastings-Lennox and Addington"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.11",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35006, 33, Bay of Quinte",
+                                "35034, 33, Haliburton-Kawartha Lakes-Brock",
+                                "35071, 100, Northumberland-Peterborough South"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.12",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35034, 67, Haliburton-Kawartha Lakes-Brock",
+                                "35084, 100, Peterborough-Kawartha"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35076, 100, Orléans",
+                                "35077, 33, Ottawa South",
+                                "35078, 33, Ottawa-Vanier"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35075, 33, Ottawa Centre",
+                                "35077, 67, Ottawa South",
+                                "35078, 67, Ottawa-Vanier"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35075, 67, Ottawa Centre",
+                                "35079, 100, Ottawa West-Nepean"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35088, 67, Carleton",
+                                "35064, 100, Nepean"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35088, 33, Carleton",
+                                "35041, 100, Kanata-Carleton",
+                                "35049, 33, Lanark-Frontenac-Kingston"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35050, 100, Leeds-Grenville-Thousand Islands and Rideau Lakes",
+                                "35102, 33, Stormont-Dundas-South Glengarry"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35044, 100, Kingston and the Islands",
+                                "35049, 67, Lanark-Frontenac-Kingston"
+                            ]
+                        },
+                        {
+                            "riding_id": "EOntario.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35039, 33, Hastings-Lennox and Addington",
+                                "35086, 100, Renfrew-Nipissing-Pembroke"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "NOnt",
+                    "top_up_seats": 3,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NOnt.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35069, 67, Nickel Belt",
+                                "35070, 100, Nipissing-Timiskaming"
+                            ]
+                        },
+                        {
+                            "riding_id": "NOnt.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35002, 33, Algoma-Manitoulin-Kapuskasing",
+                                "35069, 33, Nickel Belt",
+                                "35103, 100, Sudbury"
+                            ]
+                        },
+                        {
+                            "riding_id": "NOnt.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35002, 67, Algoma-Manitoulin-Kapuskasing",
+                                "35092, 100, Sault Ste. Marie"
+                            ]
+                        },
+                        {
+                            "riding_id": "NOnt.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35042, 100, Kenora",
+                                "35106, 33, Thunder Bay-Superior North"
+                            ]
+                        },
+                        {
+                            "riding_id": "NOnt.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35106, 33, Thunder Bay-Superior North",
+                                "35107, 100, Timmins-James Bay"
+                            ]
+                        },
+                        {
+                            "riding_id": "NOnt.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35105, 100, Thunder Bay-Rainy River",
+                                "35106, 34, Thunder Bay-Superior North"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "NYorkEtob",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "NYorkEtob.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35028, 100, Etobicoke-Lakeshore",
+                                "35081, 67, Parkdale-High Park"
+                            ]
+                        },
+                        {
+                            "riding_id": "NYorkEtob.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35027, 33, Etobicoke Centre",
+                                "35081, 33, Parkdale-High Park",
+                                "35120, 100, York South-Weston"
+                            ]
+                        },
+                        {
+                            "riding_id": "NYorkEtob.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35027, 67, Etobicoke Centre",
+                                "35029, 100, Etobicoke North"
+                            ]
+                        },
+                        {
+                            "riding_id": "NYorkEtob.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35121, 100, Humber River-Black Creek",
+                                "35118, 67, York Centre"
+                            ]
+                        },
+                        {
+                            "riding_id": "NYorkEtob.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35024, 100, Eglinton-Lawrence",
+                                "35115, 67, Willowdale",
+                                "35118, 33, York Centre"
+                            ]
+                        },
+                        {
+                            "riding_id": "NYorkEtob.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35019, 33, Don Valley East",
+                                "35020, 100, Don Valley North",
+                                "35115, 33, Willowdale"
+                            ]
+                        },
+                        {
+                            "riding_id": "NYorkEtob.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35019, 67, Don Valley East",
+                                "35021, 100, Don Valley West"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "PeelHalton",
+                    "top_up_seats": 6,
+                    "new_ridings": [
+                        {
+                            "riding_id": "PeelHalton.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35022, 100, Dufferin-Caledon"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35009, 100, Brampton East",
+                                "35010, 67, Brampton North"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35008, 100, Brampton Centre",
+                                "35010, 33, Brampton North",
+                                "35011, 33, Brampton South"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35011, 67, Brampton South",
+                                "35012, 100, Brampton West"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35059, 100, Mississauga East-Cooksville",
+                                "35062, 100, Mississauga-Malton"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35058, 67, Mississauga Centre",
+                                "35060, 33, Mississauga-Erin Mills",
+                                "35061, 100, Mississauga-Lakeshore"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35058, 33, Mississauga Centre",
+                                "35060, 67, Mississauga-Erin Mills",
+                                "35063, 100, Mississauga-Streetsville"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35072, 100, Oakville",
+                                "35073, 67, Oakville North-Burlington"
+                            ]
+                        },
+                        {
+                            "riding_id": "PeelHalton.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35057, 100, Milton",
+                                "35073, 33, Oakville North-Burlington"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "SCenOnt",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "SCenOnt.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35067, 67, Niagara Falls",
+                                "35089, 100, St. Catharines"
+                            ]
+                        },
+                        {
+                            "riding_id": "SCenOnt.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35066, 100, Niagara Centre",
+                                "35067, 33, Niagara Falls",
+                                "35068, 33, Niagara West"
+                            ]
+                        },
+                        {
+                            "riding_id": "SCenOnt.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35030, 33, Flamborough-Glanbrook",
+                                "35033, 33, Haldimand-Norfolk",
+                                "35036, 33, Hamilton East-Stoney Creek",
+                                "35068, 67, Niagara West"
+                            ]
+                        },
+                        {
+                            "riding_id": "SCenOnt.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35013, 100, Brantford-Brant",
+                                "35033, 67, Haldimand-Norfolk"
+                            ]
+                        },
+                        {
+                            "riding_id": "SCenOnt.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35030, 67, Flamborough-Glanbrook",
+                                "35038, 100, Hamilton West-Ancaster-Dundas"
+                            ]
+                        },
+                        {
+                            "riding_id": "SCenOnt.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35036, 67, Hamilton East-Stoney Creek",
+                                "35037, 100, Hamilton Mountain"
+                            ]
+                        },
+                        {
+                            "riding_id": "SCenOnt.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35015, 100, Burlington",
+                                "35035, 100, Hamilton Centre"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "SWOnt",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "SWOnt.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35117, 100, Windsor West",
+                                "35116, 67, Windsor-Tecumseh"
+                            ]
+                        },
+                        {
+                            "riding_id": "SWOnt.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35017, 33, Chatham-Kent-Leamington",
+                                "35026, 100, Essex",
+                                "35116, 33, Windsor-Tecumseh"
+                            ]
+                        },
+                        {
+                            "riding_id": "SWOnt.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35048, 67, Lambton-Kent-Middlesex",
+                                "35091, 100, Sarnia-Lambton"
+                            ]
+                        },
+                        {
+                            "riding_id": "SWOnt.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35017, 67, Chatham-Kent-Leamington",
+                                "35025, 67, Elgin-Middlesex-London",
+                                "35048, 33, Lambton-Kent-Middlesex"
+                            ]
+                        },
+                        {
+                            "riding_id": "SWOnt.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35025, 33, Elgin-Middlesex-London",
+                                "35052, 33, London North Centre",
+                                "35051, 100, London-Fanshawe"
+                            ]
+                        },
+                        {
+                            "riding_id": "SWOnt.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35052, 67, London North Centre",
+                                "35053, 100, London West"
+                            ]
+                        },
+                        {
+                            "riding_id": "SWOnt.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35080, 100, Oxford",
+                                "35083, 67, Perth-Wellington"
+                            ]
+                        },
+                        {
+                            "riding_id": "SWOnt.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35040, 100, Huron-Bruce",
+                                "35083, 33, Perth-Wellington"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "WCenOnt",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "WCenOnt.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35082, 100, Parry Sound-Muskoka",
+                                "35100, 67, Simcoe North"
+                            ]
+                        },
+                        {
+                            "riding_id": "WCenOnt.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35014, 100, Bruce-Grey-Owen Sound",
+                                "35099, 67, Simcoe-Grey"
+                            ]
+                        },
+                        {
+                            "riding_id": "WCenOnt.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35005, 67, Barrie-Springwater-Oro-Medonte",
+                                "35100, 33, Simcoe North",
+                                "35099, 33, Simcoe-Grey"
+                            ]
+                        },
+                        {
+                            "riding_id": "WCenOnt.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35004, 100, Barrie-Innisfil",
+                                "35005, 33, Barrie-Springwater-Oro-Medonte"
+                            ]
+                        },
+                        {
+                            "riding_id": "WCenOnt.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35016, 100, Cambridge",
+                                "35047, 67, Kitchener South-Hespeler"
+                            ]
+                        },
+                        {
+                            "riding_id": "WCenOnt.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35047, 33, Kitchener South-Hespeler",
+                                "35046, 100, Kitchener-Conestoga",
+                                "35113, 33, Wellington-Halton Hills"
+                            ]
+                        },
+                        {
+                            "riding_id": "WCenOnt.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35032, 100, Guelph",
+                                "35113, 67, Wellington-Halton Hills"
+                            ]
+                        },
+                        {
+                            "riding_id": "WCenOnt.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35045, 100, Kitchener Centre",
+                                "35112, 100, Waterloo"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "YorkDurham",
+                    "top_up_seats": 6,
+                    "new_ridings": [
+                        {
+                            "riding_id": "YorkDurham.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35023, 67, Durham",
+                                "35074, 100, Oshawa"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35001, 33, Ajax",
+                                "35023, 33, Durham",
+                                "35114, 100, Whitby"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35001, 67, Ajax",
+                                "35085, 100, Pickering-Uxbridge"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35065, 67, Newmarket-Aurora",
+                                "35119, 100, York-Simcoe"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35043, 100, King-Vaughan",
+                                "35111, 67, Vaughan-Woodbridge"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35087, 33, Richmond Hill",
+                                "35104, 100, Thornhill",
+                                "35111, 33, Vaughan-Woodbridge"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35003, 100, Aurora-Oak Ridges-Richmond Hill",
+                                "35065, 33, Newmarket-Aurora",
+                                "35087, 33, Richmond Hill"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35055, 33, Markham-Thornhill",
+                                "35056, 100, Markham-Unionville",
+                                "35087, 34, Richmond Hill"
+                            ]
+                        },
+                        {
+                            "riding_id": "YorkDurham.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "35054, 100, Markham-Stouffville",
+                                "35055, 67, Markham-Thornhill"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "PE",
+            "regions": [
+                {
+                    "region_id": "PEI",
+                    "top_up_seats": 2,
+                    "new_ridings": [
+                        {
+                            "riding_id": "PEI.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "11003, 100, Egmont",
+                                "11004, 100, Malpeque"
+                            ]
+                        },
+                        {
+                            "riding_id": "PEI.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "11001, 100, Cardigan",
+                                "11002, 100, Charlottetown"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "QC",
+            "regions": [
+                {
+                    "region_id": "EQuebec",
+                    "top_up_seats": 7,
+                    "new_ridings": [
+                        {
+                            "riding_id": "EQuebec.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24032, 33, Jonquière",
+                                "24046, 100, Manicouagan"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.10",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24008, 67, Beauport-Limoilou",
+                                "24019, 100, Charlesbourg-Haute-Saint-Charles"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.11",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24008, 33, Beauport-Limoilou",
+                                "24044, 33, Louis-Hébert",
+                                "24059, 100, Québec"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.12",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24044, 67, Louis-Hébert",
+                                "24045, 100, Louis-Saint-Laurent"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24032, 67, Jonquière",
+                                "24035, 100, Lac-Saint-Jean"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24006, 33, Avignon-La Mitis-Matane-Matapédia",
+                                "24026, 100, Gaspésie-Les Îles-de-la-Madeleine"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24006, 67, Avignon-La Mitis-Matane-Matapédia",
+                                "24018, 100, Rimouski-Neigette-Témiscouata-Les Basques"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24020, 67, Beauport-Côte-de-Beaupré-Île d'Orléans-Charlevoix",
+                                "24022, 100, Chicoutimi-Le Fjord"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24020, 33, Beauport-Côte-de-Beaupré-Île d'Orléans-Charlevoix",
+                                "24010, 33, Bellechasse-Les Etchemins-Lévis",
+                                "24051, 100, Montmagny-L'Islet-Kamouraska-Rivière-du-Loup"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24007, 100, Beauce",
+                                "24010, 67, Bellechasse-Les Etchemins-Lévis"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24042, 67, Lévis-Lotbinière",
+                                "24047, 100, Mégantic-L'Érable"
+                            ]
+                        },
+                        {
+                            "riding_id": "EQuebec.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24042, 33, Lévis-Lotbinière",
+                                "24058, 100, Portneuf-Jacques-Cartier"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "LauOutAbiNord",
+                    "top_up_seats": 4,
+                    "new_ridings": [
+                        {
+                            "riding_id": "LauOutAbiNord.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24001, 100, Abitibi-Baie-James-Nunavik-Eeyou",
+                                "24002, 33, Abitibi-Témiscamingue"
+                            ]
+                        },
+                        {
+                            "riding_id": "LauOutAbiNord.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24002, 67, Abitibi-Témiscamingue",
+                                "24057, 67, Pontiac"
+                            ]
+                        },
+                        {
+                            "riding_id": "LauOutAbiNord.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24027, 67, Gatineau",
+                                "24030, 100, Hull-Aylmer"
+                            ]
+                        },
+                        {
+                            "riding_id": "LauOutAbiNord.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24005, 100, Argenteuil-La Petite-Nation",
+                                "24027, 33, Gatineau",
+                                "24057, 33, Pontiac"
+                            ]
+                        },
+                        {
+                            "riding_id": "LauOutAbiNord.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24038, 100, Laurentides-Labelle",
+                                "24063, 67, Rivière-du-Nord"
+                            ]
+                        },
+                        {
+                            "riding_id": "LauOutAbiNord.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24048, 100, Mirabel",
+                                "24063, 33, Rivière-du-Nord",
+                                "24013, 33, Thérèse-De Blainville"
+                            ]
+                        },
+                        {
+                            "riding_id": "LauOutAbiNord.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24062, 100, Rivière-des-Mille-Îles",
+                                "24013, 67, Thérèse-De Blainville"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "LavLanMau",
+                    "top_up_seats": 4,
+                    "new_ridings": [
+                        {
+                            "riding_id": "LavLanMau.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24012, 34, Berthier-Maskinongé",
+                                "24070, 33, Saint-Maurice-Champlain",
+                                "24076, 100, Trois-Rivières"
+                            ]
+                        },
+                        {
+                            "riding_id": "LavLanMau.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24012, 33, Berthier-Maskinongé",
+                                "24009, 100, Bécancour-Nicolet-Saurel"
+                            ]
+                        },
+                        {
+                            "riding_id": "LavLanMau.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24012, 33, Berthier-Maskinongé",
+                                "24031, 33, Joliette",
+                                "24070, 67, Saint-Maurice-Champlain"
+                            ]
+                        },
+                        {
+                            "riding_id": "LavLanMau.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24031, 67, Joliette",
+                                "24050, 100, Montcalm"
+                            ]
+                        },
+                        {
+                            "riding_id": "LavLanMau.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24060, 100, Repentigny",
+                                "24075, 67, Terrebonne"
+                            ]
+                        },
+                        {
+                            "riding_id": "LavLanMau.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24004, 100, Alfred-Pellan",
+                                "24075, 33, Terrebonne"
+                            ]
+                        },
+                        {
+                            "riding_id": "LavLanMau.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24040, 100, Laval-Les Îles",
+                                "24078, 33, Vimy"
+                            ]
+                        },
+                        {
+                            "riding_id": "LavLanMau.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24065, 100, Marc-Aurèle-Fortin",
+                                "24078, 67, Vimy"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "MonEstCenQue",
+                    "top_up_seats": 7,
+                    "new_ridings": [
+                        {
+                            "riding_id": "MonEstCenQue.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24071, 67, Salaberry-Suroît",
+                                "24074, 100, Vaudreuil-Soulanges"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.10",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24025, 33, Drummond",
+                                "24061, 100, Richmond-Arthabaska"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.11",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24025, 67, Drummond",
+                                "24066, 100, Saint-Hyacinthe-Bagot"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24021, 100, Châteauguay-Lacolle",
+                                "24067, 33, Saint-Jean",
+                                "24071, 33, Salaberry-Suroît"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24034, 100, La Prairie",
+                                "24067, 67, Saint-Jean"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24017, 100, Brossard-Saint-Lambert",
+                                "24041, 67, Longueuil-Charles-LeMoyne"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24041, 33, Longueuil-Charles-LeMoyne",
+                                "24043, 100, Longueuil-Saint-Hubert",
+                                "24049, 33, Montarville"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24049, 67, Montarville",
+                                "24014, 100, Pierre-Boucher-Les Patriotes-Verchères"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24011, 100, Beloeil-Chambly",
+                                "24072, 67, Shefford"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24016, 100, Brome-Missisquoi",
+                                "24023, 33, Compton-Stanstead",
+                                "24072, 33, Shefford"
+                            ]
+                        },
+                        {
+                            "riding_id": "MonEstCenQue.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24023, 67, Compton-Stanstead",
+                                "24073, 100, Sherbrooke"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "region_id": "Montreal",
+                    "top_up_seats": 7,
+                    "new_ridings": [
+                        {
+                            "riding_id": "Montreal.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24036, 67, Lac-Saint-Louis",
+                                "24056, 100, Pierrefonds-Dollard"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.10",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24015, 100, Bourassa",
+                                "24029, 33, Honoré-Mercier",
+                                "24069, 33, Saint-Léonard-Saint-Michel"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.11",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24028, 100, Hochelaga",
+                                "24069, 67, Saint-Léonard-Saint-Michel"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24024, 100, Dorval-Lachine-LaSalle",
+                                "24036, 33, Lac-Saint-Louis",
+                                "24068, 33, Saint-Laurent"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24003, 100, Ahuntsic-Cartierville",
+                                "24068, 67, Saint-Laurent"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24037, 100, LaSalle-Émard-Verdun",
+                                "24077, 67, Ville-Marie-Le Sud-Ouest-Île-des-Surs"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24039, 100, Laurier-Sainte-Marie",
+                                "24053, 33, Notre-Dame-de-Grâce-Westmount",
+                                "24077, 33, Ville-Marie-Le Sud-Ouest-Île-des-Surs"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24052, 100, Mount Royal",
+                                "24053, 67, Notre-Dame-de-Grâce-Westmount"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24054, 100, Outremont",
+                                "24055, 33, Papineau",
+                                "24064, 33, Rosemont-La Petite-Patrie"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24055, 67, Papineau",
+                                "24064, 67, Rosemont-La Petite-Patrie"
+                            ]
+                        },
+                        {
+                            "riding_id": "Montreal.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "24029, 67, Honoré-Mercier",
+                                "24033, 100, La Pointe-de-l'Île"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "SK",
+            "regions": [
+                {
+                    "region_id": "SK",
+                    "top_up_seats": 5,
+                    "new_ridings": [
+                        {
+                            "riding_id": "SK.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47001, 33, Battlefords-Lloydminster",
+                                "47003, 100, Desnethé-Missinippi-Churchill River",
+                                "47014, 33, Yorkton-Melville"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.2",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47006, 100, Prince Albert",
+                                "47014, 67, Yorkton-Melville"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.3",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47001, 67, Battlefords-Lloydminster",
+                                "47004, 100, Carlton Trail-Eagle Creek"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.4",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47008, 67, Regina-Qu'Appelle",
+                                "47013, 100, Souris-Moose Mountain"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.5",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47008, 33, Regina-Qu'Appelle",
+                                "47009, 100, Regina-Wascana"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.6",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47005, 33, Moose Jaw-Lake Centre-Lanigan",
+                                "47007, 100, Regina-Lewvan"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.7",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47002, 100, Cypress Hills-Grasslands",
+                                "47005, 33, Moose Jaw-Lake Centre-Lanigan"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.8",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47005, 34, Moose Jaw-Lake Centre-Lanigan",
+                                "47010, 100, Saskatoon-Grasswood",
+                                "47011, 33, Saskatoon-University"
+                            ]
+                        },
+                        {
+                            "riding_id": "SK.9",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "47012, 100, Saskatoon West",
+                                "47011, 67, Saskatoon-University"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "prov": "YT",
+            "regions": [
+                {
+                    "region_id": "YT",
+                    "top_up_seats": 0,
+                    "new_ridings": [
+                        {
+                            "riding_id": "YT.1",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "60001, 100, Yukon"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
