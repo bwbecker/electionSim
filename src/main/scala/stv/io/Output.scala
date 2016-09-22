@@ -42,8 +42,8 @@ object Output {
       f.matches(s.params)
     })
 
-    OverviewHTML(featuredSims, "Overview of Featured Simulations", "index.html").print
-    OverviewHTML(sims, "Overview of All Simulations", "allSimulations.html").print
+    OverviewFeaturedHTML(featuredSims, sims.length, "Overview of Featured Simulations", "index.html").print
+    OverviewAllHTML(sims, "Overview of All Simulations", "allSimulations.html").print
     AboutHTML(None).print
     ShortNameHTML.print
   }

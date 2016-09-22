@@ -7,66 +7,118 @@ import stv._
 import stv.Analysis.StatsByParty
 import stv.Party._
 
+
 /**
-  * Created by bwbecker on 2016-06-29.
+  * There are two overview pages, one with all the simulations and one with just the "featured" sims.
+  * This is the common code.
   */
-case class OverviewHTML(sims: List[Sim], val pgTitle: String, val outFile: String) extends Page {
+abstract class AbstractOverview extends Page {
   protected val outDir = "overview"
-  //  protected val outFile: String = "index.html"
-  //  protected val pgTitle = "Overview of Simulations"
   override protected val includeThisModelMenu = false
-
-  protected def content: TypedTag[String] = {
-    div(cls := "overview")(
-      comments,
-      results,
-      observations,
-      properties,
-      descriptions
-    )
-  }
-
-  private val comments = div(
-    h2("Comments"),
-    div(cls := "blockIndent")(
-      p(
-        s"""This web site presents the results of simulating ${sims.length} electoral systems.
-      Others have done individual simulations of their favourite systems, but this is believed
-      to be the first which uses a consistent approach on so many."""),
-      p(s"""Each of these ${sims.length} systems is described at the bottom of this page."""),
-      p(
-        """There is a lot of data here.  It's not for the faint of heart.  However, the major
-      findings are presented immediately below in the """, em("Results"),
-        """ table and the """, em("Observations"), " that follow it."),
-
-      p(
-        """Briefly, these simulations show that:""",
-        ul(
-          li("FPTP can be very unfair and AV (Alternative Vote) is even worse."),
-          li("""Keeping our current ridings and adding a small layer of "top-up" MPs doesn't help much."""),
-          li(
-            """Single Transferable Vote (STV) and Mixed Member Proportional (MMP) can both perform
-          very well provided there are enough MPs in either the multi-member ridings (STV) or the regional
-          top-up layer (MMP)."""),
-          li(
-            """A combination of STV and MMP, called "Rural-Urban Proportional" or
-          RUP, performs as well as STV and MMP but permits continued use of single-member
-          ridings outside of large urban areas.""")
-        )
-      ),
-
-      p(
-        """It should be noted, of course, that all simulations make assumptions and that any change
-      to the voting system would change how people vote.  So actual results will almost surely be
-      somewhat different from any simulation.  Nevertheless, these simulations show us
-      important properties about the systems we are considering that can help guide our decision-making.""")
-    )
-  )
 
   val pctFmt = java.text.NumberFormat.getPercentInstance
   val pct_dFmt = new java.text.DecimalFormat("#0.0%")
   val commaFmt = new java.text.DecimalFormat("###,###,###")
   val dd_dFmt = new java.text.DecimalFormat("##0.0")
+
+
+  /**
+    * Turn a list of sims into table rows, properly sorted, using function f.
+    *
+    * @param sims
+    * @param f
+    * @return
+    */
+  protected def tableRows(sims: Seq[Sim], f: Sim => TypedTag[String]): Seq[TypedTag[String]] = {
+    for (sim <- sims.sortBy(s => (s.design.design_name.entryName,
+      s.params.singleMemberElectionStrategy.name,
+      s.params.multiMemberElectionStrategy.name))) yield (f(sim))
+  }
+
+
+  def generateResultsTable(sims: List[Sim]) = {
+    def color(tGreen: Double, tYellow: Double)(v: Double): String = {
+      if (Math.abs(v) < tGreen) "green" else if (Math.abs(v) < tYellow) "yellow" else "red"
+    }
+    def fmtOverRep(s: StatsByParty) = {
+      val pct = s.pctMPs - s.pctVote
+      val warn = color(0.05, 0.10)(pct)
+      td(cls := "colPct0 " + warn)(pctFmt.format(pct))
+    }
+
+    def fmtGallagher(g: Double) = {
+      td(cls := "colPct1 " + color(0.05, 0.10)(g))(pct_dFmt.format(g))
+    }
+
+    def fmtPrefParty(pct: Double) = {
+      val color = if (pct < 0.50) "red"
+      else if (pct < 0.75) "yellow"
+      else "green"
+      td(cls := "colPct0 " + color)(pctFmt.format(pct))
+    }
+
+    table(
+      thead(
+        img(cls := "hdr")(src := "../img/ResultsTableHeader.svg")
+      ),
+      tbody(
+        tableRows(sims, sim => {
+          val statsByParty: Map[Party, StatsByParty] = sim.analysis.statsByParty.map(s ⇒ (s.party, s)).toMap
+
+          tr(cls := "row")(
+            td(cls := "name")(
+              a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
+            td(cls := "num3")(sim.numRidingMPs),
+            td(cls := "num3")(sim.numRegionalMPs),
+            fmtOverRep(statsByParty(Lib)),
+            fmtOverRep(statsByParty(Con)),
+            fmtOverRep(statsByParty(NDP)),
+            fmtOverRep(statsByParty(Bloc)),
+            fmtOverRep(statsByParty(Grn)),
+            fmtGallagher(sim.analysis.gallagherIndex),
+            fmtGallagher(sim.compositeGallagher),
+            fmtPrefParty(sim.pctVotersWithPreferredPartyLocally),
+            fmtPrefParty(sim.pctVotersWithPreferredPartyRegionally),
+            td(cls := "shortName")(sim.shortName)
+          )
+        }
+        )
+      )
+    )
+  }
+
+
+  def resultsTableFootnotes = div(cls := "footnotes")(
+    p("Footnotes"),
+    ol(
+      li(strong("Number of Local MPs"), " is the total number of MPs representing specific ridings.  " +
+        "Those ridings may be either single-member ridings or multi-member."),
+      li(strong("Number of Regional MPs"), " is the total number of MPs that represent multiple ridings. " +
+        "This happens in systems with top-up seats such as MMP and RU-PR."),
+      li(strong("Over-Representation by Party"), " is the percentage of MPs in Parliament minus the " +
+        "percentage of the popular vote.  For example, in 2015 under FPTP the Liberals received 54.4% " +
+        "of the seats but only 39.5% of the vote for an over-representation of (54.4 - 39.5) = 14.9%. " +
+        " Negative numbers mean the party was under-represented."),
+      li(strong("Gallagher Index"), " is a measure of disproportionality. " +
+        "It combines both over and under-representation for each party into a single number.  Gallagher" +
+        "indicies less than 5 are excellent."),
+      li(strong("Gallagher Index 2015"), " is the Gallagher Index for the simulated 2015 election."),
+      li(strong("Gallagher Index Composite"), " is the average of the Gallagher Indices for each province and " +
+        "territory, weighted by its number of seats.  This corrects for a problem in calculating the " +
+        "Gallagher Index for the nation as a whole, which can can hide regional disproportionalities " +
+        "such as the significant over-representation of Conservatives in the Prairies offsetting the " +
+        "over-representation of Liberals " +
+        "in the Maritimes. "),
+      li(strong("% Voters with Preferred Local MP"), " is the percentage of voters who have an MP " +
+        "representing their riding from the same party as their first choice candidate.  Systems with " +
+        "multi-member ridings will do better under this measure."),
+      li(strong("% Voters with Preferred Regional MP"), " is the percentage of voters who have an MP " +
+        "representing their region from the same party as their first choice candidate.  Systems with " +
+        "top-up seats will do better under this measure."),
+      li(strong("Short System Name"), " is a very consise ", a(href := "shortName.html")("abbreviation"),
+        " of the key parameters for this simulation.  ")
+    )
+  )
 
 
   def observations = div(
@@ -119,129 +171,10 @@ case class OverviewHTML(sims: List[Sim], val pgTitle: String, val outFile: Strin
     )
   )
 
-
-  def results = {
-
-    def color(tGreen: Double, tYellow: Double)(v: Double): String = {
-      if (Math.abs(v) < tGreen) "green" else if (Math.abs(v) < tYellow) "yellow" else "red"
-    }
-    def fmtOverRep(s: StatsByParty) = {
-      val pct = s.pctMPs - s.pctVote
-      val warn = color(0.05, 0.10)(pct)
-      td(cls := "colPct0 " + warn)(pctFmt.format(pct))
-    }
-
-    def fmtGallagher(g: Double) = {
-      td(cls := "colPct1 " + color(0.05, 0.10)(g))(pct_dFmt.format(g))
-    }
-
-    def fmtPrefParty(pct: Double) = {
-      val color = if (pct < 0.50) "red"
-      else if (pct < 0.75) "yellow"
-      else "green"
-      td(cls := "colPct0 " + color)(pctFmt.format(pct))
-    }
-
-    def fmtTable = table(
-      thead(
-        img(cls := "hdr")(src := "../img/ResultsTableHeader.svg")
-      ),
-      tbody(
-        tableRows(sims, sim => {
-          val statsByParty: Map[Party, StatsByParty] = sim.analysis.statsByParty.map(s ⇒ (s.party, s)).toMap
-
-          tr(cls := "row")(
-            td(cls := "name")(
-              a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
-            td(cls := "num3")(sim.numRidingMPs),
-            td(cls := "num3")(sim.numRegionalMPs),
-            fmtOverRep(statsByParty(Lib)),
-            fmtOverRep(statsByParty(Con)),
-            fmtOverRep(statsByParty(NDP)),
-            fmtOverRep(statsByParty(Bloc)),
-            fmtOverRep(statsByParty(Grn)),
-            fmtGallagher(sim.analysis.gallagherIndex),
-            fmtGallagher(sim.compositeGallagher),
-            fmtPrefParty(sim.pctVotersWithPreferredPartyLocally),
-            fmtPrefParty(sim.pctVotersWithPreferredPartyRegionally),
-            td(cls := "shortName")(sim.shortName)
-          )
-        }
-        )
-      )
-    )
-
-    def footnotes = div(cls := "footnotes")(
-      p("Footnotes"),
-      ol(
-        li(strong("Number of Local MPs"), " is the total number of MPs representing specific ridings.  " +
-          "Those ridings may be either single-member ridings or multi-member."),
-        li(strong("Number of Regional MPs"), " is the total number of MPs that represent multiple ridings. " +
-          "This happens in systems with top-up seats such as MMP and RU-PR."),
-        li(strong("Over-Representation by Party"), " is the percentage of MPs in Parliament minus the " +
-          "percentage of the popular vote.  For example, in 2015 under FPTP the Liberals received 54.4% " +
-          "of the seats but only 39.5% of the vote for an over-representation of (54.4 - 39.5) = 14.9%. " +
-          " Negative numbers mean the party was under-represented."),
-        li(strong("Gallagher Index"), " is a measure of disproportionality. " +
-          "It combines both over and under-representation for each party into a single number.  Gallagher" +
-          "indicies less than 5 are excellent."),
-        li(strong("Gallagher Index 2015"), " is the Gallagher Index for the simulated 2015 election."),
-        li(strong("Gallagher Index Composite"), " is the average of the Gallagher Indices for each province and " +
-          "territory, weighted by its number of seats.  This corrects for a problem in calculating the " +
-          "Gallagher Index for the nation as a whole, which can can hide regional disproportionalities " +
-          "such as the significant over-representation of Conservatives in the Prairies offsetting the " +
-          "over-representation of Liberals " +
-          "in the Maritimes. "),
-        li(strong("% Voters with Preferred Local MP"), " is the percentage of voters who have an MP " +
-          "representing their riding from the same party as their first choice candidate.  Systems with " +
-          "multi-member ridings will do better under this measure."),
-        li(strong("% Voters with Preferred Regional MP"), " is the percentage of voters who have an MP " +
-          "representing their region from the same party as their first choice candidate.  Systems with " +
-          "top-up seats will do better under this measure."),
-        li(strong("Short System Name"), " is a very consise ", a(href := "shortName.html")("abbreviation"),
-          " of the key parameters for this simulation.  ")
-      )
-    )
-
-
-    div(cls := "results")(
-      h2("Fairness"),
-      fmtTable,
-      footnotes
-    )
-  }
-
-
-  def descriptions = div(cls := "modelDescriptions")(
-    h2("Descriptions"),
-    for (param ← sims.map(_.params)) yield {
-      div(
-        h3(param.title),
-        param.description
-      )
-    }
-  )
-
-  def properties = {
+  def properties(sims: List[Sim]) = {
 
     val propDescr = div(
       p("The Representation table focuses on how voters are represented by MP.")
-
-
-      //      p(
-      //        s"""This table summarizes two groups of properties about each of the ${
-      //          sims.length
-      //        } simulated systems."""),
-      //      ul(
-      //        li(strong("MPs:"),
-      //          """ This part of the table shows how many MPs each model assumes and how they
-      //  are distributed between local ridings and regional top-up MPs."""),
-      //
-      //        li(strong("District Magnitude:"),
-      //          """ This shows how many MPs, on average, share a riding.  This will
-      //  be 1 for FPTP, AV, and MMP;  somewhat larger for systems like STV and RUP.  It also shows the
-      //  average number of top-up MPs in a region for MMP and RUP systems.""")
-      //      )
     )
 
 
@@ -250,6 +183,14 @@ case class OverviewHTML(sims: List[Sim], val pgTitle: String, val outFile: Strin
     val colPct = cls := "colPct"
     val colArea = cls := "colArea"
     val coldd_d = cls := "coldd_d"
+
+    def dFmtOrBlank(d: Double) = {
+      if (d == 0.0) {
+        ""
+      } else {
+        dd_dFmt.format(d)
+      }
+    }
 
     def propertiesTable = table(
       thead(
@@ -266,8 +207,8 @@ case class OverviewHTML(sims: List[Sim], val pgTitle: String, val outFile: Strin
             td(colNumMPs)(sim.numMPs),
 
             td(coldd_d)(dd_dFmt.format(sim.avgMPsPerRiding)),
-            td(coldd_d)(dd_dFmt.format(sim.avgTopUpMPsPerRegion)),
-            td(coldd_d)(dd_dFmt.format(sim.avgTotalMPsPerRegion)),
+            td(coldd_d)(dFmtOrBlank(sim.avgTopUpMPsPerRegion)),
+            td(coldd_d)(dFmtOrBlank(sim.avgTotalMPsPerRegion)),
             td(colArea)(commaFmt.format(sim.avgPopPerLocalMP)),
             td(colArea)(commaFmt.format(sim.medianLocalMPRidingArea)),
             td(cls := "shortName")(sim.shortName)
@@ -282,9 +223,23 @@ case class OverviewHTML(sims: List[Sim], val pgTitle: String, val outFile: Strin
         li(strong("Number of Local MPs"), " is the total number of MPs representing a specific riding.  " +
           "That riding may be either a single-member riding or a multi-member riding."),
         li(strong("Number of Regional MPs"), " is the total number of MPs that represent multiple ridings. " +
-          "This happens in systems with top-up seats such as MMP."),
-        li(strong("Number of MPs"), " is the sum of hte local and regional MPs, or how many seats in " +
-          "Parliament is assumed by this model.")
+          "This happens in systems with top-up seats such as MMP and RU-PR."),
+        li(strong("Number of MPs"), " is the sum of the local and regional MPs, or how many seats in " +
+          "Parliament is assumed by this model."),
+        li(strong("Average Local MPs/Riding"), " is the average number of MPs representing a local riding.  For" +
+          "systems that have single-member ridings everywhere such as FPTP and MMP, it will be 1.0.  " +
+          "For systems that have at least some multi-member ridings such as STV and RU-PR it will be larger" +
+          "than 1.0."),
+        li(strong("Average Top-up Seats/Region"), " is useful for systems like MMP and RU-PR where it gives" +
+          " the average number of seats in the top-up region."),
+        li(strong("Average Total MPs/Region"), " is the average number of MPs representing a region -- the sum " +
+          "of all the local MPs in that region plus the MPs in top-up seats for that region."),
+        li(strong("Population/Local MP"), " is the total Canadian population divided by the number of local MPs."),
+        li(strong("Area Represented by Median Local MP"), " is a measure of the area covered by a local MP.  In " +
+          "this case 50% of the ridings are smaller than the area (given in square kilometeres) and 50% " +
+          "of the ridings are larger."),
+        li(strong("Short System Name"), " is a very consise ", a(href := "shortName.html")("abbreviation"),
+          " of the key parameters for this simulation.  ")
       )
     )
 
@@ -299,16 +254,120 @@ case class OverviewHTML(sims: List[Sim], val pgTitle: String, val outFile: Strin
   }
 
 
-  /**
-    * Turn a list of sims into table rows, properly sorted, using function f.
-    *
-    * @param sims
-    * @param f
-    * @return
-    */
-  def tableRows(sims: Seq[Sim], f: Sim => TypedTag[String]): Seq[TypedTag[String]] = {
-    for (sim <- sims.sortBy(s => (s.design.design_name.entryName,
-      s.params.singleMemberElectionStrategy.name,
-      s.params.multiMemberElectionStrategy.name))) yield (f(sim))
+  def descriptions(sims: List[Sim]) = div(cls := "modelDescriptions")(
+    h2("Descriptions"),
+    for (param ← sims.map(_.params)) yield {
+      div(
+        h3(param.title),
+        div(cls := "blockIndent")(
+          p(param.description),
+          p("Elections in single-member ridings are conducted with ", param.singleMemberElectionStrategy.name),
+          p("Elections in multi-member ridings are conducted with ", param.multiMemberElectionStrategy.name)
+        )
+      )
+    }
+  )
+
+
+}
+
+case class OverviewFeaturedHTML(sims: List[Sim], numAllSims: Int, val pgTitle: String, val outFile: String) extends
+  AbstractOverview {
+
+  protected def content: TypedTag[String] = {
+    div(cls := "overview")(
+      introduction,
+      resultsTable,
+      observations,
+      properties(this.sims),
+      descriptions(sims)
+    )
   }
+
+
+  private val introduction = div(
+    h2("Introduction"),
+    div(cls := "blockIndent")(
+      p(
+        s"""This web site presents the results of simulating ${numAllSims} electoral systems.
+      Others have done individual simulations of their favourite systems, but this is believed
+      to be the first which uses a consistent approach on so many.  This page features the
+      ${sims.length} systems I view as most interesting.  For the """,
+        a(href := "allSimulations.html")(s"full list of ${numAllSims} simulations"), """, please see the "All Systems"
+        item in the "Overview" menu, above. """),
+      p(s"""Each of these ${sims.length} systems is described at the bottom of this page."""),
+      p(
+        """There is a lot of data here.  It's not for the faint of heart.  Perhaps the best
+        way to dive in is to start with the associated """,
+        a(href := "../ModellingElections_en.pdf")("submission"), " to the Parlimentary Electoral Reform Committee."),
+      p("""With respect to the Committee's first principle of Effectiveness and Legitimacy, the recommendations
+        based on this modelling is that:""",
+        ul(
+          li("the Committee issue a preliminary report stating that the Alternative Vote would be a step backward" +
+            " from FPTP and should not be considered further;"),
+          li("the Committee strongly consider Rural-Urban PR, a highly proportional, made-in-Canada system that " +
+            "effectively deals with our diverse riding sizes;"),
+          li("if choosing STV, the Committee think carefully about whether having smaller multi-member ridings is" +
+            " worth the decreased proportionality;"),
+          li("if choosing MMP, the Committee should stipulate that FPTP (rather than AV) continues to be used in " +
+            "the local riding elections;"),
+          li("the Committee avoid MMP-Lite’s substantial increase in complexity for very little gain in " +
+            "proportionality.")
+        )),
+
+      p(
+        """It should be noted, of course, that all simulations make assumptions and that any change
+      to the voting system would change how people vote.  So actual results will surely be
+      somewhat different from any simulation.  Nevertheless, these simulations show us
+      important properties about the systems we are considering that can help guide our decision-making.""")
+    )
+  )
+
+
+  def resultsTable = {
+    div(cls := "results")(
+      h2("Fairness"),
+      generateResultsTable(this.sims),
+      resultsTableFootnotes
+    )
+  }
+
+}
+
+/**
+  * Created by bwbecker on 2016-06-29.
+  */
+case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: String) extends AbstractOverview {
+
+  protected def content: TypedTag[String] = {
+    div(cls := "overview")(
+      introduction,
+      resultsTable,
+      properties(this.sims),
+      descriptions(sims)
+    )
+  }
+
+  private val introduction = div(
+    h2("Introduction"),
+    div(cls := "blockIndent")(
+      s"""The tables below provide an overview of the ${sims.length} simulations performed.  Many
+        are only slight variations of each other.  For the systems that I consider most interesting,
+      please choose the \"""",
+      a(href := "index.html")("Featured Systems"), "\" item in the \"Overview\" menu, above."
+    )
+  )
+
+
+  def resultsTable = {
+
+
+    div(cls := "results")(
+      h2("Fairness"),
+      generateResultsTable(this.sims),
+      resultsTableFootnotes
+    )
+  }
+
+
 }

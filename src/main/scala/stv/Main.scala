@@ -3,7 +3,7 @@ package stv
 import scalatags.Text
 import scalatags.Text.all._
 import ca.bwbecker.io.CachedMkdir
-import stv.html.OverviewHTML
+//import stv.html.OverviewHTML
 import stv.io.{Input, Output}
 
 
@@ -19,7 +19,7 @@ object Main {
   val fptpDescr = div(
     p(a(href := "https://en.wikipedia.org/wiki/First-past-the-post_voting")("First-Past-The-Post"),
       """ (FPTP) is the electoral system that Canada uses now.  In each riding,
-      the candidate with the most votes becomes the MP.""")
+      the candidate with the most votes becomes the MP.  There are no regions or top-up seats.""")
   )
 
   val avDescr = div(
@@ -82,17 +82,18 @@ object Main {
     p("A ", a(href := "https://en.wikipedia.org/wiki/Mixed-member_proportional_representation")
     ("Mixed Member Proportional"),
       """ (MMP) model has single member ridings gathered
-    into regions.  The "8" in this model's title indicates that these regions are
+    into regions.  The "small regions" in this model's title indicates that these regions are
     composed of about 8 ridings, on average."""),
     p(
-      """ Each region has a set of "top-up" or "compensatory" MPs chosen to preserve
-          proportionality between the popular vote and the party affiliations of MPs."""),
+      """ Each region has a set of "top-up" or "compensatory" seats filled so that
+          proportionality between the popular vote and the party affiliations of MPs
+          is maintained."""),
     p(
       """ This simulation is based upon """,
       a(href := "http://wilfday.blogspot.ca/")("Wilf Day's work"),
       """ of dividing the ridings into
-      regions and assigning the number of top - up MPs to each region.It uses a
-      ranked ballot in each riding(Alternative Vote) to select the local MP.Other
+      regions and assigning the number of top - up MPs to each region.  It uses a
+      ranked ballot in each riding (Alternative Vote) to select the local MP.  Other
       simulations use FPTP to choose the local MPs and still other simulations use
       larger regions.""")
   )
@@ -101,18 +102,19 @@ object Main {
     p("A ", a(href := "https://en.wikipedia.org/wiki/Mixed-member_proportional_representation")
     ("Mixed Member Proportional"),
       """ (MMP) model has single member ridings gathered
-      into regions.The "8" in this model 's title indicates that these regions are
+      into regions.The "small regions" in this model's title indicates that these regions are
         composed of about 8 ridings, on average."""),
     p(
-      """ Each region has a set of "top-up" or "compensatory" MPs chosen to preserve
-        proportionality between the popular vote and the party affiliations of MPs."""),
+      """ Each region has a set of "top-up" or "compensatory" seats filled so that
+          proportionality between the popular vote and the party affiliations of MPs
+          is maintained."""),
     p(
       """ This simulation is based upon """,
       a(href := "http://wilfday.blogspot.ca/")("Wilf Day's work"),
       """ of dividing the ridings into
-      regions and assigning the number of top - up MPs to each region.It uses
-      a familiar First-Past-The-Post (FPTP) election in each riding to select the local MP.Other
-      simulations use a ranked ballot(Alternative Vote) to choose the local MPs and
+      regions and assigning the number of top - up MPs to each region. It uses
+      a familiar First-Past-The-Post (FPTP) election in each riding to select the local MP. Other
+      simulations use a ranked ballot (Alternative Vote) to choose the local MPs and
       still other simulations use
       larger regions.""")
   )
@@ -121,11 +123,12 @@ object Main {
     p("A ", a(href := "https://en.wikipedia.org/wiki/Mixed-member_proportional_representation")
     ("Mixed Member Proportional"),
       """ (MMP) model has single member ridings gathered
-      into regions.The "14" in this models title indicates that these regions are
+      into regions.  The "Medium Regions" in this models title indicates that these regions are
       composed of about 14 ridings, on average."""),
     p(
-      """ Each region has a set of "top-up" or "compensatory" MPs chosen to preserve
-      proportionality between the popular vote and the party affiliations of MPs."""),
+      """ Each region has a set of "top-up" or "compensatory" seats filled so that
+          proportionality between the popular vote and the party affiliations of MPs
+          is maintained."""),
     p(
       """ This simulation is based upon """,
       a(href := "http://wilfday.blogspot.ca/")("Wilf Day's work"),
@@ -143,15 +146,16 @@ object Main {
       into regions.The "14" in this models title indicates that these regions are
       composed of about 14 ridings, on average."""),
     p(
-      """ Each region has a set of "top-up" or "compensatory" MPs chosen to preserve
-      proportionality between the popular vote and the party affiliations of MPs."""),
+      """ Each region has a set of "top-up" or "compensatory" seats filled so that
+          proportionality between the popular vote and the party affiliations of MPs
+          is maintained."""),
     p(
       """ This simulation is based upon """,
       a(href := "http://wilfday.blogspot.ca/")("Wilf Day's work"),
       """ of dividing the ridings into
-      regions and assigning the number of top-up MPs to each region.It uses
-      a familiar First-Past-The-Post (FPTP) election in each riding to select the local MP.Other
-      simulations use a ranked ballot(Alternative Vote) to choose the local MPs and
+      regions and assigning the number of top-up MPs to each region. It uses
+      a familiar First-Past-The-Post (FPTP) election in each riding to select the local MP. Other
+      simulations use a ranked ballot (Alternative Vote) to choose the local MPs and
       still other simulations use
       smaller regions.""")
   )
@@ -160,7 +164,7 @@ object Main {
     p(
       """Some MPs are apparently talking about an "MMP lite" approach
       in which our existing 338 ridings are kept intact but the House is enlarged by
-      10 - 15% to provide top-up MPs that bring a measure of proportionality."""),
+      10 - 15% to provide top-up seats that bring a measure of proportionality."""),
     p(
       """ This simulation is based upon """,
       a(href := "http://wilfday.blogspot.ca/")("Wilf Day's work"),
@@ -172,7 +176,7 @@ object Main {
   val rup338Descr =
     div(
       p("The ", a(href := "../RuralUrbanProportional_20160706.pdf")("Rural-Urban Proportional"),
-        """ (RUP) model uses multi-member ridings in metropolitan
+        """ (RU-PR) model uses multi-member ridings in metropolitan
         areas and single member ridings in non-metropolitan and rural areas.  It adds a
         small layer of top-up MPs. Together, these two techniques yield excellent
         proportionality across a wide range of electoral results."""),
@@ -218,10 +222,6 @@ object Main {
       model enlarges the ridings to keep the number of MPs constant at 338.""")
   )
 
-  val rup15PctFPTPDescr = div(
-    p("Just like Rural-Urban PR (More Singles, 338 Seats) except that single-member ridings are " +
-      "decided with FPTP instead of a ranked ballot.")
-  )
 
 
   val featuredSystems = List(
@@ -267,7 +267,7 @@ object Main {
       DesignName.ru_singles, s"rup-338", rup338Descr, AvElectionStrategy, ListElectionStrategy),
 
     Params("rup-15pct", "Rural-Urban PR (More Singles, 389 Seats)", "RU-PR (More Singles, 389 Seats)",
-      DesignName.ru_enlargeP, s"rup-15pct", rup15PctFPTPDescr, FptpElectionStrategy, EkosStvElectionStrategy),
+      DesignName.ru_enlargeP, s"rup-15pct", rup15PctDescr, FptpElectionStrategy, EkosStvElectionStrategy),
 
     Params("rup-stv", "Rural-Urban PR (Few Singles)", "RU-PR (Few Singles, 390 Seats)",
       DesignName.ru_multiples, s"rup-stv", stvPlusDescr, AvElectionStrategy, EkosStvElectionStrategy)
