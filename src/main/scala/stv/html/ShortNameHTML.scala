@@ -27,13 +27,13 @@ object ShortNameHTML extends Page {
       ),
       p("The third letter is the election strategy used in single-member ridings.  They are:"),
       ul(
-        for (sms <- ElectionStrategy.singleMbrStrategies) yield {
+        for (sms <- RidingElectionStrategy.singleMbrStrategies) yield {
           li(s"${sms.shortName}: ", sms.help)
         }
       ),
       p("The fourth letter is the election strategy used in multi-member ridings.  They are:"),
       ul(
-        for (mms <- ElectionStrategy.multiMbrStrategies :+ NotApplicableElectionStrategy) yield {
+        for (mms <- RidingElectionStrategy.multiMbrStrategies :+ NotApplicableRidingElectionStrategy) yield {
           li(s"${mms.shortName}: ", mms.help)
         }
       )

@@ -13,23 +13,50 @@ class Riding(val ridingId: RidingId,
              val population: Int,
              val area: Int,
              val districtMagnitude: Int,
-             candidates0: List[Candidate],
+             val candidates0: Seq[Candidate],
              // old ridings mapped to this one: riding id, pct, riding name
-             val mapping: List[OldRiding],
-             val electionStrategy: ElectionStrategy
+             val mapping: Seq[OldRiding]
             ) {
 
   override def toString = s"""Riding($ridingId, $province, $name, $population, $area, ${districtMagnitude},
     ${candidates0.sortBy(c => -c.votes).take(3).mkString("\t", "\n\t", "")})
-    ${mapping.take(3).mkString("\n")}
-    ${electionStrategy.name})"""
+    ${mapping.take(3).mkString("\n")})"""
 
-  //println(s"Riding: ${ridingId}")
-  val (elected, unelected) = electionStrategy.runElection(this.candidates0, this.districtMagnitude)
-  //assert(elected.length + unelected.length == candidates0.length)
-  assert(elected.length == districtMagnitude, s"${elected.length} != ${districtMagnitude} for ${ridingId}")
-  val candidates = elected ::: unelected
 
+  /**
+    * Swing this ridings votes between parties for sensitivity analysis.
+    */
+  def swingVotes(voteSwing: Option[VoteSwing]): Riding = {
+    if (voteSwing.isDefined) {
+
+      val VoteSwing(pct, fromParty, toParty) = voteSwing.get
+
+      assert(pct >= 0.0, s"pct = $pct")
+
+      val fromCand = candidates0.filter(_.party == fromParty)
+      val toCand = candidates0.filter(_.party == toParty)
+      val fromVotes = fromCand.map(_.votes).sum * pct
+      val toVotes = fromVotes / toCand.length
+
+      val cand = candidates0.map { c ⇒
+        val cv = if (c.party == fromParty) {
+          c.votes - c.votes * pct
+        } else if (c.party == toParty) {
+          c.votes + toVotes
+        } else {
+          c.votes
+        }
+
+        c.copy(votes = cv, effVotes = cv)
+      }
+
+      // New riding that's exactly the same except for the candidates.
+      new Riding(this.ridingId, this.province, this.name, this.population, this.area, this.districtMagnitude, cand,
+        this.mapping)
+    } else {
+      this
+    }
+  }
 }
 
 case class OldRiding(ridingId: RidingId, pct: Double, name: String)

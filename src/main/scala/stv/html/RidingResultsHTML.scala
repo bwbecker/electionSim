@@ -29,7 +29,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
     )
   }
 
-  private def constituentRidings(map: List[OldRiding]): TypedTag[String] = {
+  private def constituentRidings(map: Seq[OldRiding]): TypedTag[String] = {
     ul(
       for {
         OldRiding(ridingId, pct, name) ← map.toList.sortBy(t ⇒ t.ridingId)
@@ -83,7 +83,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
 
   def doRiding(riding: Riding) = {
-    val cands = riding.candidates.sortBy(-_.votes)
+    val cands = sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.votes, c.name))
 
     for (c ← cands) yield {
       if (c == cands.head) {

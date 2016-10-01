@@ -1,15 +1,14 @@
 package stv.html
 
 import ca.bwbecker.enrichments._
-
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
-import stv.{Analysis, Region, Sim, Params}
+import stv._
 
 /**
- * Created by bwbecker on 2016-06-15.
- */
+  * Created by bwbecker on 2016-06-15.
+  */
 case class RegionResultsHTML(params: Params, sim: Sim) extends Page {
 
   protected val outDir: String = params.outDir
@@ -66,20 +65,26 @@ case class RegionResultsHTML(params: Params, sim: Sim) extends Page {
 
   def doRegion(region: Region) = {
 
-    val a = Analysis(region.ridings)
-    val a2 = Analysis(region)
-    //assert(a.allCandidates.length < a2.allCandidates.length)
-    //assert(a.elected.length < a2.elected.length)
+    val analysisWithoutTopups = new Analysis(
+      sim.results.candidatesByRegion(region.regionId).filterNot(c ⇒ c.topupWinner),
+      region.totalCandidates - region.topUpSeats)
+    val analysisWithTopups = new Analysis(
+      sim.results.candidatesByRegion(region.regionId),
+      region.totalCandidates)
+
+    assert(analysisWithoutTopups.allCandidates.length <= analysisWithTopups.allCandidates.length)
+    assert(analysisWithoutTopups.elected.length <= analysisWithTopups.elected.length)
+
     div(cls := "region")(
       h2(id := region.regionId)("Region: " + region.regionId),
       div(cls := "blockIndent")(
-        Analysis.comparativeStatsByPartyAsHTML(a, a2),
+        Analysis.comparativeStatsByPartyAsHTML(analysisWithoutTopups, analysisWithTopups),
         p(),
         table()(
           tr(td(cls := "topup")(
             h3(s"Topup Seats: (${region.topUpSeats})"),
             ol(
-              for (c ← region.topUpCandidates) yield {
+              for (c ← sim.results.topupByRegion(region.regionId)) yield {
                 li(cls := c.party.toString)(c.party.toString)
               }
             )),

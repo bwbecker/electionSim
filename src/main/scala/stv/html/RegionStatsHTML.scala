@@ -91,7 +91,8 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
       tbody(
         (for (region ← sim.regions.sortBy(r ⇒ r.ridings.head.province + r.regionId)) yield {
           val ridingSeats = region.ridings.map(r ⇒ r.districtMagnitude).sum
-          val analysis = Analysis(region)
+          //val analysis = Analysis(sim.results.candidatesByRegion(region.regionId), region.totalCandidates)
+          val analysis = sim.results.analysisByRegion(Seq(region))
           val sbp = analysis.statsByParty.map(s => (s.party, s)).toMap.withDefault((p) => StatsByParty(p, 0, 0.0, 0, 0.0, 0.0, 0, 0))
 
           tr(

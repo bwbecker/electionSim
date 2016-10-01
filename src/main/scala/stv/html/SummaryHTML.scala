@@ -15,13 +15,6 @@ import stv._
 case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
 
-  /**
-    * Summarize the simulation with stats for FPTP, stats for STV only (no top-up seats)
-    * and stats for STV in the ridings plus top-up seats.  Throw in a few others, as well.
-    */
-  val ridingAnalysis = Analysis(sim.newRidings.values.toList)
-  val hybridAnalysis = Analysis(sim.regions)
-
   protected val outDir: String = params.outDir
   protected val outFile: String = "index.html"
   protected val pgTitle: String = s"Summary of ${params.title}"
@@ -31,11 +24,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
       params.description,
 
-      h2("Summary Statistics"),
-      div(cls := "blockIndent")(
-        p("""Statistics concerning all of the MPs elected -- both in ridings and as top-ups."""),
-        hybridAnalysis.statsByPartyAsHTML(true)
-      ),
+      summaryStats,
 
       sensitivity(List((Con, Lib), (NDP, Lib))),
 
@@ -48,6 +37,18 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
       h2("Methodology"),
       this.methodology
+    )
+  }
+
+  private def summaryStats = {
+    val withTopups = sim.results.analysisByRegion(sim.regions)
+
+    div(
+      h2("Summary Statistics"),
+      div(cls := "blockIndent")(
+        p("""Statistics concerning all of the MPs elected -- both in ridings and as top-ups."""),
+        withTopups.statsByPartyAsHTML(true)
+      )
     )
   }
 
@@ -73,7 +74,6 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
       )
     }
   }
-
 
 
   def districtMagnitudes = {
@@ -120,7 +120,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
           s"""The district magnitude is the number of MPs that represent as specific area.  With FPTP, all
         ridings are represented by a single MP, so the district magnitude is 1 for every riding.  In
         other systems, the number of MPs may vary.  These tables show the number of districts (riding or region)
-        that have a given number of MPs representing it for the ${params.shortTitle} electoral model."""),
+        that have a given number of MPs representing it for this electoral model."""),
 
         h3("Riding-Level District Magnitudes"),
         p(
@@ -155,6 +155,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
   def subsets = {
 
     def ridingsOnlyStats: TypedTag[String] = {
+      val ridingAnalysis = sim.results.analysisByRiding(sim.newRidingsVec)
       div(
         h3("Local-Ridings Only"),
         div(cls := "blockIndent")(
@@ -170,7 +171,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
     def singleMemberRidingStats: TypedTag[String] = {
 
-      val singles = Analysis(sim.newRidings.values.filter(r ⇒ r.districtMagnitude == 1).toList)
+      val singles = sim.results.analysisByRiding(sim.newRidingsVec.filter(r ⇒ r.districtMagnitude == 1))
 
       div(
         h3("Single-Member Riding Stats"),
@@ -185,12 +186,12 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
     def multiMemberRidingStats: Option[TypedTag[String]] = {
 
-      val ridings = sim.newRidings.values.filter(r ⇒ r.districtMagnitude > 1).toList
+      val ridings = sim.newRidingsVec.filter(r ⇒ r.districtMagnitude > 1)
       if (ridings.isEmpty) {
         None
       } else {
 
-        val multi = Analysis(ridings)
+        val multi = sim.results.analysisByRiding(ridings)
         Some(div(
           h3("Multi-Member Riding Stats"),
           p("""Statistics on all of the multi-member ridings as a group."""),
@@ -202,8 +203,8 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
 
     def provinceStats(title: String, descr: String, provinces: List[ProvName]): TypedTag[String] = {
-      val ridings = Analysis(sim.newRidings.values.filter(r ⇒ provinces.contains(r.province)).toList)
-      val regions = Analysis(sim.regions.filter(r ⇒ provinces.contains(r.ridings.head.province)))
+      val ridings = sim.results.analysisByRiding(sim.newRidingsVec.filter(r ⇒ provinces.contains(r.province)))
+      val regions = sim.results.analysisByRegion(sim.regions.filter(r ⇒ provinces.contains(r.ridings.head.province)))
 
       div(id := "provStats")(
         h3(title),
@@ -308,19 +309,19 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
       (data, cumStats)
     }
 
-    val ridingByArea = sim.newRidings.values.toVector.sortBy(_.area)
+    val ridingByArea = sim.newRidingsVec.sortBy(_.area)
     val maxArea = ridingByArea.last.area
 
     val totalPop = ridingByArea.map {
       _.population
     }.sum.toDouble
 
-    val (modelData, cumStats) = mkData(ridingByArea.map{r => (r.area, r.population)}, totalPop)
+    val (modelData, cumStats) = mkData(ridingByArea.map { r => (r.area, r.population) }, totalPop)
     def popArea(pct: Double): Int = {
       cumStats.find(_._2 > pct).get._1
     }
 
-    val (fptpData, _) = mkData(Input.originalRidings.sortBy(_.area).map{r => (r.area, r.pop) }, totalPop)
+    val (fptpData, _) = mkData(Input.originalRidings.sortBy(_.area).map { r => (r.area, r.pop) }, totalPop)
 
     div(
       p(
@@ -367,7 +368,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
         };
 
 
-    var chartType = "logarithmic"
+    var chartType = "linear"
     var ctx = document.getElementById("${cssId}");
     var chartOptions = {
     type: 'line',
@@ -405,7 +406,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
                 }
             }],
             xAxes: [{
-              type: "logarithmic",
+              type: "linear",
               position: 'bottom',
               ticks: {
                 min: 10,
