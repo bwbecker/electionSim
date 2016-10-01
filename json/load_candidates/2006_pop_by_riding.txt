@@ -1,0 +1,308 @@
+10001	Avalon	78381
+10002	Bonavista–Gander–Grand Falls–Windsor1	86394
+10003	Humber–St. Barbe–Baie Verte	73171
+10004	Labrador	26364
+10005	Random–Burin–St. George's	71219
+10006	St. John's East 1	88002
+10007	St. John's South–Mount Pearl1	81938
+11001	Cardigan	35067
+11002	Charlottetown	32174
+11003	Egmont	34814
+11004	Malpeque	33796
+12001	Cape Breton–Canso	71968
+12002	Central Nova	72966
+12003	Dartmouth–Cole Harbour	87886
+12004	Halifax	89448
+12005	Halifax West	88756
+12006	Kings–Hants	81531
+12007	Cumberland–Colchester–Musquodoboit Valley1	87895
+12008	Sackville–Eastern Shore	86963
+12009	South Shore–St. Margaret's	82855
+12010	Sydney–Victoria	76801
+12011	West Nova	86393
+13001	Acadie–Bathurst	78948
+13002	Beauséjour	76259
+13003	Fredericton	85886
+13004	Fundy Royal1	69471
+13005	Madawaska–Restigouche	62593
+13006	Miramichi	53844
+13007	Moncton–Riverview–Dieppe	89334
+13008	New Brunswick Southwest 1	63232
+13009	Saint John	82078
+13010	Tobique–Mactaquac	68352
+24001	Abitibi–Témiscamingue	102795
+24002	Ahuntsic	100471
+24003	Alfred-Pellan	104765
+24004	Argenteuil–Papineau–Mirabel1	111534
+24005	Beauce	103617
+24006	Beauharnois–Salaberry	106856
+24007	Beauport–Limoilou1	101331
+24008	Berthier–Maskinongé	107911
+24009	Bourassa	100683
+24010	Brome–Missisquoi	92591
+24011	Brossard–La Prairie	113985
+24012	Chambly–Borduas	116925
+24013	Charlesbourg–Haute-Saint-Charles1	94522
+24014	Montmorency–Charlevoix–Haute-Côte-Nord1	90535
+24015	Châteauguay–Saint-Constant	107165
+24016	Chicoutimi–Le Fjord	96483
+24017	Compton–Stanstead	100148
+24018	Drummond	92982
+24019	Gaspésie–Îles-de-la-Madeleine	82007
+24020	Gatineau	108742
+24021	Hochelaga	100915
+24022	Honoré-Mercier	106196
+24023	Hull–Aylmer	110902
+24024	Jeanne-Le Ber	112863
+24025	Joliette	108169
+24026	Jonquière–Alma	97232
+24027	Lac-Saint-Louis	105622
+24028	La Pointe-de-l'Île	99685
+24029	LaSalle–Émard	100327
+24030	Laurentides–Labelle	105884
+24031	Laurier–Sainte-Marie1	101758
+24032	Laval	102230
+24033	Laval–Les Îles	111958
+24034	Lévis–Bellechasse	105927
+24035	Longueuil–Pierre-Boucher1	98032
+24036	Lotbinière–Chutes-de-la-Chaudière	100454
+24037	Louis-Hébert	101730
+24038	Louis-Saint-Laurent	96286
+24039	Manicouagan	83608
+24040	Marc-Aurèle-Fortin	107149
+24041	Haute-Gaspésie–La Mitis–Matane–Matapédia1	73140
+24042	Mégantic–L'Érable	87078
+24043	Montcalm	122825
+24044	Mount Royal	98888
+24045	Notre-Dame-de-Grâce–Lachine	104715
+24046	Abitibi–Baie-James–Nunavik–Eeyou1	80894
+24047	Outremont	95771
+24048	Papineau	101019
+24049	Pierrefonds–Dollard	105504
+24050	Pontiac	99589
+24051	Portneuf–Jacques-Cartier1	93526
+24052	Québec	95433
+24053	Repentigny	109636
+24054	Bas-Richelieu–Nicolet–Bécancour1	91745
+24055	Richmond–Arthabaska	100116
+24056	Rimouski-Neigette–Témiscouata–Les Basques1	84453
+24057	Rivière-des-Mille-Îles	97258
+24058	Montmagny–L'Islet–Kamouraska–Rivière-du-Loup1	97492
+24059	Rivière-du-Nord	101576
+24060	Roberval–Lac-Saint-Jean1	78895
+24061	Rosemont–La Petite-Patrie	105864
+24062	Saint-Bruno–Saint-Hubert	101416
+24063	Saint-Hyacinthe–Bagot	95983
+24064	Saint-Jean	102902
+24065	Saint-Lambert	94541
+24066	Saint-Laurent–Cartierville	109015
+24067	Saint-Léonard–Saint-Michel	104786
+24068	Saint-Maurice–Champlain	96968
+24069	Shefford	100000
+24070	Sherbrooke	101681
+24071	Terrebonne–Blainville	107694
+24072	Trois-Rivières	94272
+24073	Vaudreuil-Soulanges	120395
+24074	Verchères–Les Patriotes	97726
+24075	Westmount–Ville-Marie	100360
+35001	Ajax–Pickering	117183
+35002	Algoma–Manitoulin–Kapuskasing	77961
+35003	Ancaster–Dundas–Flamborough–Westdale	111844
+35004	Barrie	128430
+35005	Beaches–East York	104831
+35006	Bramalea–Gore–Malton	152698
+35007	Brampton–Springdale	131797
+35008	Brampton West	170422
+35009	Brant	125136
+35010	Burlington	118310
+35011	Cambridge	129434
+35012	Carleton–Mississippi Mills1	128915
+35013	Chatham-Kent–Essex	109484
+35014	Durham1	118500
+35015	Davenport	104615
+35016	Don Valley East	109640
+35017	Don Valley West	117083
+35018	Dufferin–Caledon	111486
+35019	Eglinton–Lawrence	110066
+35020	Elgin–Middlesex–London	110028
+35021	Essex	123872
+35022	Etobicoke Centre	111349
+35023	Etobicoke–Lakeshore	114641
+35024	Etobicoke North	108501
+35025	Glengarry–Prescott–Russell	104309
+35026	Bruce–Grey–Owen Sound1	105947
+35027	Guelph	114943
+35028	Haldimand–Norfolk	107775
+35029	Haliburton–Kawartha Lakes–Brock	119141
+35030	Halton	151943
+35031	Hamilton Centre	117509
+35032	Hamilton East–Stoney Creek	116434
+35033	Hamilton Mountain	122729
+35034	Huron–Bruce	104313
+35035	Kenora	64291
+35036	Kingston and the Islands	119069
+35037	Kitchener Centre	107540
+35038	Kitchener–Conestoga2	114405
+35039	Kitchener–Waterloo	126742
+35040	Lanark–Frontenac–Lennox and Addington	117389
+35041	Leeds–Grenville	99206
+35042	London–Fanshawe	107218
+35043	London North Centre	115250
+35044	London West	118335
+35045	Markham–Unionville	127191
+35046	Lambton–Kent–Middlesex1	107635
+35047	Mississauga–Brampton South	136470
+35048	Mississauga East–Cooksville	126642
+35049	Mississauga–Erindale	143361
+35050	Mississauga South	110932
+35051	Mississauga–Streetsville	130033
+35052	Nepean–Carleton	133245
+35053	Newmarket–Aurora	121924
+35054	Niagara Falls	126696
+35055	Niagara West–Glanbrook	111024
+35056	Nickel Belt	89377
+35057	Nipissing–Timiskaming	90963
+35058	Northumberland–Quinte West	123706
+35059	Oak Ridges–Markham	169642
+35060	Oakville	113714
+35061	Oshawa	116881
+35062	Ottawa Centre	109336
+35063	Ottawa–Orléans	109950
+35064	Ottawa South	117581
+35065	Ottawa–Vanier	101611
+35066	Ottawa West–Nepean	109735
+35067	Oxford	102756
+35068	Parkdale–High Park	102142
+35069	Parry Sound–Muskoka	90281
+35070	Perth–Wellington	103874
+35071	Peterborough	116626
+35072	Pickering–Scarborough East	106602
+35073	Prince Edward–Hastings	113227
+35074	Renfrew–Nipissing–Pembroke	98803
+35075	Richmond Hill	122614
+35076	St. Catharines	112869
+35077	St. Paul's	111131
+35078	Sarnia–Lambton	105360
+35079	Sault Ste. Marie	89028
+35080	Scarborough–Agincourt	111867
+35081	Scarborough Centre	108010
+35082	Scarborough–Guildwood	108813
+35083	Scarborough–Rouge River	130974
+35084	Scarborough Southwest	102196
+35085	Simcoe–Grey	125985
+35086	Simcoe North	119400
+35087	Stormont–Dundas–South Glengarry	99764
+35088	Sudbury	92161
+35089	Thornhill	131978
+35090	Thunder Bay–Rainy River	85153
+35091	Thunder Bay–Superior North	82589
+35092	Timmins–James Bay	80791
+35093	Toronto Centre	121407
+35094	Toronto–Danforth	103655
+35095	Trinity–Spadina	115361
+35096	Vaughan	154206
+35097	Welland	112875
+35098	Wellington–Halton Hills	111241
+35099	Whitby–Oshawa	135893
+35100	Willowdale	129356
+35101	Windsor–Tecumseh	118478
+35102	Windsor West	122219
+35103	York Centre	113457
+35104	York–Simcoe	120371
+35105	York South–Weston	114458
+35106	York West	103948
+46001	Brandon–Souris	84602
+46002	Charleswood–St. James–Assiniboia1	81469
+46003	Churchill	75232
+46004	Dauphin–Swan River–Marquette1	75103
+46005	Elmwood–Transcona	78700
+46006	Kildonan–St. Paul	81532
+46007	Portage–Lisgar	85653
+46008	Provencher	87737
+46009	Saint Boniface	84473
+46010	Selkirk–Interlake	90807
+46011	Winnipeg Centre	81017
+46012	Winnipeg North	79366
+46013	Winnipeg South	84424
+46014	Winnipeg South Centre	78286
+47001	Battlefords–Lloydminster	71184
+47002	Blackstrap	76273
+47003	Desnethé–Missinippi–Churchill River1	67937
+47004	Cypress Hills–Grasslands	60551
+47005	Palliser	65956
+47006	Prince Albert	71159
+47007	Regina–Lumsden–Lake Centre	65885
+47008	Regina–Qu'Appelle	66698
+47009	Saskatoon–Humboldt	75051
+47010	Saskatoon–Rosetown–Biggar	69547
+47011	Saskatoon–Wanuskewin	72867
+47012	Souris–Moose Mountain	63238
+47013	Wascana	75717
+47014	Yorkton–Melville	66094
+48001	Fort McMurray–Athabasca1	100805
+48002	Calgary East	110479
+48003	Calgary Centre-North 1	114615
+48004	Calgary Northeast	129015
+48005	Calgary–Nose Hill	130942
+48006	Calgary Centre1	124197
+48007	Calgary Southeast	125738
+48008	Calgary Southwest	120750
+48009	Calgary West	132162
+48010	Crowfoot	114825
+48011	Edmonton–Mill Woods–Beaumont1	112919
+48012	Edmonton Centre	120326
+48013	Edmonton East	128199
+48014	Edmonton–Leduc	116986
+48015	Edmonton–St. Albert	126447
+48016	Edmonton–Sherwood Park	118073
+48017	Edmonton–Spruce Grove	128945
+48018	Edmonton–Strathcona	99267
+48019	Lethbridge	113531
+48020	Macleod	107638
+48021	Medicine Hat	113085
+48022	Peace River	138009
+48023	Red Deer	124063
+48024	Vegreville–Wainwright	111427
+48025	Westlock–St. Paul3	101010
+48026	Wetaskiwin	107914
+48027	Wild Rose	115872
+48028	Yellowhead	103111
+59001	Abbotsford	124515
+59002	Burnaby–Douglas	112119
+59003	Burnaby–New Westminster	118713
+59004	Cariboo–Prince George	106382
+59005	Chilliwack–Fraser Canyon	112118
+59006	Delta–Richmond East	106103
+59007	Pitt Meadows–Maple Ridge–Mission1	120662
+59008	Esquimalt–Juan de Fuca	120669
+59009	Fleetwood–Port Kells	123243
+59010	Kamloops–Thompson–Cariboo1	114675
+59011	Kelowna–Lake Country1	122214
+59012	Kootenay–Columbia	86811
+59013	Langley	117858
+59014	Nanaimo–Alberni	121434
+59015	Nanaimo–Cowichan	125149
+59016	Newton–North Delta	118649
+59017	New Westminster–Coquitlam	111231
+59018	Okanagan–Shuswap1	116236
+59019	North Vancouver	122371
+59020	Okanagan–Coquihalla	107316
+59021	Port Moody–Westwood–Port Coquitlam	116563
+59022	Prince George–Peace River	105865
+59023	Richmond	114137
+59024	Saanich–Gulf Islands	115724
+59025	Skeena–Bulkley Valley	91926
+59026	British Columbia Southern Interior1	95477
+59027	South Surrey–White Rock–Cloverdale	111756
+59028	Surrey North	111960
+59029	Vancouver Centre	123701
+59030	Vancouver East	106816
+59031	Vancouver Island North	113356
+59032	Vancouver Kingsway	119815
+59033	Vancouver Quadra	119627
+59034	Vancouver South	120284
+59035	Victoria	108771
+59036	West Vancouver–Sunshine Coast–Sea to Sky Country1	129241
+60001	Yukon	30372
+61001	Northwest Territories4	41464
+62001	Nunavut	29474

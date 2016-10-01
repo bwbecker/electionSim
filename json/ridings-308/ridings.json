@@ -1,0 +1,2466 @@
+[
+    {
+        "fptp_id": 10001,
+        "prov": "NL",
+        "name": "Avalon",
+        "pop": 78381,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 10002,
+        "prov": "NL",
+        "name": "Bonavista--Gander--Grand Falls--Windsor",
+        "pop": 86394,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 10003,
+        "prov": "NL",
+        "name": "Humber--St. Barbe--Baie Verte",
+        "pop": 73171,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 10004,
+        "prov": "NL",
+        "name": "Labrador",
+        "pop": 26364,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 10005,
+        "prov": "NL",
+        "name": "Random--Burin--St. George's",
+        "pop": 71219,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 10006,
+        "prov": "NL",
+        "name": "St. John's East",
+        "pop": 88002,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 10007,
+        "prov": "NL",
+        "name": "St. John's South--Mount Pearl",
+        "pop": 81938,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 11001,
+        "prov": "PE",
+        "name": "Cardigan",
+        "pop": 35067,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 11002,
+        "prov": "PE",
+        "name": "Charlottetown",
+        "pop": 32174,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 11003,
+        "prov": "PE",
+        "name": "Egmont",
+        "pop": 34814,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 11004,
+        "prov": "PE",
+        "name": "Malpeque",
+        "pop": 33796,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12001,
+        "prov": "NS",
+        "name": "Cape Breton--Canso",
+        "pop": 71968,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12002,
+        "prov": "NS",
+        "name": "Central Nova",
+        "pop": 72966,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12003,
+        "prov": "NS",
+        "name": "Dartmouth--Cole Harbour",
+        "pop": 87886,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12004,
+        "prov": "NS",
+        "name": "Halifax",
+        "pop": 89448,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12005,
+        "prov": "NS",
+        "name": "Halifax West",
+        "pop": 88756,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12006,
+        "prov": "NS",
+        "name": "Kings--Hants",
+        "pop": 81531,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12007,
+        "prov": "NS",
+        "name": "Cumberland--Colchester--Musquodoboit Valley",
+        "pop": 87895,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12008,
+        "prov": "NS",
+        "name": "Sackville--Eastern Shore",
+        "pop": 86963,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12009,
+        "prov": "NS",
+        "name": "South Shore--St. Margaret's",
+        "pop": 82855,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12010,
+        "prov": "NS",
+        "name": "Sydney--Victoria",
+        "pop": 76801,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 12011,
+        "prov": "NS",
+        "name": "West Nova",
+        "pop": 86393,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13001,
+        "prov": "NB",
+        "name": "Acadie--Bathurst",
+        "pop": 78948,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13002,
+        "prov": "NB",
+        "name": "Beausщjour",
+        "pop": 76259,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13003,
+        "prov": "NB",
+        "name": "Fredericton",
+        "pop": 85886,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13004,
+        "prov": "NB",
+        "name": "Fundy Royal",
+        "pop": 69471,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13005,
+        "prov": "NB",
+        "name": "Madawaska--Restigouche",
+        "pop": 62593,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13006,
+        "prov": "NB",
+        "name": "Miramichi",
+        "pop": 53844,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13007,
+        "prov": "NB",
+        "name": "Moncton--Riverview--Dieppe",
+        "pop": 89334,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13008,
+        "prov": "NB",
+        "name": "New Brunswick Southwest",
+        "pop": 63232,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13009,
+        "prov": "NB",
+        "name": "Saint John",
+        "pop": 82078,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 13010,
+        "prov": "NB",
+        "name": "Tobique--Mactaquac",
+        "pop": 68352,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24001,
+        "prov": "QC",
+        "name": "Abitibi--Tщmiscamingue",
+        "pop": 102795,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24002,
+        "prov": "QC",
+        "name": "Ahuntsic",
+        "pop": 100471,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24003,
+        "prov": "QC",
+        "name": "Alfred-Pellan",
+        "pop": 104765,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24004,
+        "prov": "QC",
+        "name": "Argenteuil--Papineau--Mirabel",
+        "pop": 111534,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24005,
+        "prov": "QC",
+        "name": "Beauce",
+        "pop": 103617,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24006,
+        "prov": "QC",
+        "name": "Beauharnois--Salaberry",
+        "pop": 106856,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24007,
+        "prov": "QC",
+        "name": "Beauport--Limoilou",
+        "pop": 101331,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24008,
+        "prov": "QC",
+        "name": "Berthier--Maskinongщ",
+        "pop": 107911,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24009,
+        "prov": "QC",
+        "name": "Bourassa",
+        "pop": 100683,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24010,
+        "prov": "QC",
+        "name": "Brome--Missisquoi",
+        "pop": 92591,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24011,
+        "prov": "QC",
+        "name": "Brossard--La Prairie",
+        "pop": 113985,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24012,
+        "prov": "QC",
+        "name": "Chambly--Borduas",
+        "pop": 116925,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24013,
+        "prov": "QC",
+        "name": "Charlesbourg--Haute-Saint-Charles",
+        "pop": 94522,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24014,
+        "prov": "QC",
+        "name": "Montmorency--Charlevoix--Haute-Cєte-Nord",
+        "pop": 90535,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24015,
+        "prov": "QC",
+        "name": "Chтteauguay--Saint-Constant",
+        "pop": 107165,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24016,
+        "prov": "QC",
+        "name": "Chicoutimi--Le Fjord",
+        "pop": 96483,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24017,
+        "prov": "QC",
+        "name": "Compton--Stanstead",
+        "pop": 100148,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24018,
+        "prov": "QC",
+        "name": "Drummond",
+        "pop": 92982,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24019,
+        "prov": "QC",
+        "name": "Gaspщsie--Юles-de-la-Madeleine",
+        "pop": 82007,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24020,
+        "prov": "QC",
+        "name": "Gatineau",
+        "pop": 108742,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24021,
+        "prov": "QC",
+        "name": "Hochelaga",
+        "pop": 100915,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24022,
+        "prov": "QC",
+        "name": "Honorщ-Mercier",
+        "pop": 106196,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24023,
+        "prov": "QC",
+        "name": "Hull--Aylmer",
+        "pop": 110902,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24024,
+        "prov": "QC",
+        "name": "Jeanne-Le Ber",
+        "pop": 112863,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24025,
+        "prov": "QC",
+        "name": "Joliette",
+        "pop": 108169,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24026,
+        "prov": "QC",
+        "name": "Jonquiшre--Alma",
+        "pop": 97232,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24027,
+        "prov": "QC",
+        "name": "Lac-Saint-Louis",
+        "pop": 105622,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24028,
+        "prov": "QC",
+        "name": "La Pointe-de-l'Юle",
+        "pop": 99685,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24029,
+        "prov": "QC",
+        "name": "LaSalle--Щmard",
+        "pop": 100327,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24030,
+        "prov": "QC",
+        "name": "Laurentides--Labelle",
+        "pop": 105884,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24031,
+        "prov": "QC",
+        "name": "Laurier--Sainte-Marie",
+        "pop": 101758,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24032,
+        "prov": "QC",
+        "name": "Laval",
+        "pop": 102230,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24033,
+        "prov": "QC",
+        "name": "Laval--Les Юles",
+        "pop": 111958,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24034,
+        "prov": "QC",
+        "name": "Lщvis--Bellechasse",
+        "pop": 105927,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24035,
+        "prov": "QC",
+        "name": "Longueuil--Pierre-Boucher",
+        "pop": 98032,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24036,
+        "prov": "QC",
+        "name": "Lotbiniшre--Chutes-de-la-Chaudiшre",
+        "pop": 100454,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24037,
+        "prov": "QC",
+        "name": "Louis-Hщbert",
+        "pop": 101730,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24038,
+        "prov": "QC",
+        "name": "Louis-Saint-Laurent",
+        "pop": 96286,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24039,
+        "prov": "QC",
+        "name": "Manicouagan",
+        "pop": 83608,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24040,
+        "prov": "QC",
+        "name": "Marc-Aurшle-Fortin",
+        "pop": 107149,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24041,
+        "prov": "QC",
+        "name": "Haute-Gaspщsie--La Mitis--Matane--Matapщdia",
+        "pop": 73140,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24042,
+        "prov": "QC",
+        "name": "Mщgantic--L'Щrable",
+        "pop": 87078,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24043,
+        "prov": "QC",
+        "name": "Montcalm",
+        "pop": 122825,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24044,
+        "prov": "QC",
+        "name": "Mount Royal",
+        "pop": 98888,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24045,
+        "prov": "QC",
+        "name": "Notre-Dame-de-Grтce--Lachine",
+        "pop": 104715,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24046,
+        "prov": "QC",
+        "name": "Abitibi--Baie-James--Nunavik--Eeyou",
+        "pop": 80894,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24047,
+        "prov": "QC",
+        "name": "Outremont",
+        "pop": 95771,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24048,
+        "prov": "QC",
+        "name": "Papineau",
+        "pop": 101019,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24049,
+        "prov": "QC",
+        "name": "Pierrefonds--Dollard",
+        "pop": 105504,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24050,
+        "prov": "QC",
+        "name": "Pontiac",
+        "pop": 99589,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24051,
+        "prov": "QC",
+        "name": "Portneuf--Jacques-Cartier",
+        "pop": 93526,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24052,
+        "prov": "QC",
+        "name": "Quщbec",
+        "pop": 95433,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24053,
+        "prov": "QC",
+        "name": "Repentigny",
+        "pop": 109636,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24054,
+        "prov": "QC",
+        "name": "Bas-Richelieu--Nicolet--Bщcancour",
+        "pop": 91745,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24055,
+        "prov": "QC",
+        "name": "Richmond--Arthabaska",
+        "pop": 100116,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24056,
+        "prov": "QC",
+        "name": "Rimouski-Neigette--Tщmiscouata--Les Basques",
+        "pop": 84453,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24057,
+        "prov": "QC",
+        "name": "Riviшre-des-Mille-Юles",
+        "pop": 97258,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24058,
+        "prov": "QC",
+        "name": "Montmagny--L'Islet--Kamouraska--Riviшre-du-Loup",
+        "pop": 97492,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24059,
+        "prov": "QC",
+        "name": "Riviшre-du-Nord",
+        "pop": 101576,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24060,
+        "prov": "QC",
+        "name": "Roberval--Lac-Saint-Jean",
+        "pop": 78895,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24061,
+        "prov": "QC",
+        "name": "Rosemont--La Petite-Patrie",
+        "pop": 105864,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24062,
+        "prov": "QC",
+        "name": "Saint-Bruno--Saint-Hubert",
+        "pop": 101416,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24063,
+        "prov": "QC",
+        "name": "Saint-Hyacinthe--Bagot",
+        "pop": 95983,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24064,
+        "prov": "QC",
+        "name": "Saint-Jean",
+        "pop": 102902,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24065,
+        "prov": "QC",
+        "name": "Saint-Lambert",
+        "pop": 94541,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24066,
+        "prov": "QC",
+        "name": "Saint-Laurent--Cartierville",
+        "pop": 109015,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24067,
+        "prov": "QC",
+        "name": "Saint-Lщonard--Saint-Michel",
+        "pop": 104786,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24068,
+        "prov": "QC",
+        "name": "Saint-Maurice--Champlain",
+        "pop": 96968,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24069,
+        "prov": "QC",
+        "name": "Shefford",
+        "pop": 100000,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24070,
+        "prov": "QC",
+        "name": "Sherbrooke",
+        "pop": 101681,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24071,
+        "prov": "QC",
+        "name": "Terrebonne--Blainville",
+        "pop": 107694,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24072,
+        "prov": "QC",
+        "name": "Trois-Riviшres",
+        "pop": 94272,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24073,
+        "prov": "QC",
+        "name": "Vaudreuil-Soulanges",
+        "pop": 120395,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24074,
+        "prov": "QC",
+        "name": "Verchшres--Les Patriotes",
+        "pop": 97726,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 24075,
+        "prov": "QC",
+        "name": "Westmount--Ville-Marie",
+        "pop": 100360,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35001,
+        "prov": "ON",
+        "name": "Ajax--Pickering",
+        "pop": 117183,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35002,
+        "prov": "ON",
+        "name": "Algoma--Manitoulin--Kapuskasing",
+        "pop": 77961,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35003,
+        "prov": "ON",
+        "name": "Ancaster--Dundas--Flamborough--Westdale",
+        "pop": 111844,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35004,
+        "prov": "ON",
+        "name": "Barrie",
+        "pop": 128430,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35005,
+        "prov": "ON",
+        "name": "Beaches--East York",
+        "pop": 104831,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35006,
+        "prov": "ON",
+        "name": "Bramalea--Gore--Malton",
+        "pop": 152698,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35007,
+        "prov": "ON",
+        "name": "Brampton--Springdale",
+        "pop": 131797,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35008,
+        "prov": "ON",
+        "name": "Brampton West",
+        "pop": 170422,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35009,
+        "prov": "ON",
+        "name": "Brant",
+        "pop": 125136,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35010,
+        "prov": "ON",
+        "name": "Burlington",
+        "pop": 118310,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35011,
+        "prov": "ON",
+        "name": "Cambridge",
+        "pop": 129434,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35012,
+        "prov": "ON",
+        "name": "Carleton--Mississippi Mills",
+        "pop": 128915,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35013,
+        "prov": "ON",
+        "name": "Chatham-Kent--Essex",
+        "pop": 109484,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35014,
+        "prov": "ON",
+        "name": "Durham",
+        "pop": 118500,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35015,
+        "prov": "ON",
+        "name": "Davenport",
+        "pop": 104615,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35016,
+        "prov": "ON",
+        "name": "Don Valley East",
+        "pop": 109640,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35017,
+        "prov": "ON",
+        "name": "Don Valley West",
+        "pop": 117083,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35018,
+        "prov": "ON",
+        "name": "Dufferin--Caledon",
+        "pop": 111486,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35019,
+        "prov": "ON",
+        "name": "Eglinton--Lawrence",
+        "pop": 110066,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35020,
+        "prov": "ON",
+        "name": "Elgin--Middlesex--London",
+        "pop": 110028,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35021,
+        "prov": "ON",
+        "name": "Essex",
+        "pop": 123872,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35022,
+        "prov": "ON",
+        "name": "Etobicoke Centre",
+        "pop": 111349,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35023,
+        "prov": "ON",
+        "name": "Etobicoke--Lakeshore",
+        "pop": 114641,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35024,
+        "prov": "ON",
+        "name": "Etobicoke North",
+        "pop": 108501,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35025,
+        "prov": "ON",
+        "name": "Glengarry--Prescott--Russell",
+        "pop": 104309,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35026,
+        "prov": "ON",
+        "name": "Bruce--Grey--Owen Sound",
+        "pop": 105947,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35027,
+        "prov": "ON",
+        "name": "Guelph",
+        "pop": 114943,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35028,
+        "prov": "ON",
+        "name": "Haldimand--Norfolk",
+        "pop": 107775,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35029,
+        "prov": "ON",
+        "name": "Haliburton--Kawartha Lakes--Brock",
+        "pop": 119141,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35030,
+        "prov": "ON",
+        "name": "Halton",
+        "pop": 151943,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35031,
+        "prov": "ON",
+        "name": "Hamilton Centre",
+        "pop": 117509,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35032,
+        "prov": "ON",
+        "name": "Hamilton East--Stoney Creek",
+        "pop": 116434,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35033,
+        "prov": "ON",
+        "name": "Hamilton Mountain",
+        "pop": 122729,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35034,
+        "prov": "ON",
+        "name": "Huron--Bruce",
+        "pop": 104313,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35035,
+        "prov": "ON",
+        "name": "Kenora",
+        "pop": 64291,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35036,
+        "prov": "ON",
+        "name": "Kingston and the Islands",
+        "pop": 119069,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35037,
+        "prov": "ON",
+        "name": "Kitchener Centre",
+        "pop": 107540,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35038,
+        "prov": "ON",
+        "name": "Kitchener--Conestoga",
+        "pop": 114405,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35039,
+        "prov": "ON",
+        "name": "Kitchener--Waterloo",
+        "pop": 126742,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35040,
+        "prov": "ON",
+        "name": "Lanark--Frontenac--Lennox and Addington",
+        "pop": 117389,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35041,
+        "prov": "ON",
+        "name": "Leeds--Grenville",
+        "pop": 99206,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35042,
+        "prov": "ON",
+        "name": "London--Fanshawe",
+        "pop": 107218,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35043,
+        "prov": "ON",
+        "name": "London North Centre",
+        "pop": 115250,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35044,
+        "prov": "ON",
+        "name": "London West",
+        "pop": 118335,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35045,
+        "prov": "ON",
+        "name": "Markham--Unionville",
+        "pop": 127191,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35046,
+        "prov": "ON",
+        "name": "Lambton--Kent--Middlesex",
+        "pop": 107635,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35047,
+        "prov": "ON",
+        "name": "Mississauga--Brampton South",
+        "pop": 136470,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35048,
+        "prov": "ON",
+        "name": "Mississauga East--Cooksville",
+        "pop": 126642,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35049,
+        "prov": "ON",
+        "name": "Mississauga--Erindale",
+        "pop": 143361,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35050,
+        "prov": "ON",
+        "name": "Mississauga South",
+        "pop": 110932,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35051,
+        "prov": "ON",
+        "name": "Mississauga--Streetsville",
+        "pop": 130033,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35052,
+        "prov": "ON",
+        "name": "Nepean--Carleton",
+        "pop": 133245,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35053,
+        "prov": "ON",
+        "name": "Newmarket--Aurora",
+        "pop": 121924,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35054,
+        "prov": "ON",
+        "name": "Niagara Falls",
+        "pop": 126696,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35055,
+        "prov": "ON",
+        "name": "Niagara West--Glanbrook",
+        "pop": 111024,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35056,
+        "prov": "ON",
+        "name": "Nickel Belt",
+        "pop": 89377,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35057,
+        "prov": "ON",
+        "name": "Nipissing--Timiskaming",
+        "pop": 90963,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35058,
+        "prov": "ON",
+        "name": "Northumberland--Quinte West",
+        "pop": 123706,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35059,
+        "prov": "ON",
+        "name": "Oak Ridges--Markham",
+        "pop": 169642,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35060,
+        "prov": "ON",
+        "name": "Oakville",
+        "pop": 113714,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35061,
+        "prov": "ON",
+        "name": "Oshawa",
+        "pop": 116881,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35062,
+        "prov": "ON",
+        "name": "Ottawa Centre",
+        "pop": 109336,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35063,
+        "prov": "ON",
+        "name": "Ottawa--Orlщans",
+        "pop": 109950,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35064,
+        "prov": "ON",
+        "name": "Ottawa South",
+        "pop": 117581,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35065,
+        "prov": "ON",
+        "name": "Ottawa--Vanier",
+        "pop": 101611,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35066,
+        "prov": "ON",
+        "name": "Ottawa West--Nepean",
+        "pop": 109735,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35067,
+        "prov": "ON",
+        "name": "Oxford",
+        "pop": 102756,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35068,
+        "prov": "ON",
+        "name": "Parkdale--High Park",
+        "pop": 102142,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35069,
+        "prov": "ON",
+        "name": "Parry Sound--Muskoka",
+        "pop": 90281,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35070,
+        "prov": "ON",
+        "name": "Perth--Wellington",
+        "pop": 103874,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35071,
+        "prov": "ON",
+        "name": "Peterborough",
+        "pop": 116626,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35072,
+        "prov": "ON",
+        "name": "Pickering--Scarborough East",
+        "pop": 106602,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35073,
+        "prov": "ON",
+        "name": "Prince Edward--Hastings",
+        "pop": 113227,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35074,
+        "prov": "ON",
+        "name": "Renfrew--Nipissing--Pembroke",
+        "pop": 98803,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35075,
+        "prov": "ON",
+        "name": "Richmond Hill",
+        "pop": 122614,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35076,
+        "prov": "ON",
+        "name": "St. Catharines",
+        "pop": 112869,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35077,
+        "prov": "ON",
+        "name": "St. Paul's",
+        "pop": 111131,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35078,
+        "prov": "ON",
+        "name": "Sarnia--Lambton",
+        "pop": 105360,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35079,
+        "prov": "ON",
+        "name": "Sault Ste. Marie",
+        "pop": 89028,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35080,
+        "prov": "ON",
+        "name": "Scarborough--Agincourt",
+        "pop": 111867,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35081,
+        "prov": "ON",
+        "name": "Scarborough Centre",
+        "pop": 108010,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35082,
+        "prov": "ON",
+        "name": "Scarborough--Guildwood",
+        "pop": 108813,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35083,
+        "prov": "ON",
+        "name": "Scarborough--Rouge River",
+        "pop": 130974,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35084,
+        "prov": "ON",
+        "name": "Scarborough Southwest",
+        "pop": 102196,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35085,
+        "prov": "ON",
+        "name": "Simcoe--Grey",
+        "pop": 125985,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35086,
+        "prov": "ON",
+        "name": "Simcoe North",
+        "pop": 119400,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35087,
+        "prov": "ON",
+        "name": "Stormont--Dundas--South Glengarry",
+        "pop": 99764,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35088,
+        "prov": "ON",
+        "name": "Sudbury",
+        "pop": 92161,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35089,
+        "prov": "ON",
+        "name": "Thornhill",
+        "pop": 131978,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35090,
+        "prov": "ON",
+        "name": "Thunder Bay--Rainy River",
+        "pop": 85153,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35091,
+        "prov": "ON",
+        "name": "Thunder Bay--Superior North",
+        "pop": 82589,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35092,
+        "prov": "ON",
+        "name": "Timmins--James Bay",
+        "pop": 80791,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35093,
+        "prov": "ON",
+        "name": "Toronto Centre",
+        "pop": 121407,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35094,
+        "prov": "ON",
+        "name": "Toronto--Danforth",
+        "pop": 103655,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35095,
+        "prov": "ON",
+        "name": "Trinity--Spadina",
+        "pop": 115361,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35096,
+        "prov": "ON",
+        "name": "Vaughan",
+        "pop": 154206,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35097,
+        "prov": "ON",
+        "name": "Welland",
+        "pop": 112875,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35098,
+        "prov": "ON",
+        "name": "Wellington--Halton Hills",
+        "pop": 111241,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35099,
+        "prov": "ON",
+        "name": "Whitby--Oshawa",
+        "pop": 135893,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35100,
+        "prov": "ON",
+        "name": "Willowdale",
+        "pop": 129356,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35101,
+        "prov": "ON",
+        "name": "Windsor--Tecumseh",
+        "pop": 118478,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35102,
+        "prov": "ON",
+        "name": "Windsor West",
+        "pop": 122219,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35103,
+        "prov": "ON",
+        "name": "York Centre",
+        "pop": 113457,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35104,
+        "prov": "ON",
+        "name": "York--Simcoe",
+        "pop": 120371,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35105,
+        "prov": "ON",
+        "name": "York South--Weston",
+        "pop": 114458,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 35106,
+        "prov": "ON",
+        "name": "York West",
+        "pop": 103948,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46001,
+        "prov": "MB",
+        "name": "Brandon--Souris",
+        "pop": 84602,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46002,
+        "prov": "MB",
+        "name": "Charleswood--St. James--Assiniboia",
+        "pop": 81469,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46003,
+        "prov": "MB",
+        "name": "Churchill",
+        "pop": 75232,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46004,
+        "prov": "MB",
+        "name": "Dauphin--Swan River--Marquette",
+        "pop": 75103,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46005,
+        "prov": "MB",
+        "name": "Elmwood--Transcona",
+        "pop": 78700,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46006,
+        "prov": "MB",
+        "name": "Kildonan--St. Paul",
+        "pop": 81532,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46007,
+        "prov": "MB",
+        "name": "Portage--Lisgar",
+        "pop": 85653,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46008,
+        "prov": "MB",
+        "name": "Provencher",
+        "pop": 87737,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46009,
+        "prov": "MB",
+        "name": "Saint Boniface",
+        "pop": 84473,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46010,
+        "prov": "MB",
+        "name": "Selkirk--Interlake",
+        "pop": 90807,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46011,
+        "prov": "MB",
+        "name": "Winnipeg Centre",
+        "pop": 81017,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46012,
+        "prov": "MB",
+        "name": "Winnipeg North",
+        "pop": 79366,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46013,
+        "prov": "MB",
+        "name": "Winnipeg South",
+        "pop": 84424,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 46014,
+        "prov": "MB",
+        "name": "Winnipeg South Centre",
+        "pop": 78286,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47001,
+        "prov": "SK",
+        "name": "Battlefords--Lloydminster",
+        "pop": 71184,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47002,
+        "prov": "SK",
+        "name": "Blackstrap",
+        "pop": 76273,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47003,
+        "prov": "SK",
+        "name": "Desnethщ--Missinippi--Churchill River",
+        "pop": 67937,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47004,
+        "prov": "SK",
+        "name": "Cypress Hills--Grasslands",
+        "pop": 60551,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47005,
+        "prov": "SK",
+        "name": "Palliser",
+        "pop": 65956,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47006,
+        "prov": "SK",
+        "name": "Prince Albert",
+        "pop": 71159,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47007,
+        "prov": "SK",
+        "name": "Regina--Lumsden--Lake Centre",
+        "pop": 65885,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47008,
+        "prov": "SK",
+        "name": "Regina--Qu'Appelle",
+        "pop": 66698,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47009,
+        "prov": "SK",
+        "name": "Saskatoon--Humboldt",
+        "pop": 75051,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47010,
+        "prov": "SK",
+        "name": "Saskatoon--Rosetown--Biggar",
+        "pop": 69547,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47011,
+        "prov": "SK",
+        "name": "Saskatoon--Wanuskewin",
+        "pop": 72867,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47012,
+        "prov": "SK",
+        "name": "Souris--Moose Mountain",
+        "pop": 63238,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47013,
+        "prov": "SK",
+        "name": "Wascana",
+        "pop": 75717,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 47014,
+        "prov": "SK",
+        "name": "Yorkton--Melville",
+        "pop": 66094,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48001,
+        "prov": "AB",
+        "name": "Fort McMurray--Athabasca",
+        "pop": 100805,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48002,
+        "prov": "AB",
+        "name": "Calgary East",
+        "pop": 110479,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48003,
+        "prov": "AB",
+        "name": "Calgary Centre-North",
+        "pop": 114615,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48004,
+        "prov": "AB",
+        "name": "Calgary Northeast",
+        "pop": 129015,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48005,
+        "prov": "AB",
+        "name": "Calgary--Nose Hill",
+        "pop": 130942,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48006,
+        "prov": "AB",
+        "name": "Calgary Centre",
+        "pop": 124197,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48007,
+        "prov": "AB",
+        "name": "Calgary Southeast",
+        "pop": 125738,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48008,
+        "prov": "AB",
+        "name": "Calgary Southwest",
+        "pop": 120750,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48009,
+        "prov": "AB",
+        "name": "Calgary West",
+        "pop": 132162,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48010,
+        "prov": "AB",
+        "name": "Crowfoot",
+        "pop": 114825,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48011,
+        "prov": "AB",
+        "name": "Edmonton--Mill Woods--Beaumont",
+        "pop": 112919,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48012,
+        "prov": "AB",
+        "name": "Edmonton Centre",
+        "pop": 120326,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48013,
+        "prov": "AB",
+        "name": "Edmonton East",
+        "pop": 128199,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48014,
+        "prov": "AB",
+        "name": "Edmonton--Leduc",
+        "pop": 116986,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48015,
+        "prov": "AB",
+        "name": "Edmonton--St. Albert",
+        "pop": 126447,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48016,
+        "prov": "AB",
+        "name": "Edmonton--Sherwood Park",
+        "pop": 118073,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48017,
+        "prov": "AB",
+        "name": "Edmonton--Spruce Grove",
+        "pop": 128945,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48018,
+        "prov": "AB",
+        "name": "Edmonton--Strathcona",
+        "pop": 99267,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48019,
+        "prov": "AB",
+        "name": "Lethbridge",
+        "pop": 113531,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48020,
+        "prov": "AB",
+        "name": "Macleod",
+        "pop": 107638,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48021,
+        "prov": "AB",
+        "name": "Medicine Hat",
+        "pop": 113085,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48022,
+        "prov": "AB",
+        "name": "Peace River",
+        "pop": 138009,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48023,
+        "prov": "AB",
+        "name": "Red Deer",
+        "pop": 124063,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48024,
+        "prov": "AB",
+        "name": "Vegreville--Wainwright",
+        "pop": 111427,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48025,
+        "prov": "AB",
+        "name": "Westlock--St. Paul",
+        "pop": 101010,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48026,
+        "prov": "AB",
+        "name": "Wetaskiwin",
+        "pop": 107914,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48027,
+        "prov": "AB",
+        "name": "Wild Rose",
+        "pop": 115872,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 48028,
+        "prov": "AB",
+        "name": "Yellowhead",
+        "pop": 103111,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59001,
+        "prov": "BC",
+        "name": "Abbotsford",
+        "pop": 124515,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59002,
+        "prov": "BC",
+        "name": "Burnaby--Douglas",
+        "pop": 112119,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59003,
+        "prov": "BC",
+        "name": "Burnaby--New Westminster",
+        "pop": 118713,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59004,
+        "prov": "BC",
+        "name": "Cariboo--Prince George",
+        "pop": 106382,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59005,
+        "prov": "BC",
+        "name": "Chilliwack--Fraser Canyon",
+        "pop": 112118,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59006,
+        "prov": "BC",
+        "name": "Delta--Richmond East",
+        "pop": 106103,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59007,
+        "prov": "BC",
+        "name": "Pitt Meadows--Maple Ridge--Mission",
+        "pop": 120662,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59008,
+        "prov": "BC",
+        "name": "Esquimalt--Juan de Fuca",
+        "pop": 120669,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59009,
+        "prov": "BC",
+        "name": "Fleetwood--Port Kells",
+        "pop": 123243,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59010,
+        "prov": "BC",
+        "name": "Kamloops--Thompson--Cariboo",
+        "pop": 114675,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59011,
+        "prov": "BC",
+        "name": "Kelowna--Lake Country",
+        "pop": 122214,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59012,
+        "prov": "BC",
+        "name": "Kootenay--Columbia",
+        "pop": 86811,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59013,
+        "prov": "BC",
+        "name": "Langley",
+        "pop": 117858,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59014,
+        "prov": "BC",
+        "name": "Nanaimo--Alberni",
+        "pop": 121434,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59015,
+        "prov": "BC",
+        "name": "Nanaimo--Cowichan",
+        "pop": 125149,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59016,
+        "prov": "BC",
+        "name": "Newton--North Delta",
+        "pop": 118649,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59017,
+        "prov": "BC",
+        "name": "New Westminster--Coquitlam",
+        "pop": 111231,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59018,
+        "prov": "BC",
+        "name": "Okanagan--Shuswap",
+        "pop": 116236,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59019,
+        "prov": "BC",
+        "name": "North Vancouver",
+        "pop": 122371,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59020,
+        "prov": "BC",
+        "name": "Okanagan--Coquihalla",
+        "pop": 107316,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59021,
+        "prov": "BC",
+        "name": "Port Moody--Westwood--Port Coquitlam",
+        "pop": 116563,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59022,
+        "prov": "BC",
+        "name": "Prince George--Peace River",
+        "pop": 105865,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59023,
+        "prov": "BC",
+        "name": "Richmond",
+        "pop": 114137,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59024,
+        "prov": "BC",
+        "name": "Saanich--Gulf Islands",
+        "pop": 115724,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59025,
+        "prov": "BC",
+        "name": "Skeena--Bulkley Valley",
+        "pop": 91926,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59026,
+        "prov": "BC",
+        "name": "British Columbia Southern Interior",
+        "pop": 95477,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59027,
+        "prov": "BC",
+        "name": "South Surrey--White Rock--Cloverdale",
+        "pop": 111756,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59028,
+        "prov": "BC",
+        "name": "Surrey North",
+        "pop": 111960,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59029,
+        "prov": "BC",
+        "name": "Vancouver Centre",
+        "pop": 123701,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59030,
+        "prov": "BC",
+        "name": "Vancouver East",
+        "pop": 106816,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59031,
+        "prov": "BC",
+        "name": "Vancouver Island North",
+        "pop": 113356,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59032,
+        "prov": "BC",
+        "name": "Vancouver Kingsway",
+        "pop": 119815,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59033,
+        "prov": "BC",
+        "name": "Vancouver Quadra",
+        "pop": 119627,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59034,
+        "prov": "BC",
+        "name": "Vancouver South",
+        "pop": 120284,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59035,
+        "prov": "BC",
+        "name": "Victoria",
+        "pop": 108771,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 59036,
+        "prov": "BC",
+        "name": "West Vancouver--Sunshine Coast--Sea to Sky Country",
+        "pop": 129241,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 60001,
+        "prov": "YT",
+        "name": "Yukon",
+        "pop": 30372,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 61001,
+        "prov": "NT",
+        "name": "Western Arctic",
+        "pop": 41464,
+        "area": 0,
+        "dm": 1
+    },
+    {
+        "fptp_id": 62001,
+        "prov": "NU",
+        "name": "Nunavut",
+        "pop": 29474,
+        "area": 0,
+        "dm": 1
+    }
+]

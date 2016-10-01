@@ -1,0 +1,33 @@
+Design contains riding (48034,AB,Yellowhead) but riding list does not.
+Design contains riding (48031,AB,St. Albert-Edmonton) but riding list does not.
+Design contains riding (48033,AB,Sturgeon River-Parkland) but riding list does not.
+Design contains riding (48032,AB,Sherwood Park-Fort Saskatchewan) but riding list does not.
+Design contains riding (48030,AB,Red Deer-Lacombe) but riding list does not.
+Design contains riding (48029,AB,Red Deer-Mountain View) but riding list does not.
+Design contains riding (48034,AB,Yellowhead) but riding list does not.
+Design contains riding (59041,BC,Victoria) but riding list does not.
+Design contains riding (59037,BC,North Island-Powell River) but riding list does not.
+Design contains riding (59038,BC,Vancouver Kingsway) but riding list does not.
+Design contains riding (59039,BC,Vancouver Quadra) but riding list does not.
+Design contains riding (59042,BC,West Vancouver-Sunshine Coast-Sea to Sky Country) but riding list does not.
+Design contains riding (59040,BC,Vancouver South) but riding list does not.
+Design contains riding (35114,ON,Whitby) but riding list does not.
+Design contains riding (35121,ON,Humber River-Black Creek) but riding list does not.
+Design contains riding (35120,ON,York South-Weston) but riding list does not.
+Design contains riding (35119,ON,York-Simcoe) but riding list does not.
+Design contains riding (35115,ON,Willowdale) but riding list does not.
+Design contains riding (35118,ON,York Centre) but riding list does not.
+Design contains riding (35108,ON,Toronto Centre) but riding list does not.
+Design contains riding (35109,ON,Toronto-Danforth) but riding list does not.
+Design contains riding (35110,ON,University-Rosedale) but riding list does not.
+Design contains riding (35111,ON,Vaughan-Woodbridge) but riding list does not.
+Design contains riding (35107,ON,Timmins-James Bay) but riding list does not.
+Design contains riding (35107,ON,Timmins-James Bay) but riding list does not.
+Design contains riding (35113,ON,Wellington-Halton Hills) but riding list does not.
+Design contains riding (35113,ON,Wellington-Halton Hills) but riding list does not.
+Design contains riding (35112,ON,Waterloo) but riding list does not.
+Design contains riding (35117,ON,Windsor West) but riding list does not.
+Design contains riding (35116,ON,Windsor-Tecumseh) but riding list does not.
+Design contains riding (24076,QC,Trois-Rivières) but riding list does not.
+Design contains riding (24078,QC,Vimy) but riding list does not.
+Design contains riding (24077,QC,Ville-Marie-Le Sud-Ouest-Île-des-Surs) but riding list does not.
