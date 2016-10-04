@@ -22,7 +22,7 @@ object Main {
       case Some(config) =>
         println(config)
 
-        val numRidingsByElectionYr = Map(2015 → 338, 2011 → 308)
+        val numRidingsByElectionYr = Map(2015 → 338, 2011 → 308, 2006 → 308)
 
         val sims = for {
           year ← config.years
@@ -43,7 +43,6 @@ object Main {
             val params = namedSystems.find(_.matches(designName, year, singleMbrStrategy, multiMbrStrategy))
               .getOrElse {
                 val name = s"${designName}-${singleMbrStrategy.name}-${multiMbrStrategy.name}"
-                println(s"generating params for ${name}")
                 Params(name, year, name, designName, name, p("Description"), singleMbrStrategy, multiMbrStrategy)
               }
 
@@ -85,7 +84,7 @@ object Main {
 
     opt[Unit]("all").action((_, c) =>
       c.copy(all = true,
-        years = Seq(2015, 2011),
+        years = Seq(2015, 2011, 2006),
         designs = DesignName.values,
         overview = true
       )).text("Produce all possible combinations")
