@@ -23,7 +23,8 @@ libraryDependencies ++= Seq(
   "com.lihaoyi" %% "upickle" % "0.4.1",
   "ca.bwbecker" %% "bwblib" % "1.2",
   "com.beachape" %% "enumeratum" % enumeratumVersion,
-  "com.beachape" %% "enumeratum-upickle" % enumeratumVersion
+  "com.beachape" %% "enumeratum-upickle" % enumeratumVersion,
+  "com.github.scopt" %% "scopt" % "3.5.0"
 
 )
 

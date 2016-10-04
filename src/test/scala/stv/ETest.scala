@@ -17,9 +17,7 @@ object ETest extends TestSuite {
 
 
   val tests = this {
-    val d1 = io.Input.readDesign(TestDesigns.d1).transform(Params("d1", "Design1", DesignName.mmp_small,
-      "outDir",
-      p("Description"), FptpRidingElectionStrategy, EkosStvRidingElectionStrategy, None))
+    val d1 = io.Input.readDesign(TestDesigns.d1)
 
     "Design d1 has correct structure" - {
       "1 province" - {assert(d1.provinces.length == 1)}

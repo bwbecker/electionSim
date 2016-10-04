@@ -15,9 +15,7 @@ object Input {
 
   class RawDesign(private val d: JsonDesign) {
 
-    def transform(params: Params): Design = {
-      d.transform(params)
-    }
+    def transform(): Design = d.transform()
 
     def hasSingleMemberRidings = {
       d.provinces.exists(p => p.regions.exists(region => region.new_ridings.exists(riding => riding.district_mag == 1)))
@@ -45,10 +43,10 @@ object Input {
                                  provinces: Vector[JsonProv]
                                ) {
 
-    def transform(params: Params): Design = Design(
+    def transform(): Design = Design(
       design_name,
       is_proportional,
-      provinces.map(p => p.toProvince(params))
+      provinces.map(p => p.toProvince())
     )
   }
 
@@ -56,8 +54,8 @@ object Input {
   private case class JsonProv(prov: ProvName,
                               regions: Vector[JsonRegion]) {
 
-    def toProvince(params: Params): Province = Province(prov,
-      regions.map { r => r.toRegion(params) }
+    def toProvince(): Province = Province(prov,
+      regions.map { r => r.toRegion() }
     )
   }
 
@@ -65,10 +63,10 @@ object Input {
                                 top_up_seats: Int,
                                 new_ridings: Vector[JsonNewRiding]) {
 
-    def toRegion(params: Params) = Region(
+    def toRegion() = Region(
       region_id,
       top_up_seats,
-      new_ridings.map(r => r.toRiding(params, region_id)),
+      new_ridings.map(r => r.toRiding(region_id)),
       0.01)
   }
 
@@ -89,7 +87,7 @@ object Input {
     val oldRidings = old_ridings.map(JsonOldRiding(_))
 
 
-    def toRiding(params: Params, regionId: RegionId): Riding = {
+    def toRiding(regionId: RegionId): Riding = {
 
       // Get the list of candidates, adjusted for partial ridings.
       val candidates = oldRidings.flatMap { or =>
@@ -131,9 +129,9 @@ object Input {
     *
     * @return
     */
-    // ToDo:  This should be parameterized by election
+  // ToDo:  This should be parameterized by election
   val e2015Candidates: List[Candidate] = {
-    val fileName = s"json/candidates.json"
+    val fileName = s"json/candidates/candidates-2015.json"
     //val fileName = s"json/candidates_ian.json"
     val source = scala.io.Source.fromFile(fileName)
     val rawJson = try source.getLines().mkString("\n") finally source.close()
@@ -165,7 +163,7 @@ object Input {
   }
 
   val originalRidings: Vector[RawFptpRiding] = {
-    val fileName = s"json/ridings.json"
+    val fileName = s"json/ridings-338/ridings.json"
     val source = scala.io.Source.fromFile(fileName)
     val rawJson = try source.getLines().mkString("\n") finally source.close()
     Pickler.read[Vector[RawFptpRiding]](rawJson)
@@ -173,7 +171,7 @@ object Input {
 
   val originalRidingsMap = originalRidings.map(r => (r.fptp_id, r)).toMap
 
-  private val designCache = mutable.Map[DesignName, RawDesign]()
+  private val designCache = mutable.Map[DesignName, Design]()
 
 
   /**
@@ -183,11 +181,11 @@ object Input {
     * @param d
     * @return
     */
-  def readDesign(d: DesignName): RawDesign = {
+  def readDesign(year: Int, d: DesignName): Design = {
     this.designCache.get(d) match {
       case Some(rd) => rd
       case None     =>
-        val source = scala.io.Source.fromFile(s"json/${d}.json")
+        val source = scala.io.Source.fromFile(s"json/ridings-338/${d}.json")
         val rawJson = try source.getLines().mkString("\n") finally source.close()
         val rd = this.readDesign(rawJson)
         designCache += d -> rd
@@ -195,15 +193,19 @@ object Input {
     }
   }
 
-  def readDesign(rawJson: String): RawDesign = {
+//  def readDesign(fileName:String):RawDesign = {
+//
+//  }
+
+  def readDesign(rawJson: String): Design = {
     val jd = Pickler.read[JsonDesign](rawJson)
-    new RawDesign(jd)
+    new RawDesign(jd).transform()
   }
 
 
+  // ToDo:  Fix the year!
   def getSim(params: Params): Sim = {
-    Sim(Input.readDesign(params.designName).transform(params),
-      params)
+    Sim(Input.readDesign(2015, params.designName), params)
   }
 
 }

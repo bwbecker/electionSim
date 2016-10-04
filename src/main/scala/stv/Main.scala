@@ -3,6 +3,7 @@ package stv
 import scalatags.Text
 import scalatags.Text.all._
 import ca.bwbecker.io.CachedMkdir
+
 //import stv.html.OverviewHTML
 import stv.io.{Input, Output}
 
@@ -12,9 +13,149 @@ import stv.io.{Input, Output}
   */
 object Main {
 
-  val dbService = "election"
+  def main(args: Array[String]): Unit = {
+
+//    def doOne(p: Params): Sim = {
+//      println(s"Simulating ${p.name} ")
+//
+//      val sim = Input.getSim(p)
+//      Output.writeHtml(p, sim)
+//      sim
+//    }
+
+
+    def doDesign(d: DesignName): Vector[Sim] = {
+      val design = Input.readDesign(2015, d)
+
+      def singleMbrStrategies: Vector[RidingElectionStrategy] = {
+        if (design.hasSingleMemberRidings) {
+          RidingElectionStrategy.singleMbrStrategies
+        } else {
+          Vector(NotApplicableRidingElectionStrategy)
+        }
+      }
+
+      def multiMbrStrategies: Vector[RidingElectionStrategy] = if (design.hasMultiMemberRidings) {
+        RidingElectionStrategy.multiMbrStrategies
+      } else {
+        Vector(NotApplicableRidingElectionStrategy)
+      }
+
+      println(s"Simulating design ${d}.")
+
+      for {
+        sms <- singleMbrStrategies
+        mms <- multiMbrStrategies
+      } yield {
+
+        val params = namedSystems.find(p => p.designName == d &&
+          p.multiMemberElectionStrategy == mms &&
+          p.singleMemberElectionStrategy == sms)
+          .getOrElse {
+            val name = s"${d}-${sms.name}-${mms.name}"
+            Params(name, name, d, name, p("Description"), sms, mms)
+          }
+
+        val sim = Sim(design, params)
+        Output.writeHtml(params, sim)
+
+        sim
+      }
+
+    }
+
+
+    this.clArgParser.parse(args, CLArgs()) match {
+      case Some(config) =>
+        println(config)
+
+        val sims = for {
+          year ← config.years
+          design ← config.designs
+        } yield {
+          doDesign(design)
+        }
+
+        if (config.overview) {
+          Output.writeOverview(sims.flatten.toList)
+          Output.copyLess(this.outdir)
+        }
+
+      case None =>
+      // arguments are bad, error message will have been displayed
+    }
+
+
+    /*
+    if (args.length != 1) {
+      println(usage)
+    } else if (args(0) == "all") {
+      val sims = for (d ← DesignName.values) yield {
+        doDesign(d)
+      }
+      Output.writeOverview(sims.flatten.toList)
+      Output.copyLess(this.outdir)
+    } else if (args(0) == "test") {
+      val sims = for (d <- List(DesignName.ru_singles, DesignName.fptp, DesignName.mmp_med)) yield {
+        doDesign(d)
+      }
+      Output.writeOverview(sims.flatten)
+      Output.copyLess(this.outdir)
+    } else {
+      namedSystems.find(p ⇒ p.name == args(0)) match {
+        case Some(p) ⇒
+          doDesign(p.designName)
+          Output.copyLess(this.outdir)
+
+        case None ⇒
+          println(s"Didn't find model ${args(0)}")
+          println(usage)
+      }
+
+    }
+    */
+
+  }
+
 
   val outdir = "html"
+
+
+  case class CLArgs(all: Boolean = false,
+                    years: Seq[Int] = Vector[Int](),
+                    designs: Seq[DesignName] = Vector[DesignName](),
+                    overview: Boolean = false)
+
+  /**
+    * Parse the argument list
+    */
+
+  private implicit val weekDaysRead: scopt.Read[DesignName] = scopt.Read.reads(DesignName.withNameInsensitive(_))
+
+  val clArgParser = new scopt.OptionParser[CLArgs]("scopt") {
+    head("Election Modelling", "2.x")
+
+    opt[Unit]("all").action((_, c) =>
+      c.copy(all = true,
+        years = Seq(2015, 2011),
+        designs = DesignName.values)).text("Produce all possible combinations")
+
+    opt[Seq[Int]]("years").valueName("<yr1>,<yr2>...").action((x, c) =>
+      c.copy(years = x)).text("election years to base simulations on")
+
+    opt[Seq[DesignName]]("designs").valueName(DesignName.values.mkString("<", ">,<", ">")).action((x, c) =>
+      c.copy(designs = x)).text("designs for the simulations")
+
+    //    checkConfig(c =>
+    //      (c.all, c.years.length, c.designs.length) match {
+    //        case (true, 0, 0)                    ⇒ success
+    //        case (false, x, y) if x > 0 && y > 0 ⇒ success
+    //        case (_, _, _)                       ⇒
+    //          failure("Required to have either --all or at least one year and at least one design.")
+    //      }
+    //    )
+  }
+
 
   val fptpDescr = div(
     p(a(href := "https://en.wikipedia.org/wiki/First-past-the-post_voting")("First-Past-The-Post"),
@@ -223,7 +364,6 @@ object Main {
   )
 
 
-
   val featuredSystems = List(
 
     Params("fptp", "First-Past-The-Post",
@@ -240,11 +380,13 @@ object Main {
 
 
     Params("mmp-8-fptp", "Mixed Member Proportional (Small Regions)",
-      DesignName.mmp_small, s"mmp-8-fptp", mmp8fptpDescr, FptpRidingElectionStrategy, NotApplicableRidingElectionStrategy),
+      DesignName.mmp_small, s"mmp-8-fptp", mmp8fptpDescr, FptpRidingElectionStrategy,
+      NotApplicableRidingElectionStrategy),
 
 
     Params("mmpLite", "Mixed Member Proportional (Lite)",
-      DesignName.mmp_enlargeP, s"mmp-15pct", mmpLiteDescr, FptpRidingElectionStrategy, NotApplicableRidingElectionStrategy),
+      DesignName.mmp_enlargeP, s"mmp-15pct", mmpLiteDescr, FptpRidingElectionStrategy,
+      NotApplicableRidingElectionStrategy),
 
     Params("rup-338", "Rural-Urban PR (More Singles, 338 Seats)",
       DesignName.ru_singles, s"rup-338", rup338Descr, AvRidingElectionStrategy, ListRidingElectionStrategy),
@@ -263,7 +405,8 @@ object Main {
       DesignName.mmp_med, s"mmp-14-av", mmp14avDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
     Params("mmp-14-fptp", "MMP (Medium Regions, FPTP)",
-      DesignName.mmp_med, s"mmp-14-fptp", mmp14fptpDescr, FptpRidingElectionStrategy, NotApplicableRidingElectionStrategy),
+      DesignName.mmp_med, s"mmp-14-fptp", mmp14fptpDescr, FptpRidingElectionStrategy,
+      NotApplicableRidingElectionStrategy),
 
     Params("rup-338-list", "Rural-Urban PR (More Singles, 338 Seats, ListPR)",
       DesignName.ru_singles, s"rup-338-list", rup338ListDescr, FptpRidingElectionStrategy, ListRidingElectionStrategy),
@@ -273,93 +416,8 @@ object Main {
 
   )
 
+
   val namedSystems = featuredSystems ++ variantSystems
-
-
-  val usage = s""" Usage: sbt run ${("all" :: featuredSystems.map(_.name)).mkString("[", "|", "]")} """
-
-  def main(args: Array[String]): Unit = {
-
-    def doOne(p: Params): Sim = {
-      println(s"Simulating ${p.name} ")
-
-      val sim = Input.getSim(p)
-      Output.writeHtml(p, sim)
-      sim
-    }
-
-
-    def doDesign(d: DesignName): Vector[Sim] = {
-      val rawDesign = Input.readDesign(d)
-
-      def singleMbrStrategies: Vector[RidingElectionStrategy] = {
-        if (rawDesign.hasSingleMemberRidings) {
-          RidingElectionStrategy.singleMbrStrategies
-        } else {
-          Vector(NotApplicableRidingElectionStrategy)
-        }
-      }
-
-      def multiMbrStrategies: Vector[RidingElectionStrategy] = if (rawDesign.hasMultiMemberRidings) {
-        RidingElectionStrategy.multiMbrStrategies
-      } else {
-        Vector(NotApplicableRidingElectionStrategy)
-      }
-
-      println(s"Simulating design ${d}.")
-
-      for {
-        sms <- singleMbrStrategies
-        mms <- multiMbrStrategies
-      } yield {
-
-        val params = namedSystems.find(p => p.designName == d &&
-          p.multiMemberElectionStrategy == mms &&
-          p.singleMemberElectionStrategy == sms)
-          .getOrElse {
-            val name = s"${d}-${sms.name}-${mms.name}"
-            Params(name, name, d, name, p("Description"), sms, mms)
-          }
-
-        val design = rawDesign.transform(params)
-        val sim = Sim(design, params)
-        Output.writeHtml(params, sim)
-
-        sim
-      }
-
-    }
-
-
-    if (args.length != 1) {
-      println(usage)
-    } else if (args(0) == "all") {
-      val sims = for (d ← DesignName.values) yield {
-        doDesign(d)
-      }
-      Output.writeOverview(sims.flatten.toList)
-      Output.copyLess(this.outdir)
-    } else if (args(0) == "test") {
-      val sims = for (d <- List(DesignName.ru_singles, DesignName.fptp, DesignName.mmp_med)) yield {
-        doDesign(d)
-      }
-      Output.writeOverview(sims.flatten)
-      Output.copyLess(this.outdir)
-    } else {
-      namedSystems.find(p ⇒ p.name == args(0)) match {
-        case Some(p) ⇒
-          doDesign(p.designName)
-          Output.copyLess(this.outdir)
-
-        case None ⇒
-          println(s"Didn't find model ${args(0)}")
-          println(usage)
-      }
-
-    }
-
-  }
-
 
 }
 
