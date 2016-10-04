@@ -20,11 +20,16 @@ trait Page {
 
   protected def content: TypedTag[String]
 
+  // if outDir has a year, we need to go up one more directory level for css and overviews.
+  private lazy val prefix = if ("\\d{4}/.*".r.matches(outDir)) {"../.."} else {".."}
+
   private def renderPage: TypedTag[String] = {
+    println(s"writing ${outDir}/${outFile}")
+    val css = s"${prefix}/css/main.css"
     scalatags.Text.all.html(
       head(
         meta(charset := "UTF-8"),
-        link(rel := "stylesheet", href := "../css/main.css", `type` := "text/css"),
+        link(rel := "stylesheet", href := css, `type` := "text/css"),
         //link(rel := "stylesheet", href := "https://yui.yahooapis.com/pure/0.6.0/base-min.css"),
         link(rel := "stylesheet", href := "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"),
         script(src := "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"),
@@ -51,50 +56,52 @@ trait Page {
     printToFile(new File(s"${Main.outdir}/${outDir}/${outFile}")) { p ⇒ p.println(renderPage) }
   }
 
-  def menus = scalatags.Text.tags2.nav(cls := "group")(
-    ul(
-      li(
-        a(href := "#")("Overview"),
-        ul(
-          li(a(href := "../overview/index.html")("Featured Systems")),
-          li(a(href := "../overview/allSimulations.html")("All Systems")),
-          li(a(href := "../ModellingElections_en.pdf")("ERRE Submission"))
-        )
-      ),
-      li(
-        a(href := "#")("Featured Models"),
-        ul(
-          for (p ← stv.Main.featuredSystems.sortBy(_.name)) yield {
-            val file = if (this.includeThisModelMenu) this.outFile else "index.html"
-            li(a(href := s"../${p.outDir}/${file}")(p.title))
-          }
-        )
-      ),
-      if (this.includeThisModelMenu) {
+  def menus = {
+    scalatags.Text.tags2.nav(cls := "group")(
+      ul(
         li(
-          a(href := "#")("This Model"),
+          a(href := "#")("Overview"),
           ul(
-            li(a(href := "index.html")("Summary")),
-            li(a(href := "ridingResults.html")("Riding Results")),
-            li(a(href := "ridingStats.html")("Riding Stats")),
-            li(a(href := "regionResults.html")("Region Results")),
-            li(a(href := "regionStats.html")("Region Stats")),
-            li(a(href := "params.html")("Parameters"))
+            li(a(href := s"${prefix}/overview/index.html")("Featured Systems")),
+            li(a(href := s"${prefix}/overview/allSimulations.html")("All Systems")),
+            li(a(href := s"${prefix}/ModellingElections_en.pdf")("ERRE Submission"))
+          )
+        ),
+        li(
+          a(href := "#")("Featured Models"),
+          ul(
+            for (p ← stv.Main.featuredSystems.sortBy(_.name)) yield {
+              val file = if (this.includeThisModelMenu) this.outFile else "index.html"
+              li(a(href := s"${prefix}/${p.outDir}/${file}")(p.title))
+            }
+          )
+        ),
+        if (this.includeThisModelMenu) {
+          li(
+            a(href := "#")("This Model"),
+            ul(
+              li(a(href := "index.html")("Summary")),
+              li(a(href := "ridingResults.html")("Riding Results")),
+              li(a(href := "ridingStats.html")("Riding Stats")),
+              li(a(href := "regionResults.html")("Region Results")),
+              li(a(href := "regionStats.html")("Region Stats")),
+              li(a(href := "params.html")("Parameters"))
+            )
+          )
+        } else {
+          li(a(raw("")), ul())
+        },
+        li(
+          a(href := "about.html")("About"),
+          ul(
+            li(a(href := "about.html")("About")),
+            li(a(href := "about.html#contact")("Contact"))
           )
         )
-      } else {
-        li(a(raw("")), ul())
-      },
-      li(
-        a(href := "about.html")("About"),
-        ul(
-          li(a(href := "about.html")("About")),
-          li(a(href := "about.html#contact")("Contact"))
-        )
       )
-    )
 
-  )
+    )
+  }
 
 
   def tracking = raw(

@@ -1,10 +1,11 @@
 package stv.io
 
 import stv._
-
 import stv.Pickler
 
 import scala.collection.mutable
+
+import java.io.File
 
 
 object Input {
@@ -14,7 +15,7 @@ object Input {
 
 
   /*
-   * Stuff to read the raw JSON and then transform it into our finished data structure (Design)
+   * Read a candidate from JSON.
    */
   case class RawCandidate(riding_id: Int,
                           candidate_name: String,
@@ -25,44 +26,17 @@ object Input {
 
 
   /**
-    * Read the list of candidates from the 2015 election.
-    *
-    * @return
+    * Read the list of candidates from the given election.
     */
-  // ToDo:  This should be parameterized by election
-  // Used to create eCandidatesByRiding for design transformation
   def candidates(year: Int): Vector[RawCandidate] = {
-    val rawJson = this.fileToString(s"json/candidates/candidates-${year}.json")
-    val r: Vector[RawCandidate] = Pickler.read[Vector[RawCandidate]](rawJson)
-
-    //    val result = r.toList.map { c ⇒
-    //      // Region and province will be filled in with correct values in a later step
-    //      Candidate(c.riding_id.toString, "DummyRegion", ProvName.AB, c.candidate_name, c.party_id,
-    //        c.votes,
-    //        c.votes,
-    //        false, SeatType.RidingSeat)
-    //    }
-    //    assert(result.length == Input.e2015NumCandidates)
-    //    assert(result.map(_.votes).sum == Input.e2015NumVotes)
-
-    //    result
-    r
+    this.fileToString(s"json/candidates/candidates-${year}.json").map { json ⇒
+      Pickler.read[Vector[RawCandidate]](json)
+    }.getOrElse(Vector())
   }
 
   /**
-    * Get the Candidates that ran in the 2015 election.
+    * Read the ridings used in the election
     */
-  // Used in design transformation
-  //  private val eCandidatesByRiding: Map[RidingId, List[Candidate]] = {
-  //
-  //    val byRiding = Input.e2015Candidates.groupBy(_.ridingId)
-  //    assert(byRiding.keys.size == 338,
-  //      s"eCandidatesByRiding.keys.size = ${byRiding.keys.size}")
-  //
-  //    byRiding
-  //  }
-
-  // Used in design transformation; SummaryHTML
   def originalRidings(numRidings: Int): Vector[RawFptpRiding] = {
     val fileName = s"json/ridings-${numRidings}/ridings.json"
     val source = scala.io.Source.fromFile(fileName)
@@ -70,49 +44,43 @@ object Input {
     Pickler.read[Vector[RawFptpRiding]](rawJson)
   }
 
-  // Used in Design transformation
-
-
-  //  def readDesign(electionYear:Int, dName:DesignName): Design = {
-  //    def designAsJsonString(numRidings:Int):String = {
-  //      val source = scala.io.Source.fromFile(s"json/ridings-${numRidings}/${dName}.json")
-  //      val rawJson = try source.getLines().mkString("\n") finally source.close()
-  //      rawJson
-  //    }
-  //
-  //
-  //    val numRidings = numRidingsByElectionYr(electionYear)
-  //    new DesignReader(
-  //      designAsJsonString(numRidings),
-  //      originalRidingsMap(numRidings),
-  //      candidatesByRiding(electionYear)
-  //    )
-  //  }
 
   /**
     * Read the design from a json file.  Cached so it can be re-read without a significant performance
     * penalty.
     */
-  def readDesignFromFile(fileName: String): Design = {
-    this.readDesign(fileToString(fileName))
+  //  def readDesignFromFile(fileName: String): Design = {
+  //    this.readDesign(fileToString(fileName).get)
+  //  }
+
+  def readDesign(dName: DesignName, numRidings: Int, ridings: Vector[RawFptpRiding], candidates:
+  Vector[RawCandidate]): Option[Design] = {
+    fileToString(s"json/ridings-${numRidings}/${dName}.json").map { json ⇒
+      new DesignReader(json, ridings, candidates).read
+    }
   }
 
-  def readDesign(rawJson: String): Design = {
-    new DesignReader(rawJson, originalRidings(338), candidates(2015)).read
-  }
+  //  def readDesign(rawJson: String): Design = {
+  //    new DesignReader(rawJson, originalRidings(338), candidates(2015)).read
+  //  }
 
   /**
     * Read the contents of a file and return it as a string.
     */
-  def fileToString(fileName: String): String = {
-    val source = scala.io.Source.fromFile(fileName)
-    val rawJson = try source.getLines().mkString("\n") finally source.close()
-    rawJson
+  def fileToString(fileName: String): Option[String] = {
+    val file = new File(fileName)
+    if (file.exists()) {
+      val source = scala.io.Source.fromFile(file)
+      val rawJson = try source.getLines().mkString("\n") finally source.close()
+      Some(rawJson)
+    } else {
+      None
+    }
   }
 
-  def getSim(fileName: String, params: Params, ridings:Vector[RawFptpRiding]): Sim = {
-    Sim(Input.readDesignFromFile(fileName), params, ridings)
-  }
+  //  def getSim(fileName: String, params: Params, ridings: Vector[RawFptpRiding]): Sim = {
+  //    Sim(Input.readDesignFromFile(fileName), params, ridings)
+  //  }
 
 }
 
@@ -132,7 +100,28 @@ private class DesignReader(rawJson: String,
   private val candidatesByRiding: Map[Int, Vector[Input.RawCandidate]] = candidates.groupBy(_.riding_id)
 
   def read: Design = {
-    Pickler.read[JsonDesign](rawJson).transform()
+    val d = Pickler.read[JsonDesign](rawJson)
+
+    // ridingValidityChecks
+    val designRidings = (for {
+      p ← d.provinces
+      region ← p.regions
+      newRiding ← region.new_ridings
+      oldRiding ← newRiding.oldRidings
+    } yield {
+      oldRiding.riding_id
+    }).distinct
+
+    candidates.foreach { c ⇒ if (!designRidings.contains(c.riding_id)) {
+      println(s"${c.candidate_name} has riding ${c.riding_id} that isn't in list of ridings.")
+    }
+    }
+    designRidings.sorted.foreach { r ⇒ if (!candidates.exists(c ⇒ c.riding_id == r)) {
+      println(s"Riding ${r} does not have any candidates.")
+    }
+    }
+
+    d.transform()
   }
 
 

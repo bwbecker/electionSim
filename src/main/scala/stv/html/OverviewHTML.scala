@@ -40,8 +40,8 @@ abstract class AbstractOverview extends Page {
     def color(tGreen: Double, tYellow: Double)(v: Double): String = {
       if (Math.abs(v) < tGreen) "green" else if (Math.abs(v) < tYellow) "yellow" else "red"
     }
-    def fmtOverRep(s: StatsByParty) = {
-      val pct = s.pctMPs - s.pctVote
+    def fmtOverRep(os: Option[StatsByParty]) = {
+      val pct = os.map { s ⇒ s.pctMPs - s.pctVote }.getOrElse(0.0)
       val warn = color(0.05, 0.10)(pct)
       td(cls := "colPct0 " + warn)(pctFmt.format(pct))
     }
@@ -70,11 +70,11 @@ abstract class AbstractOverview extends Page {
               a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
             td(cls := "num3")(sim.numRidingMPs),
             td(cls := "num3")(sim.numRegionalMPs),
-            fmtOverRep(statsByParty(Lib)),
-            fmtOverRep(statsByParty(Con)),
-            fmtOverRep(statsByParty(NDP)),
-            fmtOverRep(statsByParty(Bloc)),
-            fmtOverRep(statsByParty(Grn)),
+            fmtOverRep(statsByParty.get(Lib)),
+            fmtOverRep(statsByParty.get(Con)),
+            fmtOverRep(statsByParty.get(NDP)),
+            fmtOverRep(statsByParty.get(Bloc)),
+            fmtOverRep(statsByParty.get(Grn)),
             fmtGallagher(sim.analysis.gallagherIndex),
             fmtGallagher(sim.compositeGallagher),
             fmtPrefParty(sim.pctVotersWithPreferredPartyLocally),

@@ -26,45 +26,32 @@ object Main {
     //    }
 
 
-    def doDesign(d: DesignName, candidates: Vector[RawCandidate], ridings: Vector[RawFptpRiding]): Vector[Sim] = {
-      val design = Input.readDesignFromFile(s"json/ridings-338/${d}.json")
-
-      def singleMbrStrategies: Vector[RidingElectionStrategy] = {
-        if (design.hasSingleMemberRidings) {
-          RidingElectionStrategy.singleMbrStrategies
-        } else {
-          Vector(NotApplicableRidingElectionStrategy)
-        }
-      }
-
-      def multiMbrStrategies: Vector[RidingElectionStrategy] = if (design.hasMultiMemberRidings) {
-        RidingElectionStrategy.multiMbrStrategies
-      } else {
-        Vector(NotApplicableRidingElectionStrategy)
-      }
-
-      println(s"Simulating design ${d}.")
-
-      for {
-        sms <- singleMbrStrategies
-        mms <- multiMbrStrategies
-      } yield {
-
-        val params = namedSystems.find(p => p.designName == d &&
-          p.multiMemberElectionStrategy == mms &&
-          p.singleMemberElectionStrategy == sms)
-          .getOrElse {
-            val name = s"${d}-${sms.name}-${mms.name}"
-            Params(name, name, d, name, p("Description"), sms, mms)
-          }
-
-        val sim = Sim(design, params, ridings)
-        Output.writeHtml(params, sim)
-
-        sim
-      }
-
-    }
+    //    def doDesign(d: DesignName, candidates: Vector[RawCandidate], ridings: Vector[RawFptpRiding]): Vector[Sim] = {
+    //      val design = Input.readDesignFromFile(s"json/ridings-338/${d}.json")
+    //
+    //
+    //      println(s"Simulating design ${d}.")
+    //
+    //      for {
+    //        sms <- singleMbrStrategies
+    //        mms <- multiMbrStrategies
+    //      } yield {
+    //
+    //        val params = namedSystems.find(p => p.designName == d &&
+    //          p.multiMemberElectionStrategy == mms &&
+    //          p.singleMemberElectionStrategy == sms)
+    //          .getOrElse {
+    //            val name = s"${d}-${sms.name}-${mms.name}"
+    //            Params(name, name, d, name, p("Description"), sms, mms)
+    //          }
+    //
+    //        val sim = Sim(design, params, ridings)
+    //        Output.writeHtml(params, sim)
+    //
+    //        sim
+    //      }
+    //
+    //    }
 
 
     this.clArgParser.parse(args, CLArgs()) match {
@@ -78,9 +65,28 @@ object Main {
           candidates = Input.candidates(year)
           numRidings = numRidingsByElectionYr(year)
           ridings = Input.originalRidings(numRidings)
-          design ← config.designs
+          designName ← config.designs
+          design ← Input.readDesign(designName, numRidings, ridings, candidates)
         } yield {
-          doDesign(design, candidates, ridings)
+          println(s"Processing ${year} ${numRidings} ${designName}")
+
+          // Seems like these ought to be included in the outer for; but gives a type error
+          for {
+            singleMbrStrategy ← design.singleMbrStrategies
+            multiMbrStrategy ← design.multiMbrStrategies
+          } yield {
+
+            val params = namedSystems.find(_.matches(designName, year, singleMbrStrategy, multiMbrStrategy))
+              .getOrElse {
+                val name = s"${designName}-${singleMbrStrategy.name}-${multiMbrStrategy.name}"
+                Params(name, year, name, designName, name, p("Description"), singleMbrStrategy, multiMbrStrategy)
+              }
+
+            val sim = Sim(design, params, ridings)
+            Output.writeHtml(params, sim)
+            sim
+          }
+
         }
 
         if (config.overview) {
@@ -146,6 +152,9 @@ object Main {
       c.copy(all = true,
         years = Seq(2015, 2011),
         designs = DesignName.values)).text("Produce all possible combinations")
+
+    opt[Unit]("overview").action((_, c) =>
+      c.copy(overview = true)).text("Write the overview pages")
 
     opt[Seq[Int]]("years").valueName("<yr1>,<yr2>...").action((x, c) =>
       c.copy(years = x)).text("election years to base simulations on")
@@ -373,52 +382,52 @@ object Main {
 
   val featuredSystems = List(
 
-    Params("fptp", "First-Past-The-Post",
+    Params("fptp", 2015, "First-Past-The-Post",
       DesignName.fptp, s"fptp", fptpDescr, FptpRidingElectionStrategy, NotApplicableRidingElectionStrategy),
 
-    Params("av", "Alternative Vote",
+    Params("av", 2015, "Alternative Vote",
       DesignName.fptp, s"av", avDescr, AvRidingElectionStrategy, NotApplicableRidingElectionStrategy),
 
-    Params("stv_med", "Single Transferable Vote (Medium-sized Regions)",
+    Params("stv_med", 2015, "Single Transferable Vote (Medium-sized Regions)",
       DesignName.stv_med, s"stv_med", stvMedDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
-    Params("stv_small", "Single Transferable Vote (Small Regions)",
+    Params("stv_small", 2015, "Single Transferable Vote (Small Regions)",
       DesignName.stv_small, s"stv_small", stvSmallDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
 
-    Params("mmp-8-fptp", "Mixed Member Proportional (Small Regions)",
+    Params("mmp-8-fptp", 2015, "Mixed Member Proportional (Small Regions)",
       DesignName.mmp_small, s"mmp-8-fptp", mmp8fptpDescr, FptpRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
 
-    Params("mmpLite", "Mixed Member Proportional (Lite)",
+    Params("mmpLite", 2015, "Mixed Member Proportional (Lite)",
       DesignName.mmp_enlargeP, s"mmp-15pct", mmpLiteDescr, FptpRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
-    Params("rup-338", "Rural-Urban PR (More Singles, 338 Seats)",
+    Params("rup-338", 2015, "Rural-Urban PR (More Singles, 338 Seats)",
       DesignName.ru_singles, s"rup-338", rup338Descr, AvRidingElectionStrategy, ListRidingElectionStrategy),
 
-    Params("rup-15pct", "Rural-Urban PR (More Singles, 389 Seats)",
+    Params("rup-15pct", 2015, "Rural-Urban PR (More Singles, 389 Seats)",
       DesignName.ru_enlargeP, s"rup-15pct", rup15PctDescr, FptpRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
-    Params("rup-stv", "Rural-Urban PR (Few Singles)",
+    Params("rup-stv", 2015, "Rural-Urban PR (Few Singles)",
       DesignName.ru_multiples, s"rup-stv", stvPlusDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy)
   )
 
   val variantSystems = List(
-    Params("mmp-8-av", "MMP (Small Regions, AV)",
+    Params("mmp-8-av", 2015, "MMP (Small Regions, AV)",
       DesignName.mmp_small, s"mmp-8-av", mmp8avDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
-    Params("mmp-14-av", "MMP (Medium Regions, AV)",
+    Params("mmp-14-av", 2015, "MMP (Medium Regions, AV)",
       DesignName.mmp_med, s"mmp-14-av", mmp14avDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
-    Params("mmp-14-fptp", "MMP (Medium Regions, FPTP)",
+    Params("mmp-14-fptp", 2015, "MMP (Medium Regions, FPTP)",
       DesignName.mmp_med, s"mmp-14-fptp", mmp14fptpDescr, FptpRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
-    Params("rup-338-list", "Rural-Urban PR (More Singles, 338 Seats, ListPR)",
+    Params("rup-338-list", 2015, "Rural-Urban PR (More Singles, 338 Seats, ListPR)",
       DesignName.ru_singles, s"rup-338-list", rup338ListDescr, FptpRidingElectionStrategy, ListRidingElectionStrategy),
 
-    Params("rup-15pct-stv", "Rural-Urban PR (More Singles, More Seats)",
+    Params("rup-15pct-stv", 2015, "Rural-Urban PR (More Singles, More Seats)",
       DesignName.ru_enlargeP, s"rup-15pct-stv", rup15PctDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy)
 
   )
@@ -436,18 +445,28 @@ object Main {
 case class VoteSwing(pct: Double, fromParty: Party, toParty: Party)
 
 case class Params(name: String, // identify this set of parameters
+                  year: Int,
                   title: String, // Title to put on web pages
                   designName: DesignName, // how ridings are grouped, etc.
-                  outDir: String,
+                  outDir0: String,
                   description: Text.TypedTag[String],
                   singleMemberElectionStrategy: RidingElectionStrategy,
                   multiMemberElectionStrategy: RidingElectionStrategy,
                   voteAdjustment: Option[VoteSwing] = None
                  ) {
-  def matches(p: Params): Boolean = {
-    this.designName == p.designName &&
-      this.singleMemberElectionStrategy == p.singleMemberElectionStrategy &&
-      this.multiMemberElectionStrategy == p.multiMemberElectionStrategy
+
+  val outDir:String = if (year == 2015) this.outDir0 else s"${year}/${outDir0}"
+
+  def matches(p: Params): Boolean = this.matches(p.designName, p.year, p.singleMemberElectionStrategy,
+    p.multiMemberElectionStrategy)
+
+
+  def matches(designName: DesignName, year:Int, sms: RidingElectionStrategy, mms: RidingElectionStrategy): Boolean = {
+    this.designName == designName &&
+      this.year == year &&
+      this.singleMemberElectionStrategy == singleMemberElectionStrategy &&
+      this.multiMemberElectionStrategy == multiMemberElectionStrategy
+
   }
 }
 

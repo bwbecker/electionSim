@@ -38,33 +38,23 @@
                             ]
                         },
                         {
-                            "riding_id": "AB.Yellowhead",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "48034, 100, Yellowhead"
-                            ]
-                        },
-                        {
                             "riding_id": "AB.EdNorth",
-                            "district_mag": 6,
+                            "district_mag": 5,
                             "old_ridings": [
                                 "48014, 100, Edmonton Centre",
                                 "48015, 100, Edmonton Griesbach",
                                 "48016, 100, Edmonton Manning",
-                                "48020, 100, Edmonton West",
-                                "48031, 100, St. Albert-Edmonton",
-                                "48033, 100, Sturgeon River-Parkland"
+                                "48020, 100, Edmonton West"
                             ]
                         },
                         {
                             "riding_id": "AB.EdSouth",
-                            "district_mag": 5,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "48017, 100, Edmonton Mill Woods",
                                 "48018, 100, Edmonton Riverbend",
                                 "48019, 100, Edmonton Strathcona",
-                                "48021, 100, Edmonton-Wetaskiwin",
-                                "48032, 100, Sherwood Park-Fort Saskatchewan"
+                                "48021, 100, Edmonton-Wetaskiwin"
                             ]
                         },
                         {
@@ -100,14 +90,6 @@
                                 "48008, 100, Calgary Midnapore",
                                 "48011, 100, Calgary Shepard",
                                 "48012, 100, Calgary Signal Hill"
-                            ]
-                        },
-                        {
-                            "riding_id": "AB.RedDeer",
-                            "district_mag": 2,
-                            "old_ridings": [
-                                "48030, 100, Red Deer-Lacombe",
-                                "48029, 100, Red Deer-Mountain View"
                             ]
                         },
                          {
@@ -192,13 +174,6 @@
                             ]
                         },
                         {
-                            "riding_id": "BC.37",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "59037, 100, North Island-Powell River"
-                            ]
-                        },
-                        {
                             "riding_id": "BC.Cariboo",
                             "district_mag": 1,
                             "old_ridings": [
@@ -225,11 +200,10 @@
                         },
                         {
                             "riding_id": "BCCapitalR",
-                            "district_mag": 3,
+                            "district_mag": 2,
                             "old_ridings": [
                                 "59026, 100, Esquimalt-Saanich-Sooke",
-                                "59027, 100, Saanich-Gulf Islands",
-                                "59041, 100, Victoria"
+                                "59027, 100, Saanich-Gulf Islands"
                             ]
                         }
                     ]
@@ -240,12 +214,11 @@
                     "new_ridings": [
                         {
                             "riding_id": "BC.BurVanE",
-                            "district_mag": 4,
+                            "district_mag": 3,
                             "old_ridings": [
                                 "59002, 100, Burnaby North-Seymour",
                                 "59003, 100, Burnaby South",
-                                "59035, 100, Vancouver East",
-                                "59038, 100, Vancouver Kingsway"
+                                "59035, 100, Vancouver East"
                             ]
                         },
                         {
@@ -281,23 +254,20 @@
                         },
                         {
                             "riding_id": "BC.VanCN",
-                            "district_mag": 4,
+                            "district_mag": 2,
                             "old_ridings": [
                                 "59021, 100, North Vancouver",
-                                "59034, 100, Vancouver Centre",
-                                "59039, 100, Vancouver Quadra",
-                                "59042, 100, West Vancouver-Sunshine Coast-Sea to Sky Country"
+                                "59034, 100, Vancouver Centre"
                             ]
                         },
                         {
                             "riding_id": "BC.VanSoRichDelta",
-                            "district_mag": 5,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "59011, 100, Delta",
                                 "59025, 100, Richmond Centre",
                                 "59031, 100, Steveston-Richmond East",
-                                "59036, 100, Vancouver Granville",
-                                "59040, 100, Vancouver South"
+                                "59036, 100, Vancouver Granville"
                             ]
                         }
                     ]
@@ -694,36 +664,32 @@
                         },
                         {
                             "riding_id": "ON.Durham",
-                            "district_mag": 5,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "35001, 100, Ajax",
                                 "35023, 100, Durham",
                                 "35074, 100, Oshawa",
-                                "35085, 100, Pickering-Uxbridge",
-                                "35114, 100, Whitby"
+                                "35085, 100, Pickering-Uxbridge"
                             ]
                         },
                         {
                             "riding_id": "ON.Etobicoke",
-                            "district_mag": 6,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "35027, 100, Etobicoke Centre",
                                 "35029, 100, Etobicoke North",
                                 "35028, 100, Etobicoke-Lakeshore",
-                                "35121, 100, Humber River-Black Creek",
-                                "35081, 100, Parkdale-High Park",
-                                "35120, 100, York South-Weston"
+                                "35081, 100, Parkdale-High Park"
                             ]
                         },
                         {
                             "riding_id": "ON.Markham",
-                            "district_mag": 5,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "35054, 100, Markham-Stouffville",
                                 "35055, 100, Markham-Thornhill",
                                 "35056, 100, Markham-Unionville",
-                                "35065, 100, Newmarket-Aurora",
-                                "35119, 100, York-Simcoe"
+                                "35065, 100, Newmarket-Aurora"
                             ]
                         },
                         {
@@ -740,14 +706,12 @@
                         },
                         {
                             "riding_id": "ON.NYork",
-                            "district_mag": 6,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "35019, 100, Don Valley East",
                                 "35020, 100, Don Valley North",
                                 "35021, 100, Don Valley West",
-                                "35024, 100, Eglinton-Lawrence",
-                                "35115, 100, Willowdale",
-                                "35118, 100, York Centre"
+                                "35024, 100, Eglinton-Lawrence"
                             ]
                         },
                         {
@@ -773,26 +737,22 @@
                         },
                         {
                             "riding_id": "ON.TorEYork",
-                            "district_mag": 7,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "35007, 100, Beaches-East York",
                                 "35018, 100, Davenport",
                                 "35101, 100, Spadina-Fort York",
-                                "35108, 100, Toronto Centre",
-                                "35109, 100, Toronto-Danforth",
-                                "35090, 100, Toronto-St. Paul's",
-                                "35110, 100, University-Rosedale"
+                                "35090, 100, Toronto-St. Paul's"
                             ]
                         },
                         {
                             "riding_id": "ON.VaughanRichHill",
-                            "district_mag": 5,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "35003, 100, Aurora-Oak Ridges-Richmond Hill",
                                 "35043, 100, King-Vaughan",
                                 "35087, 100, Richmond Hill",
-                                "35104, 100, Thornhill",
-                                "35111, 100, Vaughan-Woodbridge"
+                                "35104, 100, Thornhill"
                             ]
                         }
                     ]
@@ -827,13 +787,6 @@
                             "district_mag": 1,
                             "old_ridings": [
                                 "35070, 100, Nipissing-Timiskaming"
-                            ]
-                        },
-                        {
-                            "riding_id": "ON.G2.Timmins",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "35107, 100, Timmins-James Bay"
                             ]
                         },
                         {
@@ -880,13 +833,6 @@
                             ]
                         },
                         {
-                            "riding_id": "ON.G4.WellHH",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "35113, 100, Wellington-Halton Hills"
-                            ]
-                        },
-                        {
                             "riding_id": "ON.Hamilton",
                             "district_mag": 6,
                             "old_ridings": [
@@ -910,13 +856,12 @@
                         },
                         {
                             "riding_id": "ON.WaterlooRegion",
-                            "district_mag": 5,
+                            "district_mag": 4,
                             "old_ridings": [
                                 "35016, 100, Cambridge",
                                 "35045, 100, Kitchener Centre",
                                 "35047, 100, Kitchener South-Hespeler",
-                                "35046, 100, Kitchener-Conestoga",
-                                "35112, 100, Waterloo"
+                                "35046, 100, Kitchener-Conestoga"
                             ]
                         }
                     ]
@@ -990,12 +935,10 @@
                         },
                         {
                             "riding_id": "ON.WindsorECK",
-                            "district_mag": 4,
+                            "district_mag": 2,
                             "old_ridings": [
                                 "35017, 100, Chatham-Kent-Leamington",
-                                "35026, 100, Essex",
-                                "35117, 100, Windsor West",
-                                "35116, 100, Windsor-Tecumseh"
+                                "35026, 100, Essex"
                             ]
                         }
                     ]
@@ -1147,10 +1090,9 @@
                         },
                         {
                             "riding_id": "QC.TroisRiv",
-                            "district_mag": 2,
+                            "district_mag": 1,
                             "old_ridings": [
-                                "24009, 100, Bécancour-Nicolet-Saurel",
-                                "24076, 100, Trois-Rivières"
+                                "24009, 100, Bécancour-Nicolet-Saurel"
                             ]
                         }
                     ]
@@ -1196,12 +1138,11 @@
                         },
                         {
                             "riding_id": "QC.Laval",
-                            "district_mag": 4,
+                            "district_mag": 3,
                             "old_ridings": [
                                 "24004, 100, Alfred-Pellan",
                                 "24040, 100, Laval-Les Îles",
-                                "24065, 100, Marc-Aurèle-Fortin",
-                                "24078, 100, Vimy"
+                                "24065, 100, Marc-Aurèle-Fortin"
                             ]
                         },
                         {
@@ -1219,14 +1160,13 @@
                         },
                         {
                             "riding_id": "QC.MontrealEast",
-                            "district_mag": 6,
+                            "district_mag": 5,
                             "old_ridings": [
                                 "24028, 100, Hochelaga",
                                 "24033, 100, La Pointe-de-l'Île",
                                 "24039, 100, Laurier-Sainte-Marie",
                                 "24054, 100, Outremont",
-                                "24064, 100, Rosemont-La Petite-Patrie",
-                                "24077, 100, Ville-Marie-Le Sud-Ouest-Île-des-Surs"
+                                "24064, 100, Rosemont-La Petite-Patrie"
                             ]
                         },
                         {

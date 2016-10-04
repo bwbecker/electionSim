@@ -24,6 +24,23 @@ case class Design(
   }
 
 
+  def singleMbrStrategies: Vector[RidingElectionStrategy] = {
+    if (this.hasSingleMemberRidings) {
+      RidingElectionStrategy.singleMbrStrategies
+    } else {
+      Vector(NotApplicableRidingElectionStrategy)
+    }
+  }
+
+  def multiMbrStrategies: Vector[RidingElectionStrategy] = {
+    if (this.hasMultiMemberRidings) {
+      RidingElectionStrategy.multiMbrStrategies
+    } else {
+      Vector(NotApplicableRidingElectionStrategy)
+    }
+  }
+
+
   def debug: String = {
     val sb = new StringBuilder()
     sb.append(s"Design: ${this.design_name}")
@@ -42,10 +59,11 @@ case class Design(
 
   /**
     * Run an election on this voting design.
+    *
     * @param singleMbrStrategy The election strategy to use in single-member ridings
-    * @param multiMbrStrategy The election strategy to use in multi-member ridings
-    * @param topUpStrategy The election strategy to use for top-up seats
-    * @param voteSwing Whether to swing the votes by a given percentage first
+    * @param multiMbrStrategy  The election strategy to use in multi-member ridings
+    * @param topUpStrategy     The election strategy to use for top-up seats
+    * @param voteSwing         Whether to swing the votes by a given percentage first
     * @return
     */
   def doElection(singleMbrStrategy: RidingElectionStrategy,
