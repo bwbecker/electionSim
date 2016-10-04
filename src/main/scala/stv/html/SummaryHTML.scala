@@ -321,7 +321,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
       cumStats.find(_._2 > pct).get._1
     }
 
-    val (fptpData, _) = mkData(Input.originalRidings.sortBy(_.area).map { r => (r.area, r.pop) }, totalPop)
+    val (fptpData, _) = mkData(sim.originalRidings.sortBy(_.area).map { r => (r.area, r.pop) }, totalPop)
 
     div(
       p(

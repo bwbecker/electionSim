@@ -10,7 +10,8 @@ import scala.collection.mutable
   */
 case class Sim(//fptpRidings: Map[RidingId, Riding],
                design: Design,
-               params: Params
+               params: Params,
+               val originalRidings: Vector[RawFptpRiding]
               ) {
 
 

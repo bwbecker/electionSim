@@ -2,7 +2,9 @@ package stv
 
 import scalatags.Text
 import scalatags.Text.all._
+
 import ca.bwbecker.io.CachedMkdir
+import stv.io.Input.RawCandidate
 
 //import stv.html.OverviewHTML
 import stv.io.{Input, Output}
@@ -15,17 +17,17 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-//    def doOne(p: Params): Sim = {
-//      println(s"Simulating ${p.name} ")
-//
-//      val sim = Input.getSim(p)
-//      Output.writeHtml(p, sim)
-//      sim
-//    }
+    //    def doOne(p: Params): Sim = {
+    //      println(s"Simulating ${p.name} ")
+    //
+    //      val sim = Input.getSim(p)
+    //      Output.writeHtml(p, sim)
+    //      sim
+    //    }
 
 
-    def doDesign(d: DesignName): Vector[Sim] = {
-      val design = Input.readDesign(2015, d)
+    def doDesign(d: DesignName, candidates: Vector[RawCandidate], ridings: Vector[RawFptpRiding]): Vector[Sim] = {
+      val design = Input.readDesignFromFile(s"json/ridings-338/${d}.json")
 
       def singleMbrStrategies: Vector[RidingElectionStrategy] = {
         if (design.hasSingleMemberRidings) {
@@ -56,7 +58,7 @@ object Main {
             Params(name, name, d, name, p("Description"), sms, mms)
           }
 
-        val sim = Sim(design, params)
+        val sim = Sim(design, params, ridings)
         Output.writeHtml(params, sim)
 
         sim
@@ -69,11 +71,16 @@ object Main {
       case Some(config) =>
         println(config)
 
+        val numRidingsByElectionYr = Map(2015 → 338, 2011 → 308)
+
         val sims = for {
           year ← config.years
+          candidates = Input.candidates(year)
+          numRidings = numRidingsByElectionYr(year)
+          ridings = Input.originalRidings(numRidings)
           design ← config.designs
         } yield {
-          doDesign(design)
+          doDesign(design, candidates, ridings)
         }
 
         if (config.overview) {
