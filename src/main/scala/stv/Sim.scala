@@ -170,7 +170,7 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
     var totalVoters = 0.0
     var gotPrefParty = 0.0
     for {
-      candidate ← this.results.allCandidates
+      candidate ← this.results.allRidingCandidates
       prefParty = candidate.party
     } {
       val candidates = this.results.electedByRiding.get(candidate.ridingId)

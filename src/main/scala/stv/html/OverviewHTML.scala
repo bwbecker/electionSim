@@ -36,26 +36,27 @@ abstract class AbstractOverview extends Page {
   }
 
 
-  def generateResultsTable(sims: List[Sim]) = {
-    def color(tGreen: Double, tYellow: Double)(v: Double): String = {
-      if (Math.abs(v) < tGreen) "green" else if (Math.abs(v) < tYellow) "yellow" else "red"
-    }
-    def fmtOverRep(os: Option[StatsByParty]) = {
-      val pct = os.map { s ⇒ s.pctMPs - s.pctVote }.getOrElse(0.0)
-      val warn = color(0.05, 0.10)(pct)
-      td(cls := "colPct0 " + warn)(pctFmt.format(pct))
-    }
+  protected   def color(tGreen: Double, tYellow: Double)(v: Double): String = {
+    if (Math.abs(v) < tGreen) "green" else if (Math.abs(v) < tYellow) "yellow" else "red"
+  }
+  protected   def fmtOverRep(os: Option[StatsByParty]) = {
+    val pct = os.map { s ⇒ s.pctMPs - s.pctVote }.getOrElse(0.0)
+    val warn = color(0.05, 0.10)(pct)
+    td(cls := "colPct0 " + warn)(pctFmt.format(pct))
+  }
 
-    def fmtGallagher(g: Double) = {
-      td(cls := "colPct1 " + color(0.05, 0.10)(g))(pct_dFmt.format(g))
-    }
+  protected def fmtGallagher(g: Double) = {
+    td(cls := "colPct1 " + color(0.05, 0.10)(g))(pct_dFmt.format(g))
+  }
 
-    def fmtPrefParty(pct: Double) = {
-      val color = if (pct < 0.50) "red"
-      else if (pct < 0.75) "yellow"
-      else "green"
-      td(cls := "colPct0 " + color)(pctFmt.format(pct))
-    }
+  protected def fmtPrefParty(pct: Double) = {
+    val color = if (pct < 0.50) "red"
+    else if (pct < 0.75) "yellow"
+    else "green"
+    td(cls := "colPct0 " + color)(pctFmt.format(pct))
+  }
+
+  protected def generateResultsTable(sims: List[Sim]) = {
 
     table(
       thead(
@@ -343,6 +344,7 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
     div(cls := "overview")(
       introduction,
       resultsTable,
+      tableII,
       properties(this.sims),
       descriptions(sims)
     )
@@ -360,12 +362,52 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
 
 
   def resultsTable = {
-
-
     div(cls := "results")(
       h2("Fairness"),
       generateResultsTable(this.sims),
       resultsTableFootnotes
+    )
+  }
+
+  def tableII = {
+    div(cls := "results")(
+      h2("More Details"),
+      table(
+        thead(
+          tr(
+            td("System Name"),
+            td("Riding Design"),
+            td("Single Mbr Riding Elections"),
+            td("Multi-Mbr Riding Elections"),
+            td("Year"),
+            td("Gallagher"),
+            td("Composite Gallagher")
+          )
+        ),
+        tbody(
+          for{
+            sim ← sims.sortBy(s ⇒ (
+              s.design.design_name.toString,
+              s.params.singleMemberElectionStrategy.name,
+              s.params.multiMemberElectionStrategy.name,
+              s.params.year
+              ))
+            ana = sim.analysis
+            parms = sim.params
+          } yield {
+            tr(cls := "row")(
+              td(cls := "name")(
+                a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
+              td(parms.designName.toString),
+              td(parms.singleMemberElectionStrategy.name),
+              td(parms.multiMemberElectionStrategy.name),
+              td(parms.year),
+              fmtGallagher(ana.gallagherIndex),
+              fmtGallagher(sim.compositeGallagher)
+            )
+          }
+        )
+      )
     )
   }
 

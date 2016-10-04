@@ -15,7 +15,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
   protected val outDir: String = params.outDir
   protected val outFile: String = "ridingResults.html"
-  protected val pgTitle: String = s"Riding Results for ${params.title}"
+  protected val pgTitle: String = s"Riding Results for ${params.title} (${params.year} Data)"
 
 
   protected def content: TypedTag[String] = {

@@ -24,7 +24,6 @@ trait Page {
   private lazy val prefix = if ("\\d{4}/.*".r.matches(outDir)) {"../.."} else {".."}
 
   private def renderPage: TypedTag[String] = {
-    println(s"writing ${outDir}/${outFile}")
     val css = s"${prefix}/css/main.css"
     scalatags.Text.all.html(
       head(
@@ -89,7 +88,7 @@ trait Page {
             )
           )
         } else {
-          li(a(raw("")), ul())
+          li(a(raw("&nbsp;")), ul())
         },
         li(
           a(href := "about.html")("About"),

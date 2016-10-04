@@ -13,7 +13,7 @@ case class RegionResultsHTML(params: Params, sim: Sim) extends Page {
 
   protected val outDir: String = params.outDir
   protected val outFile: String = "regionResults.html"
-  protected val pgTitle: String = s"Region Results for ${params.title}"
+  protected val pgTitle: String = s"Region Results for ${params.title} (${params.year} Data)"
 
   protected def content: TypedTag[String] = {
     div(

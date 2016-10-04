@@ -18,7 +18,7 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
 
   protected val outDir: String = params.outDir
   protected val outFile: String = "regionStats.html"
-  protected val pgTitle: String = s"Region Stats for ${params.title}"
+  protected val pgTitle: String = s"Region Stats for ${params.title} (${params.year} Data)"
 
   // Column recording the Liberal overrepresentation totals
   private val LibOverRepColumn = 13

@@ -8,7 +8,9 @@ case class ElectionResults(val elected: Vector[Candidate],
                            val topup: Vector[Candidate],
                            design: Design) {
 
-  val allCandidates = elected ++ unelected ++ topup
+  val allRidingCandidates = elected ++ unelected
+
+  val allCandidates = allRidingCandidates ++ topup
 
   val electedByRegion: Map[RegionId, Vector[Candidate]] = (elected ++ topup).groupBy(
     cand ⇒ cand.regionId)

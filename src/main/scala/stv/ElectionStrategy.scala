@@ -107,7 +107,7 @@ object FptpRidingElectionStrategy extends StvRidingElectionStrategy(XferProbFPTP
 }
 
 object NotApplicableRidingElectionStrategy extends RidingElectionStrategy {
-  val name: String = "N/A"
+  val name: String = "NA"
   val shortName = "x"
   val help = p("No election strategy is applicable in this situation.")
   val description: TypedTag[String] = p("An election strategy for where none are applicable.  For example, for " +

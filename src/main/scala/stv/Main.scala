@@ -17,42 +17,6 @@ object Main {
 
   def main(args: Array[String]): Unit = {
 
-    //    def doOne(p: Params): Sim = {
-    //      println(s"Simulating ${p.name} ")
-    //
-    //      val sim = Input.getSim(p)
-    //      Output.writeHtml(p, sim)
-    //      sim
-    //    }
-
-
-    //    def doDesign(d: DesignName, candidates: Vector[RawCandidate], ridings: Vector[RawFptpRiding]): Vector[Sim] = {
-    //      val design = Input.readDesignFromFile(s"json/ridings-338/${d}.json")
-    //
-    //
-    //      println(s"Simulating design ${d}.")
-    //
-    //      for {
-    //        sms <- singleMbrStrategies
-    //        mms <- multiMbrStrategies
-    //      } yield {
-    //
-    //        val params = namedSystems.find(p => p.designName == d &&
-    //          p.multiMemberElectionStrategy == mms &&
-    //          p.singleMemberElectionStrategy == sms)
-    //          .getOrElse {
-    //            val name = s"${d}-${sms.name}-${mms.name}"
-    //            Params(name, name, d, name, p("Description"), sms, mms)
-    //          }
-    //
-    //        val sim = Sim(design, params, ridings)
-    //        Output.writeHtml(params, sim)
-    //
-    //        sim
-    //      }
-    //
-    //    }
-
 
     this.clArgParser.parse(args, CLArgs()) match {
       case Some(config) =>
@@ -79,6 +43,7 @@ object Main {
             val params = namedSystems.find(_.matches(designName, year, singleMbrStrategy, multiMbrStrategy))
               .getOrElse {
                 val name = s"${designName}-${singleMbrStrategy.name}-${multiMbrStrategy.name}"
+                println(s"generating params for ${name}")
                 Params(name, year, name, designName, name, p("Description"), singleMbrStrategy, multiMbrStrategy)
               }
 
@@ -97,36 +62,6 @@ object Main {
       case None =>
       // arguments are bad, error message will have been displayed
     }
-
-
-    /*
-    if (args.length != 1) {
-      println(usage)
-    } else if (args(0) == "all") {
-      val sims = for (d ← DesignName.values) yield {
-        doDesign(d)
-      }
-      Output.writeOverview(sims.flatten.toList)
-      Output.copyLess(this.outdir)
-    } else if (args(0) == "test") {
-      val sims = for (d <- List(DesignName.ru_singles, DesignName.fptp, DesignName.mmp_med)) yield {
-        doDesign(d)
-      }
-      Output.writeOverview(sims.flatten)
-      Output.copyLess(this.outdir)
-    } else {
-      namedSystems.find(p ⇒ p.name == args(0)) match {
-        case Some(p) ⇒
-          doDesign(p.designName)
-          Output.copyLess(this.outdir)
-
-        case None ⇒
-          println(s"Didn't find model ${args(0)}")
-          println(usage)
-      }
-
-    }
-    */
 
   }
 
@@ -151,7 +86,9 @@ object Main {
     opt[Unit]("all").action((_, c) =>
       c.copy(all = true,
         years = Seq(2015, 2011),
-        designs = DesignName.values)).text("Produce all possible combinations")
+        designs = DesignName.values,
+        overview = true
+      )).text("Produce all possible combinations")
 
     opt[Unit]("overview").action((_, c) =>
       c.copy(overview = true)).text("Write the overview pages")
@@ -455,17 +392,17 @@ case class Params(name: String, // identify this set of parameters
                   voteAdjustment: Option[VoteSwing] = None
                  ) {
 
-  val outDir:String = if (year == 2015) this.outDir0 else s"${year}/${outDir0}"
+  val outDir: String = if (year == 2015) this.outDir0 else s"${year}/${outDir0}"
 
   def matches(p: Params): Boolean = this.matches(p.designName, p.year, p.singleMemberElectionStrategy,
     p.multiMemberElectionStrategy)
 
 
-  def matches(designName: DesignName, year:Int, sms: RidingElectionStrategy, mms: RidingElectionStrategy): Boolean = {
+  def matches(designName: DesignName, year: Int, sms: RidingElectionStrategy, mms: RidingElectionStrategy): Boolean = {
     this.designName == designName &&
       this.year == year &&
-      this.singleMemberElectionStrategy == singleMemberElectionStrategy &&
-      this.multiMemberElectionStrategy == multiMemberElectionStrategy
+      this.singleMemberElectionStrategy == sms &&
+      this.multiMemberElectionStrategy == mms
 
   }
 }

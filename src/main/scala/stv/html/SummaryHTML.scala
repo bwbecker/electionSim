@@ -17,7 +17,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
   protected val outDir: String = params.outDir
   protected val outFile: String = "index.html"
-  protected val pgTitle: String = s"Summary of ${params.title}"
+  protected val pgTitle: String = s"Summary of ${params.title} (${params.year} Data)"
 
   protected def content: TypedTag[String] = {
     div(
