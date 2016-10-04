@@ -11,35 +11,6 @@ import ca.bwbecker.enrichments._
   */
 
 object Analysis {
-  def apply(ridings: List[Riding], topups: List[Candidate] = List()): Analysis = new Analysis(
-    ridings.flatMap(_.candidates) ::: topups,
-    ridings.map(_.districtMagnitude).sum + topups.length
-  )
-
-  def apply(ridings: List[Riding], topups: List[Candidate], numTopups: Int): Analysis = new Analysis(
-    ridings.flatMap(_.candidates) ::: topups,
-    ridings.map(_.districtMagnitude).sum + numTopups
-  )
-
-  def apply(region: Region): Analysis = new Analysis(
-    region.ridings.flatMap(_.candidates) ::: region.topUpCandidates,
-    region.ridings.map(r ⇒ r.districtMagnitude).sum + region.topUpSeats)
-
-  def apply(candidates: List[Candidate], seats: Int): Analysis = new Analysis(candidates, seats)
-
-  def apply(regions: List[Region]): Analysis = new Analysis(
-    regions.flatMap(r ⇒ r.ridings.flatMap(r ⇒ r.candidates) ::: r.topUpCandidates),
-    regions.map(r ⇒ r.topUpSeats + r.ridings.map(_.districtMagnitude).sum).sum
-  )
-
-  /**
-    * Analysis on a list of provinces, given a simulation.  Includes top-ups.
-    * @param provinces
-    * @param sim
-    * @return
-    */
-  def apply(provinces: List[ProvName])(implicit sim:Sim):Analysis =
-    Analysis(sim.regions.filter(r ⇒ provinces.contains(r.ridings.head.province)))
 
 
   case class StatsByParty(party: Party,
@@ -124,11 +95,16 @@ object Analysis {
 }
 
 
-class Analysis(candidates: List[Candidate],
-               val seats: Int
+/**
+  * Do an analysis of the proportionality of this set of candidates.
+  *
+  * @param allCandidates All the candidates (both winning and losing) that competed in the area to be analyzed.
+  * @param totalSeats    The total number of seats (riding + top-up) that represent the area to be analyzed.
+  */
+class Analysis(val allCandidates: Seq[Candidate],
+               val totalSeats: Int
               ) {
 
-  val allCandidates = candidates
   lazy val elected = allCandidates.filter(c ⇒ c.winner)
   lazy val unelected = allCandidates.filterNot(c ⇒ c.winner)
   lazy val electedParties = elected.map(_.party).distinct
@@ -153,7 +129,7 @@ class Analysis(candidates: List[Candidate],
     val pctVote = popVote / totalVotes.toDouble
     val mps = cand.count(_.winner)
     val pctMPs = mps / (elected.length).toDouble
-    val deservedMPs = seats * pctVote
+    val deservedMPs = totalSeats * pctVote
     val numLocalMPs = cand.count(c => c.seatType == SeatType.RidingSeat && c.winner)
     val numTopupSeats = cand.count(c => c.seatType == SeatType.TopupSeat && c.winner)
     assert(numLocalMPs + numTopupSeats == mps, s"$numLocalMPs + $numTopupSeats != $mps")
@@ -167,7 +143,7 @@ class Analysis(candidates: List[Candidate],
     *
     * @return
     */
-  private def calcStatsByParty: List[StatsByParty] = {
+  private def calcStatsByParty: Seq[StatsByParty] = {
     for {
       party ← parties
     } yield {

@@ -20,7 +20,7 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
     val right = cls := "right"
     val left = cls := "left"
 
-    val ridings = sim.newRidings.values.toList
+    val ridings = sim.newRidingsVec
     val numRidings = ridings.size
     val avgMPs = ridings.map(_.districtMagnitude).sum / numRidings.toDouble
     val avgArea = ridings.map(_.area).sum / numRidings.toDouble
@@ -51,7 +51,9 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
         ),
 
         tbody(
-          (for ((riding_id, riding) ← sim.newRidings.toList.sortBy(t ⇒ t._2.province + t._2.ridingId)) yield {
+          (for (riding ← sim.newRidingsVec.sortBy(t ⇒ t.province + t.ridingId)) yield {
+            val elected = sim.results.electedByRiding(riding.ridingId)
+
             tr(
               td(left)(riding.name),
               td(left)(riding.province.toString),
@@ -59,11 +61,11 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
               td(f"${riding.area}%,10d"),
               td(f"${riding.population}%,10d"),
               td(f"${riding.population / riding.districtMagnitude}%,d"),
-              td(cls := "Con")(riding.elected.count(_.party == Con)),
-              td(cls := "Bloc")(riding.elected.count(_.party == Bloc)),
-              td(cls := "Grn")(riding.elected.count(_.party == Grn)),
-              td(cls := "Lib")(riding.elected.count(_.party == Lib)),
-              td(cls := "NDP")(riding.elected.count(_.party == NDP))
+              td(cls := "Con")(elected.count(_.party == Con)),
+              td(cls := "Bloc")(elected.count(_.party == Bloc)),
+              td(cls := "Grn")(elected.count(_.party == Grn)),
+              td(cls := "Lib")(elected.count(_.party == Lib)),
+              td(cls := "NDP")(elected.count(_.party == NDP))
             )
           }) :+ tfoot(
             tr(cls := "totalsRow")(
@@ -76,11 +78,7 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
           )
         )
       )
-
-
     )
-
-
   }
 
 }

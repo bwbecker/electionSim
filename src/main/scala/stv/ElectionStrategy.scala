@@ -4,12 +4,7 @@ import scala.collection.mutable
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
-
-/**
-  * Created by bwbecker on 2016-08-18.
-  */
 trait ElectionStrategy {
-
   val name: String
   val shortName: String
   val help: TypedTag[String]
@@ -17,36 +12,71 @@ trait ElectionStrategy {
   val description: TypedTag[String]
   val debug = false
 
+}
 
-  def runElection(candidates: List[Candidate], dm: Int): (List[Candidate], List[Candidate])
+/**
+  * Created by bwbecker on 2016-08-18.
+  */
+trait RidingElectionStrategy extends ElectionStrategy {
 
-  protected def collapseCandidates(candidates: List[Candidate]): List[Candidate] = {
-    val grouped = candidates.groupBy(c => c.party)
-    for {
-      (party, cands) <- grouped.toList
-    } yield {
-      if (cands.length > 1) {
-        val mostVotes = cands.maxBy(_.votes)
-        mostVotes.copy(votes = cands.map(_.votes).sum, effVotes = cands.map(_.effVotes).sum)
+
+  def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate])
+
+}
+
+trait TopupElectionStrategy extends ElectionStrategy {
+
+  def runElection(regionId: String,
+                  allCandidates: Vector[Candidate],
+                  numSeats: Int,
+                  threshhold: Double): Vector[Candidate]
+}
+
+object TopupStrategy extends TopupElectionStrategy {
+  val name = "Top-up"
+  val shortName = "Top-up"
+  val help = p("Iteratively choose the most disadvantaged party.")
+  val description = p("Iteratively choose the most disadvantaged party.")
+
+  def runElection(regionId: String, allCandidates:Vector[Candidate], numTopupSeats: Int, threshhold:
+  Double): Vector[Candidate] = {
+
+    val numRidingSeats = allCandidates.count(c ⇒ c.winner)
+
+    def helper(topups: Vector[Candidate]): Vector[Candidate] = {
+      if (topups.length == numTopupSeats) {
+        topups //.reverse
       } else {
-        cands.head
+        val a = new Analysis(allCandidates ++ topups, numRidingSeats + numTopupSeats)
+        val stats = a.statsByParty.filter(s ⇒ s.pctVote >= threshhold)
+
+
+        val disadvantaged = stats.maxBy(s ⇒ s.deservedMPs - s.mps)
+
+        val cand = Candidate("", regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0, 0.0, true, SeatType.TopupSeat)
+        helper(topups :+ cand)
+
       }
     }
+
+    helper(Vector())
+
   }
 
 }
 
-object ElectionStrategy {
-  val values = Vector(FptpElectionStrategy,
-    AvElectionStrategy,
-    EkosStvElectionStrategy,
-    ListElectionStrategy,
-    NotApplicableElectionStrategy
+
+object RidingElectionStrategy {
+  val values = Vector(FptpRidingElectionStrategy,
+    AvRidingElectionStrategy,
+    EkosStvRidingElectionStrategy,
+    ListRidingElectionStrategy,
+    NotApplicableRidingElectionStrategy
   )
 
-  val singleMbrStrategies = Vector(FptpElectionStrategy, AvElectionStrategy)
+  val singleMbrStrategies = Vector(FptpRidingElectionStrategy, AvRidingElectionStrategy)
 
-  val multiMbrStrategies = Vector(EkosStvElectionStrategy, ListElectionStrategy)
+  val multiMbrStrategies = Vector(EkosStvRidingElectionStrategy, ListRidingElectionStrategy)
 }
 
 /*
@@ -69,51 +99,55 @@ object FptpElectionStrategy extends ElectionStrategy {
 }
 */
 
-object FptpElectionStrategy extends StvElectionStrategy(XferProbFPTP) {
+object FptpRidingElectionStrategy extends StvRidingElectionStrategy(XferProbFPTP) {
   override val name = "FPTP"
   override val shortName = "F"
   override val description = p("A version of FPTP that deals with merged ridings.")
   override val help = p("First-Past-The-Post -- the candidate with the most votes wins.")
 }
 
-object NotApplicableElectionStrategy extends ElectionStrategy {
+object NotApplicableRidingElectionStrategy extends RidingElectionStrategy {
   val name: String = "N/A"
   val shortName = "x"
   val help = p("No election strategy is applicable in this situation.")
-  val description: TypedTag[String] = p("An election strategy for where none are applicable.  For example, for multi-member" +
+  val description: TypedTag[String] = p("An election strategy for where none are applicable.  For example, for " +
+    "multi-member" +
     " ridings in a FPTP simulation.")
 
-  def runElection(candidates: List[Candidate], dm: Int): (List[Candidate], List[Candidate]) = {
+  def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
     throw new Exception("Election Strategy is not applicable.")
   }
 
 }
 
 
+
+
 /**
   * Just like STV but we want the AV name.
   */
-object AvElectionStrategy extends StvElectionStrategy(Ekos) {
+object AvRidingElectionStrategy extends StvRidingElectionStrategy(Ekos) {
   override val name = "AV"
   override val shortName = "A"
   override val help = p("Alternative Vote: Elect one winner using a ranked ballot.  Drop the least " +
     "popular candidate and redistribute their ballots to the next choice candidate until one candidate " +
     "has at least 50%+1.")
 
-  override def runElection(candidates: List[Candidate], dm: Int): (List[Candidate], List[Candidate]) = {
+  override def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
     assert(dm == 1)
     super.runElection(candidates, dm)
   }
 }
 
 
-object EkosStvElectionStrategy extends StvElectionStrategy(Ekos)
+object EkosStvRidingElectionStrategy extends StvRidingElectionStrategy(Ekos)
 
-class StvElectionStrategy(voteXfer: VoteXfer) extends ElectionStrategy {
+class StvRidingElectionStrategy(voteXfer: VoteXfer) extends RidingElectionStrategy {
 
   val name = "STV"
   val shortName = "S"
-  val help = div(p("Single Transferable Vote: Elect one or more winners using a ranked ballot. Establish a 'quota' or " +
+  val help = div(p("Single Transferable Vote: Elect one or more winners using a ranked ballot. Establish a 'quota' or" +
+    " " +
     "maximum number of votes required to be elected.  Call that number 'Q'."),
     p("If a candidate has more than Q votes, declare the candidate elected and transfer any votes more than " +
       "Q to other candidates according to the preferences expressed on the ballots.  If no candidate has " +
@@ -138,12 +172,14 @@ class StvElectionStrategy(voteXfer: VoteXfer) extends ElectionStrategy {
   }
 
 
-  def runElection(candidates: List[Candidate], dm: Int): (List[Candidate], List[Candidate]) = {
+  def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
     this.stvElection(candidates, dm, voteXfer.xfer, debug)
   }
 
 
   private case class MutCandidate(ridingId: RidingId,
+                                  regionId:RegionId,
+                                  provName: ProvName,
                                   name: String,
                                   party: Party,
                                   votes: Double,
@@ -155,10 +191,12 @@ class StvElectionStrategy(voteXfer: VoteXfer) extends ElectionStrategy {
 
   }
 
-  private def stvElection(candidates: List[Candidate], dm: Int, xferVoteProb: VoteXferFunc, debug: Boolean): (List[Candidate],
-    List[Candidate]) = {
-    def c2m(c: Candidate): MutCandidate = MutCandidate(c.ridingId, c.name, c.party, c.votes, c.votes, false)
-    def m2c(m: MutCandidate): Candidate = Candidate(m.ridingId, m.name, m.party, m.votes, m.effVotes, m.winner, SeatType.RidingSeat)
+  private def stvElection(candidates: Seq[Candidate], dm: Int, xferVoteProb: VoteXferFunc, debug: Boolean):
+  (Seq[Candidate],
+    Seq[Candidate]) = {
+    def c2m(c: Candidate): MutCandidate = MutCandidate(c.ridingId, c.regionId, c.provName, c.name, c.party, c.votes, c.votes, false)
+    def m2c(m: MutCandidate): Candidate = Candidate(m.ridingId, m.regionId, m.provName, m.name, m.party, m.votes, m.effVotes, m.winner,
+      SeatType.RidingSeat)
 
     val (win, lose) = stvElection(
       candidates.map(c2m(_)).toSet, dm, xferVoteProb)(debug)
@@ -216,7 +254,7 @@ class StvElectionStrategy(voteXfer: VoteXfer) extends ElectionStrategy {
             hasThreshold.winner = true
             hasThreshold.effVotes = threshhold
             helper(remainingCandidates, hasThreshold :: elected, notElected)
-          case None ⇒
+          case None               ⇒
             if (elected.length + candidates.size == dm) {
               dp(s"Exactly enough candidates left to finish the election.  ${candidates}")
               candidates.foreach(_.winner = true)
@@ -238,7 +276,10 @@ class StvElectionStrategy(voteXfer: VoteXfer) extends ElectionStrategy {
     val (winners, losers) = helper(candidates, List(), List())
     dp(s"winners = ${winners}")
     dp(s"losers = ${losers}")
-    assert(winners.length + losers.length == candidates.size, s"${winners.length} + ${losers.length} != ${candidates.size}")
+    assert(winners.length + losers.length == candidates.size, s"${winners.length} + ${losers.length} != ${
+      candidates
+        .size
+    }")
     (winners, losers)
   }
 
@@ -288,7 +329,7 @@ class StvElectionStrategy(voteXfer: VoteXfer) extends ElectionStrategy {
 }
 
 
-object ListElectionStrategy extends ElectionStrategy {
+object ListRidingElectionStrategy extends RidingElectionStrategy {
   val name: String = "List"
   val shortName: String = "L"
   val description: TypedTag[String] = div(
@@ -303,7 +344,7 @@ object ListElectionStrategy extends ElectionStrategy {
   )
   val help = description
 
-  def runElection(candidates: List[Candidate], dm: Int): (List[Candidate], List[Candidate]) = {
+  def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
     //assert(!candidates.exists(c => c.winner))
 
     //val cand = candidates.filter(c => c.party.mainStream)
@@ -320,7 +361,7 @@ object ListElectionStrategy extends ElectionStrategy {
     implicit val priority = Ordering.by { foo: (Party, Double) => foo._2 }
     val q = mutable.PriorityQueue[(Party, Double)](quotientsByParty: _*)
 
-    def winners(elected: List[Candidate], unelected: List[Candidate]): (List[Candidate], List[Candidate]) = {
+    def winners(elected: Seq[Candidate], unelected: Seq[Candidate]): (Seq[Candidate], Seq[Candidate]) = {
       if (elected.length == dm) {
         (elected, unelected)
       } else {
@@ -331,13 +372,15 @@ object ListElectionStrategy extends ElectionStrategy {
         try {
           val winner = unelected.filter(c => c.party == party).maxBy(c => c.votes)
           q.enqueue((party, quot - 1))
-          winners(winner.copy(winner = true) :: elected, unelected.filterNot(c => c == winner))
+          winners(winner.copy(winner = true) +: elected, unelected.filterNot(c => c == winner))
         } catch {
           case e: UnsupportedOperationException =>
             println(s"${party} didn't run enough candidates.")
             winners(Candidate(candidates.head.ridingId,
+              candidates.head.regionId,
+              candidates.head.provName,
               "Party ran insufficient candidates",
-              party, 0, 0, true, SeatType.RidingSeat) :: elected, unelected)
+              party, 0, 0, true, SeatType.RidingSeat) +: elected, unelected)
         }
       }
     }

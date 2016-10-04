@@ -13,18 +13,23 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
                params: Params
               ) {
 
+
+  val results = design.doElection(params.singleMemberElectionStrategy, params.multiMemberElectionStrategy,
+    TopupStrategy, None)
+
   //val SENSITIVITY_STEPS =   0.02
   val SENSITIVITY_STEPS = 0.1
   val SENSITIVITY_START = -0.30
   val SENSITIVITY_END = 0.21
 
 
-  val regions: List[Region] = design.provinces.flatMap(p => p.regions).toList
+  val regions: Vector[Region] = design.regions
+
   // Sort for consistent output later.
   val newRidingsVec: Vector[Riding] = regions.flatMap { rg => rg.ridings }.toVector
   val newRidings: Map[RidingId, Riding] = newRidingsVec.sortBy(_.ridingId).map { r => (r.ridingId, r) }.toMap
 
-  val analysis = Analysis(regions)
+  val analysis = results.analysisByRegion(regions)
 
   val totalArea = this.newRidings.map(_._2.area).sum
 
@@ -164,11 +169,13 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
     var totalVoters = 0.0
     var gotPrefParty = 0.0
     for {
-      (ridingId, riding) ← this.newRidings
-      candidate ← riding.candidates
+      candidate ← this.results.allCandidates
       prefParty = candidate.party
     } {
-      if (riding.elected.exists(cand ⇒ cand.party == prefParty)) {
+      val candidates = this.results.electedByRiding.get(candidate.ridingId)
+      if (candidates.isEmpty) {
+        println(s"pctVotersWithPreferredPartyLocally: no candidates for riding ${candidate.ridingId}")
+      } else if (candidates.get.exists(cand ⇒ cand.party == prefParty)) {
         gotPrefParty += candidate.votes
       }
       totalVoters += candidate.votes
@@ -180,15 +187,13 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
     var totalVoters = 0.0
     var gotPrefParty = 0.0
     for {
-      region ← this.regions
-      riding ← region.ridings
-      candidate ← riding.candidates
+      candidate ← this.results.allCandidates
       prefParty = candidate.party
-      gotPrefPartyLocally = riding.elected.exists(cand ⇒ cand.party == prefParty)
-      gotPrefPartyRegionally = region.topUpCandidates.exists(cand ⇒ cand.party == prefParty)
     } {
-
-      if (gotPrefPartyLocally || gotPrefPartyRegionally) {
+      val candidates = this.results.electedByRegion.get(candidate.regionId)
+      if (candidates.isEmpty) {
+        println(s"pctVotersWithPreferredPartyRegionally: no candidates for region ${candidate.regionId}")
+      } else if (candidates.get.exists(cand ⇒ cand.party == prefParty)) {
         gotPrefParty += candidate.votes
       }
       totalVoters += candidate.votes
@@ -196,50 +201,38 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
     gotPrefParty / totalVoters
   }
 
-  /* Calculating the sensitivity stuff is expensive -- so cache it to avoid recomputation.
+  /*
   * This is used to get the average Gallagher for the model, so can't be moved to the companion
-  * object.  Caching really doesn't happen except for the average gallagher.  Probably a better
-  * way to do it.
+  * object.
   */
   private var sensitivityCache = mutable.Map[(Party, Party), Vector[SensitivityDataPoint]]()
 
   def sensitivityAnalysis(party1: Party, party2: Party): Vector[SensitivityDataPoint] = {
-    this.sensitivityCache.get((party1, party2)) match {
 
-      case Some(lst) ⇒
-        //println(s"Found sensitivity for ${party1} -> ${party2} in cache.")
-        lst
+    //println(s"Did NOT find sensitivity for ${party1} -> ${party2} in cache.")
 
-      case None ⇒
-        //println(s"Did NOT find sensitivity for ${party1} -> ${party2} in cache.")
+    val lst = (for (d ← SENSITIVITY_START until SENSITIVITY_END by SENSITIVITY_STEPS) yield {
+      val p = if (d < 0) {
+        params.copy(voteAdjustment = Some(VoteSwing(-d, party2, party1)))
+      } else {
+        params.copy(voteAdjustment = Some(VoteSwing(d, party1, party2)))
+      }
 
-        val lst = (for (d ← SENSITIVITY_START until SENSITIVITY_END by SENSITIVITY_STEPS) yield {
-          val p = if (d < 0) {
-            params.copy(voteAdjustment = Some(VoteAdjust(-d, party2, party1)))
-          } else {
-            params.copy(voteAdjustment = Some(VoteAdjust(d, party1, party2)))
-          }
+      val results = this.design.doElection(p.singleMemberElectionStrategy, p.multiMemberElectionStrategy,
+        TopupStrategy, p.voteAdjustment)
+      val analysis = results.analysisByRegion(this.regions)
 
-          val inputs = io.Input.getSim(p)
-          val analysis = Analysis(inputs.regions)
+      val libVotes = analysis.statsByParty.find(_.party == Lib).get.pctVote
+      val libMPs = analysis.statsByParty.find(_.party == Lib).get.pctMPs
+      val ndpVotes = analysis.statsByParty.find(_.party == NDP).get.pctVote
+      val ndpMPs = analysis.statsByParty.find(_.party == NDP).get.pctMPs
+      val conVotes = analysis.statsByParty.find(_.party == Con).get.pctVote
+      val conMPs = analysis.statsByParty.find(_.party == Con).get.pctMPs
 
-          val libVotes = analysis.statsByParty.find(_.party == Lib).get.pctVote
-          val libMPs = analysis.statsByParty.find(_.party == Lib).get.pctMPs
-          val ndpVotes = analysis.statsByParty.find(_.party == NDP).get.pctVote
-          val ndpMPs = analysis.statsByParty.find(_.party == NDP).get.pctMPs
-          val conVotes = analysis.statsByParty.find(_.party == Con).get.pctVote
-          val conMPs = analysis.statsByParty.find(_.party == Con).get.pctMPs
-
-          //      println(f"${d}%3.2f\t${libVotes}%d\t${conVotes}%d\t${ndpVotes}%d" +
-          //        f"\t${fptpAnalysis.gallagherIndex}%5.4f\t${stvAnalysis.gallagherIndex}%5.4f\t${
-          //          hybridAnalysis
-          //            .gallagherIndex
-          //        }%5.4f")
-          SensitivityDataPoint(d, libVotes, libMPs, conVotes, conMPs, ndpVotes, ndpMPs, analysis.gallagherIndex)
-        }).toVector
-        this.sensitivityCache += (party1, party2) → lst
-        lst
-    }
+      SensitivityDataPoint(d, libVotes, libMPs, conVotes, conMPs, ndpVotes, ndpMPs, analysis.gallagherIndex)
+    }).toVector
+    this.sensitivityCache += (party1, party2) → lst
+    lst
   }
 
 
@@ -288,9 +281,9 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
     //
     //    wtGallagher
 
-    val aLst = ProvName.values.map { p ⇒ Analysis(List(p)) }
-    val totSeats = aLst.map(a ⇒ a.seats).sum
-    val wtGallagher = aLst.map(a ⇒ a.gallagherIndex * a.seats / totSeats).sum
+    val aLst = ProvName.values.map { p ⇒ this.results.analysisByProvince(List(p)) }
+    val totSeats = aLst.map(a ⇒ a.totalSeats).sum
+    val wtGallagher = aLst.map(a ⇒ a.gallagherIndex * a.totalSeats / totSeats).sum
 
     wtGallagher
 

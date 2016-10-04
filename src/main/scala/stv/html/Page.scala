@@ -83,7 +83,7 @@ trait Page {
           )
         )
       } else {
-        li(a(raw("&nbsp;")), ul())
+        li(a(raw("")), ul())
       },
       li(
         a(href := "about.html")("About"),

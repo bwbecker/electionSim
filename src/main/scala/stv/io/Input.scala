@@ -12,16 +12,10 @@ object Input {
   private val e2015NumCandidates = 1775
   private val e2015NumVotes = 17583155
 
-  private case class RawCandidate(riding_id: Int,
-                                  candidate_name: String,
-                                  party_id: Party,
-                                  incumbent: Boolean,
-                                  elected: Boolean,
-                                  votes: Double)
 
   class RawDesign(private val d: JsonDesign) {
 
-    def transform(params:Params): Design = {
+    def transform(params: Params): Design = {
       d.transform(params)
     }
 
@@ -32,8 +26,18 @@ object Input {
     def hasMultiMemberRidings = {
       d.provinces.exists(p => p.regions.exists(region => region.new_ridings.exists(riding => riding.district_mag > 1)))
     }
-
   }
+
+
+  /*
+   * Stuff to read the raw JSON and then transform it into our finished data structure (Design)
+   */
+  private case class RawCandidate(riding_id: Int,
+                                  candidate_name: String,
+                                  party_id: Party,
+                                  incumbent: Boolean,
+                                  elected: Boolean,
+                                  votes: Double)
 
   private case class JsonDesign(
                                  design_name: DesignName,
@@ -41,7 +45,7 @@ object Input {
                                  provinces: Vector[JsonProv]
                                ) {
 
-    def transform(params:Params): Design = Design(
+    def transform(params: Params): Design = Design(
       design_name,
       is_proportional,
       provinces.map(p => p.toProvince(params))
@@ -52,8 +56,7 @@ object Input {
   private case class JsonProv(prov: ProvName,
                               regions: Vector[JsonRegion]) {
 
-    def toProvince(params:Params): Province = Province(
-      prov,
+    def toProvince(params: Params): Province = Province(prov,
       regions.map { r => r.toRegion(params) }
     )
   }
@@ -62,13 +65,17 @@ object Input {
                                 top_up_seats: Int,
                                 new_ridings: Vector[JsonNewRiding]) {
 
-    def toRegion(params:Params) = Region(
+    def toRegion(params: Params) = Region(
       region_id,
       top_up_seats,
-      new_ridings.map(r => r.toRiding(params)).toList,
+      new_ridings.map(r => r.toRiding(params, region_id)),
       0.01)
   }
 
+  /*
+   * The JSON input file encode the old ridings that are mapped to a new riding as a
+   * comma separated string.  Split it into its constituent parts.
+   */
   private case class JsonOldRiding(info: String) {
     val (riding_id, pct, name) = {
       val a = info.split(", *")
@@ -82,42 +89,15 @@ object Input {
     val oldRidings = old_ridings.map(JsonOldRiding(_))
 
 
-    def toRiding(params:Params): Riding = {
+    def toRiding(params: Params, regionId: RegionId): Riding = {
 
       // Get the list of candidates, adjusted for partial ridings.
       val candidates = oldRidings.flatMap { or =>
         val r = Input.eCandidatesByRiding(or.riding_id.toString)
         // Change old riding ID to new riding Id.
-        r.map { r => r.copy(ridingId = riding_id,
+        r.map { r => r.copy(ridingId = riding_id, regionId = regionId,
           votes = r.votes * or.pct / 100.0, effVotes = r.votes * or.pct / 100.0)
         }
-      }
-
-
-
-      // Adjust votes
-      val c2 = params.voteAdjustment match {
-        case None ⇒ candidates
-
-        case Some(VoteAdjust(pct, fromParty, toParty)) ⇒
-          assert(pct >= 0.0, s"pct = $pct")
-
-          val fromCand = candidates.filter(_.party == fromParty)
-          val toCand = candidates.filter(_.party == toParty)
-          val fromVotes = fromCand.map(_.votes).sum * pct
-          val toVotes = fromVotes / toCand.length
-
-          candidates.map { c ⇒
-            val cv = if (c.party == fromParty) {
-              c.votes - c.votes * pct
-            } else if (c.party == toParty) {
-              c.votes + toVotes
-            } else {
-              c.votes
-            }
-
-            c.copy(votes = cv, effVotes = cv)
-          }
       }
 
 
@@ -139,9 +119,8 @@ object Input {
         Math.round(pop).toInt, // pop
         Math.round(area).toInt, // area
         district_mag,
-        c2.toList,
-        oldRidings.map(or => OldRiding(or.riding_id.toString, or.pct.toDouble, or.name)).toList,
-        if (district_mag == 1) params.singleMemberElectionStrategy else params.multiMemberElectionStrategy
+        candidates,
+        oldRidings.map(or => OldRiding(or.riding_id.toString, or.pct.toDouble, or.name))
       )
     }
   }
@@ -152,6 +131,7 @@ object Input {
     *
     * @return
     */
+    // ToDo:  This should be parameterized by election
   val e2015Candidates: List[Candidate] = {
     val fileName = s"json/candidates.json"
     //val fileName = s"json/candidates_ian.json"
@@ -160,7 +140,8 @@ object Input {
     val r: Vector[RawCandidate] = Pickler.read[Vector[RawCandidate]](rawJson)
 
     val result = r.toList.map { c ⇒
-      Candidate(c.riding_id.toString, c.candidate_name, c.party_id,
+      // Region and province will be filled in with correct values in a later step
+      Candidate(c.riding_id.toString, "DummyRegion", ProvName.AB, c.candidate_name, c.party_id,
         c.votes,
         c.votes,
         false, SeatType.RidingSeat)
@@ -205,7 +186,7 @@ object Input {
   def readDesign(d: DesignName): RawDesign = {
     this.designCache.get(d) match {
       case Some(rd) => rd
-      case None =>
+      case None     =>
         val source = scala.io.Source.fromFile(s"json/${d}.json")
         val rawJson = try source.getLines().mkString("\n") finally source.close()
         val rd = this.readDesign(rawJson)
@@ -214,13 +195,13 @@ object Input {
     }
   }
 
-  def readDesign(rawJson:String):RawDesign = {
+  def readDesign(rawJson: String): RawDesign = {
     val jd = Pickler.read[JsonDesign](rawJson)
     new RawDesign(jd)
   }
 
 
-  def getSim(params:Params):Sim = {
+  def getSim(params: Params): Sim = {
     Sim(Input.readDesign(params.designName).transform(params),
       params)
   }

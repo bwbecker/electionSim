@@ -56,7 +56,6 @@ case class ParametersHTML(params: Params, sim: Sim) extends Page {
               va ⇒ tr(td("Vote adjustment: "),
                 td(s"${va.toParty}.votes += ${va.pct} * ${va.fromParty}.votes"))
             },
-            tr(td("Minium threshhold to earn top-up seats: "), td(params.threshholdForTopup)),
             tr(td("Single-Member Riding election type: "), td(params.singleMemberElectionStrategy.name)),
             tr(td("Multi-Member Riding election type: "), td(params.multiMemberElectionStrategy.name))
           ))

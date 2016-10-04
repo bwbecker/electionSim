@@ -4,5 +4,7 @@ candidates_ian.json
 fptp_toronto.json
 synch
 .idea
-2011_results.csv
-2011_results_clean.csv
+json/load_candidates/2011_results.csv
+json/load_candidates/2011_results_clean.csv
+html_ref
+html_ref1

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Diff HTML output against a reference version when refactoring.
+
+# Usage:  ./diff_html html/fptp html_ref
+# That is, the specific subdir for the first arg and the top-level dir for the second
+
+
+for f in `find $1 -name "*.html"`; do
+	from=$f
+	ref=$2/${f#*/}
+	tidy -q -xml $from > $from.tidy
+	tidy -q -xml $ref > $ref.tidy
+	echo "***" $f
+	diff $from.tidy $ref.tidy
+done
