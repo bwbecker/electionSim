@@ -289,6 +289,13 @@ case class OverviewFeaturedHTML(sims: List[Sim], numAllSims: Int, val pgTitle: S
   private val introduction = div(
     h2("Introduction"),
     div(cls := "blockIndent")(
+      div(cls := "whatsNew")(
+        h3("What's New"),
+        p(strong("2016-10-05"), ": Added a few simulations based on 2006, 2008, and 2011 elections. " +
+          "See the second table on the ",
+          a(href := "allSimulations.html")("All Systems"),
+          " page.")
+      ),
       p(
         s"""This web site presents the results of simulating ${numAllSims} electoral systems.
       Others have done individual simulations of their favourite systems, but this is believed
