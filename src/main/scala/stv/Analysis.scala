@@ -116,6 +116,15 @@ class Analysis(val allCandidates: Seq[Candidate],
 
   lazy val statsByParty = this.calcStatsByParty
 
+  /**
+    * Get the percent of the vote earned by the given party.
+    */
+  def pctVote(party: Party): Double = statsByParty.find(_.party == party).map(stats ⇒ stats.pctVote).getOrElse(0.0)
+
+  /**
+    * Get the percent of the MPs returned for the given party.
+    */
+  def pctMPs(party: Party): Double = statsByParty.find(_.party == party).map(stats ⇒ stats.pctMPs).getOrElse(0.0)
 
   def gallagherIndex: Double = {
     val sumDifSquared = this.statsByParty.map { ps ⇒ Math.pow(ps.pctVote - ps.pctMPs, 2) }.sum

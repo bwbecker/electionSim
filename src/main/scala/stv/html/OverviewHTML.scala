@@ -387,7 +387,7 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
         tbody(
           for{
             sim ← sims.sortBy(s ⇒ (
-              s.design.design_name.toString,
+              s.params.designName.toString,
               s.params.singleMemberElectionStrategy.name,
               s.params.multiMemberElectionStrategy.name,
               s.params.year

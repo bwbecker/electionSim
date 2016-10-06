@@ -5,7 +5,7 @@ import stv.Pickler
 
 import scala.collection.mutable
 
-import java.io.File
+import java.io.{File, FileNotFoundException}
 
 
 object Input {
@@ -53,8 +53,12 @@ object Input {
   //    this.readDesign(fileToString(fileName).get)
   //  }
 
-  def readDesign(dName: DesignName, numRidings: Int, ridings: Vector[RawFptpRiding], candidates:
-  Vector[RawCandidate]): Option[Design] = {
+  def readDesign(dName: DesignName,
+                 numRidings: Int,
+                 ridings: Vector[RawFptpRiding],
+                 candidates: Vector[RawCandidate]): Option[Design] = {
+    assert(ridings.length > 250, s"Looks like ridings didn't get read; only found ${ridings.length}.")
+    assert(candidates.length > 250, s"Looks like candidates didn't get read; only found ${candidates.length}.")
     fileToString(s"json/ridings-${numRidings}/${dName}.json").map { json ⇒
       new DesignReader(json, ridings, candidates).read
     }
@@ -74,6 +78,7 @@ object Input {
       val rawJson = try source.getLines().mkString("\n") finally source.close()
       Some(rawJson)
     } else {
+      //throw new FileNotFoundException(s"Didn't find ${fileName}.")
       None
     }
   }

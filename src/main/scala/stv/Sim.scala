@@ -223,12 +223,12 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
         TopupStrategy, p.voteAdjustment)
       val analysis = results.analysisByRegion(this.regions)
 
-      val libVotes = analysis.statsByParty.find(_.party == Lib).get.pctVote
-      val libMPs = analysis.statsByParty.find(_.party == Lib).get.pctMPs
-      val ndpVotes = analysis.statsByParty.find(_.party == NDP).get.pctVote
-      val ndpMPs = analysis.statsByParty.find(_.party == NDP).get.pctMPs
-      val conVotes = analysis.statsByParty.find(_.party == Con).get.pctVote
-      val conMPs = analysis.statsByParty.find(_.party == Con).get.pctMPs
+      val libVotes = analysis.pctVote(Lib)
+      val libMPs = analysis.pctMPs(Lib)
+      val ndpVotes = analysis.pctVote(NDP)
+      val ndpMPs = analysis.pctMPs(NDP)
+      val conVotes = analysis.pctVote(Con)
+      val conMPs = analysis.pctMPs(Con)
 
       SensitivityDataPoint(d, libVotes, libMPs, conVotes, conMPs, ndpVotes, ndpMPs, analysis.gallagherIndex)
     }).toVector

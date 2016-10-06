@@ -15,6 +15,8 @@ import stv.io.{Input, Output}
   */
 object Main {
 
+  private val numRidingsByElectionYr = Map(2015 → 338, 2011 → 308, 2008 → 308, 2006 → 308)
+
   def main(args: Array[String]): Unit = {
 
 
@@ -22,7 +24,6 @@ object Main {
       case Some(config) =>
         println(config)
 
-        val numRidingsByElectionYr = Map(2015 → 338, 2011 → 308, 2006 → 308)
 
         val sims = for {
           year ← config.years
@@ -84,7 +85,7 @@ object Main {
 
     opt[Unit]("all").action((_, c) =>
       c.copy(all = true,
-        years = Seq(2015, 2011, 2006),
+        years = numRidingsByElectionYr.keys.toVector.sorted,
         designs = DesignName.values,
         overview = true
       )).text("Produce all possible combinations")
@@ -92,7 +93,7 @@ object Main {
     opt[Unit]("overview").action((_, c) =>
       c.copy(overview = true)).text("Write the overview pages")
 
-    opt[Seq[Int]]("years").valueName("<yr1>,<yr2>...").action((x, c) =>
+    opt[Seq[Int]]("years").valueName(numRidingsByElectionYr.keys.toVector.sorted.mkString("<", ">,<",">")).action((x, c) =>
       c.copy(years = x)).text("election years to base simulations on")
 
     opt[Seq[DesignName]]("designs").valueName(DesignName.values.mkString("<", ">,<", ">")).action((x, c) =>
