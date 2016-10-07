@@ -35,10 +35,16 @@ object Main {
         } yield {
           println(s"Processing ${year} ${numRidings} ${designName}")
 
+
           // Seems like these ought to be included in the outer for; but gives a type error
           for {
             singleMbrStrategy ← design.singleMbrStrategies
             multiMbrStrategy ← design.multiMbrStrategies
+          // if both single and multi strategies use a ranked ballot, they both use the same transfer function
+            if (!singleMbrStrategy.isInstanceOf[StvRidingElectionStrategy] ||
+              !multiMbrStrategy.isInstanceOf[StvRidingElectionStrategy] ||
+              singleMbrStrategy.asInstanceOf[StvRidingElectionStrategy].voteXfer == multiMbrStrategy
+                .asInstanceOf[StvRidingElectionStrategy].voteXfer)
           } yield {
 
             val params = namedSystems.find(_.matches(designName, year, singleMbrStrategy, multiMbrStrategy))
@@ -93,8 +99,9 @@ object Main {
     opt[Unit]("overview").action((_, c) =>
       c.copy(overview = true)).text("Write the overview pages")
 
-    opt[Seq[Int]]("years").valueName(numRidingsByElectionYr.keys.toVector.sorted.mkString("<", ">,<",">")).action((x, c) =>
-      c.copy(years = x)).text("election years to base simulations on")
+    opt[Seq[Int]]("years").valueName(numRidingsByElectionYr.keys.toVector.sorted.mkString("<", ">,<", ">")).action(
+      (x, c) =>
+        c.copy(years = x)).text("election years to base simulations on")
 
     opt[Seq[DesignName]]("designs").valueName(DesignName.values.mkString("<", ">,<", ">")).action((x, c) =>
       c.copy(designs = x)).text("designs for the simulations")
@@ -267,6 +274,13 @@ object Main {
       a familiar First-Past-The-Post (FPTP) election in each riding to select the local MP.""")
   )
 
+  val avPlusDescr = div(
+    p("""This design assumes that we keep our current 338 single-member ridings but
+    elect the MPs using Alternative Vote (AV) instead of FPTP.  To make things more
+    proportional, it adds a small top-up layer (like MMP).  It's like MMP-Lite except
+    for replacing FPTP in the single-member ridings with AV.""")
+  )
+
   val rup338Descr =
     div(
       p("The ", a(href := "../RuralUrbanProportional_20160706.pdf")("Rural-Urban Proportional"),
@@ -323,13 +337,13 @@ object Main {
       DesignName.fptp, s"fptp", fptpDescr, FptpRidingElectionStrategy, NotApplicableRidingElectionStrategy),
 
     Params("av", 2015, "Alternative Vote",
-      DesignName.fptp, s"av", avDescr, AvRidingElectionStrategy, NotApplicableRidingElectionStrategy),
+      DesignName.fptp, s"av", avDescr, EkosAvRidingElectionStrategy, NotApplicableRidingElectionStrategy),
 
     Params("stv_med", 2015, "Single Transferable Vote (Medium-sized Regions)",
-      DesignName.stv_med, s"stv_med", stvMedDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.stv_med, s"stv_med", stvMedDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
     Params("stv_small", 2015, "Single Transferable Vote (Small Regions)",
-      DesignName.stv_small, s"stv_small", stvSmallDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.stv_small, s"stv_small", stvSmallDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
 
     Params("mmp-8-fptp", 2015, "Mixed Member Proportional (Small Regions)",
@@ -341,21 +355,25 @@ object Main {
       DesignName.mmp_enlargeP, s"mmp-15pct", mmpLiteDescr, FptpRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
+    Params("av+", 2015, "AV+",
+      DesignName.mmp_enlargeP, s"av-plus", avPlusDescr, EkosAvRidingElectionStrategy,
+      NotApplicableRidingElectionStrategy),
+
     Params("rup-338", 2015, "Rural-Urban PR (More Singles, 338 Seats)",
-      DesignName.ru_singles, s"rup-338", rup338Descr, AvRidingElectionStrategy, ListRidingElectionStrategy),
+      DesignName.ru_singles, s"rup-338", rup338Descr, EkosAvRidingElectionStrategy, ListRidingElectionStrategy),
 
     Params("rup-15pct", 2015, "Rural-Urban PR (More Singles, 389 Seats)",
       DesignName.ru_enlargeP, s"rup-15pct", rup15PctDescr, FptpRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
     Params("rup-stv", 2015, "Rural-Urban PR (Few Singles)",
-      DesignName.ru_multiples, s"rup-stv", stvPlusDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy)
+      DesignName.ru_multiples, s"rup-stv", stvPlusDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy)
   )
 
   val variantSystems = List(
     Params("mmp-8-av", 2015, "MMP (Small Regions, AV)",
-      DesignName.mmp_small, s"mmp-8-av", mmp8avDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.mmp_small, s"mmp-8-av", mmp8avDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
     Params("mmp-14-av", 2015, "MMP (Medium Regions, AV)",
-      DesignName.mmp_med, s"mmp-14-av", mmp14avDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.mmp_med, s"mmp-14-av", mmp14avDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
     Params("mmp-14-fptp", 2015, "MMP (Medium Regions, FPTP)",
       DesignName.mmp_med, s"mmp-14-fptp", mmp14fptpDescr, FptpRidingElectionStrategy,
@@ -365,7 +383,8 @@ object Main {
       DesignName.ru_singles, s"rup-338-list", rup338ListDescr, FptpRidingElectionStrategy, ListRidingElectionStrategy),
 
     Params("rup-15pct-stv", 2015, "Rural-Urban PR (More Singles, More Seats)",
-      DesignName.ru_enlargeP, s"rup-15pct-stv", rup15PctDescr, AvRidingElectionStrategy, EkosStvRidingElectionStrategy)
+      DesignName.ru_enlargeP, s"rup-15pct-stv", rup15PctDescr, EkosAvRidingElectionStrategy,
+      EkosStvRidingElectionStrategy)
 
   )
 

@@ -26,7 +26,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
       summaryStats,
 
-      sensitivity(List((Con, Lib), (NDP, Lib))),
+      sensitivity(sensitivityPairs),
 
       subsets,
 
@@ -38,6 +38,12 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
       h2("Methodology"),
       this.methodology
     )
+  }
+
+  private def sensitivityPairs:List[(Party, Party)] = {
+    val stats = sim.analysis.statsByParty.sortBy(s ⇒ -s.pctVote).take(3)
+
+    List((stats(1).party, stats(0).party), (stats(2).party, stats(0).party), (Party.Grn, stats(0).party))
   }
 
   private def summaryStats = {
@@ -569,6 +575,24 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
             borderColor: 'rgba(200, 100, 100, 1)',
             borderWidth: 1,
             pointStyle: 'rect',
+            pointRadius: 5
+        },
+        {
+            label: 'Grn Votes',
+            data: ${toData(data.map(_.grnVotes))},
+            backgroundColor: 'rgba(40, 40, 40, 0)',
+            borderColor: 'green',
+            borderWidth: 3,
+            pointStyle: 'rectRot',
+            pointRadius: 4
+        },
+        {
+            label: 'Grn MPs',
+            data: ${toData(data.map(_.grnMPs))},
+            backgroundColor: 'rgba(45, 45, 45, 0)',
+            borderColor: 'rgba(100, 200, 100, 1)',
+            borderWidth: 1,
+            pointStyle: 'rectRot',
             pointRadius: 5
         },
         {

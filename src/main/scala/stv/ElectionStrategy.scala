@@ -22,6 +22,26 @@ trait RidingElectionStrategy extends ElectionStrategy {
 
   def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate])
 
+  /**
+    * Return the same list but with the effective votes either the total of
+    * all votes for the party (assigned to the candidate with the most votes)
+    * or 0.
+    *
+    */
+  def collapseCandidates(candidates: Seq[Candidate]): Seq[Candidate] = {
+    val byParty = candidates.groupBy(_.party)
+    val winnersByParty = byParty.map(
+      t ⇒ t._1 → t._2.maxBy(_.votes)
+    )
+    for (c ← candidates) yield {
+      if (c == winnersByParty(c.party)) {
+        c.copy(effVotes = byParty(c.party).map(_.votes).sum)
+      } else {
+        c.copy(effVotes = 0)
+      }
+    }
+  }
+
 }
 
 trait TopupElectionStrategy extends ElectionStrategy {
@@ -38,7 +58,7 @@ object TopupStrategy extends TopupElectionStrategy {
   val help = p("Iteratively choose the most disadvantaged party.")
   val description = p("Iteratively choose the most disadvantaged party.")
 
-  def runElection(regionId: String, allCandidates:Vector[Candidate], numTopupSeats: Int, threshhold:
+  def runElection(regionId: String, allCandidates: Vector[Candidate], numTopupSeats: Int, threshhold:
   Double): Vector[Candidate] = {
 
     val numRidingSeats = allCandidates.count(c ⇒ c.winner)
@@ -53,7 +73,8 @@ object TopupStrategy extends TopupElectionStrategy {
 
         val disadvantaged = stats.maxBy(s ⇒ s.deservedMPs - s.mps)
 
-        val cand = Candidate("", regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0, 0.0, true, SeatType.TopupSeat)
+        val cand = Candidate("", regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0,
+          0.0, true, SeatType.TopupSeat)
         helper(topups :+ cand)
 
       }
@@ -68,15 +89,22 @@ object TopupStrategy extends TopupElectionStrategy {
 
 object RidingElectionStrategy {
   val values = Vector(FptpRidingElectionStrategy,
-    AvRidingElectionStrategy,
+    EkosAvRidingElectionStrategy,
+    //ThinAirAvRidingElectionStrategy,
     EkosStvRidingElectionStrategy,
+    //ThinAirStvRidingElectionStrategy,
     ListRidingElectionStrategy,
     NotApplicableRidingElectionStrategy
   )
 
-  val singleMbrStrategies = Vector(FptpRidingElectionStrategy, AvRidingElectionStrategy)
+  val singleMbrStrategies = Vector(FptpRidingElectionStrategy,
+    //ThinAirAvRidingElectionStrategy,
+    EkosAvRidingElectionStrategy
+  )
 
-  val multiMbrStrategies = Vector(EkosStvRidingElectionStrategy, ListRidingElectionStrategy)
+  val multiMbrStrategies = Vector(EkosStvRidingElectionStrategy,
+    //ThinAirStvRidingElectionStrategy,
+    ListRidingElectionStrategy)
 }
 
 /*
@@ -104,6 +132,16 @@ object FptpRidingElectionStrategy extends StvRidingElectionStrategy(XferProbFPTP
   override val shortName = "F"
   override val description = p("A version of FPTP that deals with merged ridings.")
   override val help = p("First-Past-The-Post -- the candidate with the most votes wins.")
+
+  override def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
+    assert(dm == 1)
+    val cCands = this.collapseCandidates(candidates)
+    val winner = cCands.maxBy(_.effVotes)
+    val (elected, unelected) = cCands.partition(c => c == winner)
+    assert(elected.length == 1)
+    assert(unelected.length == cCands.length - 1)
+    (elected.map { c ⇒ c.copy(winner = true) }, unelected)
+  }
 }
 
 object NotApplicableRidingElectionStrategy extends RidingElectionStrategy {
@@ -121,17 +159,28 @@ object NotApplicableRidingElectionStrategy extends RidingElectionStrategy {
 }
 
 
-
-
 /**
   * Just like STV but we want the AV name.
   */
-object AvRidingElectionStrategy extends StvRidingElectionStrategy(Ekos) {
-  override val name = "AV"
+object EkosAvRidingElectionStrategy extends StvRidingElectionStrategy(EkosXfer) {
+  override val name = "AV-Ekos"
   override val shortName = "A"
   override val help = p("Alternative Vote: Elect one winner using a ranked ballot.  Drop the least " +
     "popular candidate and redistribute their ballots to the next choice candidate until one candidate " +
-    "has at least 50%+1.")
+    "has at least 50%+1.  Use a 2nd choice function based on Ekos polling.")
+
+  override def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
+    assert(dm == 1)
+    super.runElection(candidates, dm)
+  }
+}
+
+object ThinAirAvRidingElectionStrategy extends StvRidingElectionStrategy(ThinAirXfer) {
+  override val name = "AV-ThinAir"
+  override val shortName = "a"
+  override val help = p("Alternative Vote: Elect one winner using a ranked ballot.  Drop the least " +
+    "popular candidate and redistribute their ballots to the next choice candidate until one candidate " +
+    "has at least 50%+1.  Use a made-up 2nd choice function.")
 
   override def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
     assert(dm == 1)
@@ -140,9 +189,17 @@ object AvRidingElectionStrategy extends StvRidingElectionStrategy(Ekos) {
 }
 
 
-object EkosStvRidingElectionStrategy extends StvRidingElectionStrategy(Ekos)
+object EkosStvRidingElectionStrategy extends StvRidingElectionStrategy(EkosXfer) {
+  override val name = "STV-Ekos"
+  override val shortName = "S"
+}
 
-class StvRidingElectionStrategy(voteXfer: VoteXfer) extends RidingElectionStrategy {
+object ThinAirStvRidingElectionStrategy extends StvRidingElectionStrategy(ThinAirXfer) {
+  override val name = "STV-ThinAir"
+  override val shortName = "T"
+}
+
+class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrategy {
 
   val name = "STV"
   val shortName = "S"
@@ -178,7 +235,7 @@ class StvRidingElectionStrategy(voteXfer: VoteXfer) extends RidingElectionStrate
 
 
   private case class MutCandidate(ridingId: RidingId,
-                                  regionId:RegionId,
+                                  regionId: RegionId,
                                   provName: ProvName,
                                   name: String,
                                   party: Party,
@@ -194,8 +251,10 @@ class StvRidingElectionStrategy(voteXfer: VoteXfer) extends RidingElectionStrate
   private def stvElection(candidates: Seq[Candidate], dm: Int, xferVoteProb: VoteXferFunc, debug: Boolean):
   (Seq[Candidate],
     Seq[Candidate]) = {
-    def c2m(c: Candidate): MutCandidate = MutCandidate(c.ridingId, c.regionId, c.provName, c.name, c.party, c.votes, c.votes, false)
-    def m2c(m: MutCandidate): Candidate = Candidate(m.ridingId, m.regionId, m.provName, m.name, m.party, m.votes, m.effVotes, m.winner,
+    def c2m(c: Candidate): MutCandidate = MutCandidate(c.ridingId, c.regionId, c.provName, c.name, c.party, c.votes,
+      c.votes, false)
+    def m2c(m: MutCandidate): Candidate = Candidate(m.ridingId, m.regionId, m.provName, m.name, m.party, m.votes, m
+      .effVotes, m.winner,
       SeatType.RidingSeat)
 
     val (win, lose) = stvElection(

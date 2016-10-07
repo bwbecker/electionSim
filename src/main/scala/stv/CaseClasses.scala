@@ -22,7 +22,7 @@ case class Candidate(ridingId: RidingId,
 
   override def toString = f"Candidate(${ridingId}, ${name}, ${party}, ${votes}%,4.1f, ${effVotes}%,4.1f)"
 
-  val topupWinner:Boolean = this.seatType == SeatType.TopupSeat
+  val topupWinner: Boolean = this.seatType == SeatType.TopupSeat
 
 }
 
@@ -54,6 +54,8 @@ case class SensitivityDataPoint(shift: Double,
                                 conMPs: Double,
                                 ndpVotes: Double,
                                 ndpMPs: Double,
+                                grnVotes: Double,
+                                grnMPs: Double,
                                 gallagher: Double)
 
 

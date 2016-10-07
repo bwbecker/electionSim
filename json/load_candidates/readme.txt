@@ -5,6 +5,7 @@
   http://www.elections.ca/content.aspx?section=res&dir=rep/off/41gedata&document=bypro&lang=e
   "Poll results" is easiest to work with.  Downloads a zip file containing one CSV for each
   of the 308 ridings.
+* For 2015 there are more formats.  Choose poll-by-poll Format 2.
 
 * Edit load_poll_results.sql to adjust file name.
 

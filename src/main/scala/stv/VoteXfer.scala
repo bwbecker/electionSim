@@ -20,6 +20,9 @@ trait VoteXfer {
   def xfer(p1: Party, p2: Party, dm: Int): Double
 
 
+  /**
+    * Generate an HTML table to display the vote transfer function.
+    */
   def xferTable: TypedTag[String] = {
     val right = cls := "right"
     val left = cls := "left"
@@ -49,38 +52,38 @@ trait VoteXfer {
 }
 
 
-object Ekos extends VoteXfer {
+object EkosXfer extends VoteXfer {
   val name = "Ekos"
   val shortDescr = "Transfers based on Ekos polling just before the 2015 election."
 
   //http://www.ekospolitics.com/wp-content/uploads/full_report_october_15_2015.pdf
   val map =
-    Map[(Party, Party), Double](
-      (Lib, Con) → 0.12,
-      (Lib, NDP) → 0.45,
-      (Lib, Grn) → 0.10,
-      (Lib, Bloc) → 0.03,
+  Map[(Party, Party), Double](
+    (Lib, Con) → 0.12,
+    (Lib, NDP) → 0.45,
+    (Lib, Grn) → 0.10,
+    (Lib, Bloc) → 0.03,
 
-      (Con, Lib) → 0.17,
-      (Con, NDP) → 0.10,
-      (Con, Grn) → 0.08,
+    (Con, Lib) → 0.17,
+    (Con, NDP) → 0.10,
+    (Con, Grn) → 0.08,
 
-      (NDP, Lib) → 0.53,
-      (NDP, Con) → 0.06,
-      (NDP, Grn) → 0.13,
-      (NDP, Bloc) → 0.06,
+    (NDP, Lib) → 0.53,
+    (NDP, Con) → 0.06,
+    (NDP, Grn) → 0.13,
+    (NDP, Bloc) → 0.06,
 
-      (Grn, Lib) → 0.16,
-      (Grn, Con) → 0.08,
-      (Grn, NDP) → 0.22,
-      (Grn, Bloc) → 0.15,
+    (Grn, Lib) → 0.16,
+    (Grn, Con) → 0.08,
+    (Grn, NDP) → 0.22,
+    (Grn, Bloc) → 0.15,
 
-      (Bloc, Lib) → 0.16,
-      (Bloc, Con) → 0.19,
-      (Bloc, NDP) → 0.29,
-      (Bloc, Grn) → 0.06
+    (Bloc, Lib) → 0.16,
+    (Bloc, Con) → 0.19,
+    (Bloc, NDP) → 0.29,
+    (Bloc, Grn) → 0.06
 
-    ).withDefault(t ⇒ 0.0)
+  ).withDefault(t ⇒ 0.0)
 
   def description = div(
     p(
@@ -94,6 +97,53 @@ object Ekos extends VoteXfer {
   )
 
   def source = Some("http://www.ekospolitics.com/wp-content/uploads/full_report_october_15_2015.pdf")
+
+  def xfer(p1: Party, p2: Party, dm: Int): Double = map(p1, p2)
+}
+
+object ThinAirXfer extends VoteXfer {
+  val name = "ThinAirXfer"
+  val shortDescr = "A guess at a transfer function, to provide a different data point for ranked ballot elections."
+
+  //http://www.ekospolitics.com/wp-content/uploads/full_report_october_15_2015.pdf
+  val map =
+  Map[(Party, Party), Double](
+    (Lib, Con) → 0.32,
+    (Lib, NDP) → 0.25,
+    (Lib, Grn) → 0.10,
+    (Lib, Bloc) → 0.03,
+
+    (Con, Lib) → 0.10,
+    (Con, NDP) → 0.10,
+    (Con, Grn) → 0.15,
+
+    (NDP, Lib) → 0.43,
+    (NDP, Con) → 0.06,
+    (NDP, Grn) → 0.23,
+    (NDP, Bloc) → 0.06,
+
+    (Grn, Lib) → 0.16,
+    (Grn, Con) → 0.08,
+    (Grn, NDP) → 0.22,
+    (Grn, Bloc) → 0.15,
+
+    (Bloc, Lib) → 0.11,
+    (Bloc, Con) → 0.14,
+    (Bloc, NDP) → 0.24,
+    (Bloc, Grn) → 0.21
+
+  ).withDefault(t ⇒ 0.0)
+
+  def description = div(
+    p(
+      """Another vote transfer function, constructed out of thin air.  It's here to provide another
+      data point for elections based on a ranked ballot.  With reference to the Ekos poll, it
+      has more Liberals defecting to the Conservatives and fewer to the NDP.  Greens also become
+      a second choice for more people.""")
+
+  )
+
+  def source = None
 
   def xfer(p1: Party, p2: Party, dm: Int): Double = map(p1, p2)
 }

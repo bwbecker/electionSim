@@ -1,6 +1,6 @@
 package stv
 
-import stv.Party.{Con, NDP, Lib}
+import stv.Party.{Con, Grn, Lib, NDP}
 
 import scala.collection.mutable
 
@@ -21,7 +21,7 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
   //val SENSITIVITY_STEPS =   0.02
   val SENSITIVITY_STEPS = 0.1
   val SENSITIVITY_START = -0.30
-  val SENSITIVITY_END = 0.21
+  val SENSITIVITY_END = 0.30
 
 
   val regions: Vector[Region] = design.regions
@@ -229,8 +229,10 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
       val ndpMPs = analysis.pctMPs(NDP)
       val conVotes = analysis.pctVote(Con)
       val conMPs = analysis.pctMPs(Con)
+      val grnVotes = analysis.pctVote(Grn)
+      val grnMPs = analysis.pctMPs(Grn)
 
-      SensitivityDataPoint(d, libVotes, libMPs, conVotes, conMPs, ndpVotes, ndpMPs, analysis.gallagherIndex)
+      SensitivityDataPoint(d, libVotes, libMPs, conVotes, conMPs, ndpVotes, ndpMPs, grnVotes, grnMPs, analysis.gallagherIndex)
     }).toVector
     this.sensitivityCache += (party1, party2) → lst
     lst

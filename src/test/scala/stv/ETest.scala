@@ -2,9 +2,11 @@ package stv
 
 import utest._
 import ca.bwbecker.numeric._
-import utest.framework.{Tree, Result}
-
-import scalatags.Text.all._
+import utest.framework.{Result, Tree}
+import stv.ProvName._
+import stv.Party._
+import stv.SeatType._
+import stv.io.DesignReader
 
 /**
   * Created by bwbecker on 2016-05-31.
@@ -17,7 +19,8 @@ object ETest extends TestSuite {
 
 
   val tests = this {
-    val d1 = io.Input.readDesign(TestDesigns.d1)
+
+    val d1 = new DesignReader(TestDesigns.d1, TestDesigns.r1, TestDesigns.c1).read
 
     "Design d1 has correct structure" - {
       "1 province" - {assert(d1.provinces.length == 1)}
@@ -33,16 +36,21 @@ object ETest extends TestSuite {
           val rA = rg1.ridings(0)
           "riding id of RidingA" - {assert(rA.ridingId == "RidingA")}
           "dm of 2" - {assert(rA.districtMagnitude == 2)}
-          "composed of 2 old ridings" - {assert(rA.mapping.length == 2)}
-          "one is 48009" - {
-            assert(rA.mapping(0).ridingId == "48009")
-            assert(rA.mapping(0).pct == 67)
-            assert(rA.mapping(0).name == "Calgary Nose Hill")
+          "composed of 2 old ridings" - {assert(rA.mapping.length == 3)}
+          "one is Riding_1" - {
+            assert(rA.mapping(0).ridingId == "1")
+            assert(rA.mapping(0).pct == 60)
+            assert(rA.mapping(0).name == "Riding_1")
           }
-          "the other is 48010" - {
-            assert(rA.mapping(1).ridingId == "48010")
+          "another is Riding_2" - {
+            assert(rA.mapping(1).ridingId == "2")
             assert(rA.mapping(1).pct == 100)
-            assert(rA.mapping(1).name == "Calgary Rocky Ridge")
+            assert(rA.mapping(1).name == "Riding_2")
+          }
+          "the last is Riding_4" - {
+            assert(rA.mapping(2).ridingId == "4")
+            assert(rA.mapping(2).pct == 50)
+            assert(rA.mapping(2).name == "Riding_4")
           }
         }
       }
@@ -53,6 +61,7 @@ object ETest extends TestSuite {
         "no top-up seats" - {assert(rg2.topUpSeats == 0)}
         "2 ridings" - {assert(rg2.ridings.length == 2)}
         "first is RidingC" - {assert(rg2.ridings(0).ridingId == "RidingC")}
+        "second is RidingD" - {assert(rg2.ridings(1).ridingId == "RidingD")}
       }
     }
 
@@ -60,10 +69,79 @@ object ETest extends TestSuite {
       val ra = d1.provinces(0).regions(0).ridings(0)
       assert(ra.ridingId == "RidingA")
       "population" - {
-        assert(ra.population == Math.round(109286 * 67/100.0) + 108901)
+        assert(ra.population == Math.round(100 * 60 / 100.0) + 200 + Math.round(400 * 50 / 100))
       }
       "area" - {
-        assert(ra.area == Math.round(57 * 67/100.0) + 90)
+        assert(ra.area == 4600)
+      }
+    }
+
+    "Design d1 candidates:" - {
+      "Region R2 RidingC (1 old riding)" - {
+        val rC = d1.regions(1).ridings(0)
+        assert(rC.name == "RidingC")
+        "has 3 candidates" - {assert(rC.candidates0.length == 3)}
+        "with correct names" - {
+          assert(rC.candidates0(0).name == "C5-C")
+          assert(rC.candidates0(1).name == "C5-L")
+          assert(rC.candidates0(2).name == "C5-N")
+        }
+        "with correct number of votes" - {
+          val votes = rC.candidates0.map { c ⇒ c.votes }
+          assert(votes == Vector(30, 20, 10))
+        }
+        "with effective votes = votes" - {
+          assert(rC.candidates0.forall { c ⇒ c.votes == c.effVotes })
+        }
+      }
+
+
+      "Region R1 RidingB (3 old ridings)" - {
+        val rB = d1.regions(0).ridings(1)
+        assert(rB.name == "RidingB")
+        "has 9 candidates" - {assert(rB.candidates0.length == 9)}
+        "with correct names" - {
+          val names = rB.candidates0.map { c ⇒ c.name }.toSet
+          assert(names.equals(Set(
+            "C1-C", "C1-L", "C1-N",
+            "C3-C", "C3-L", "C3-N",
+            "C4-C", "C4-L", "C4-N"
+          )))
+        }
+        "with pro-rated of votes" - {
+          val votes = rB.candidates0.map { c ⇒ c.votes }
+          assert(votes == Vector(30 * .4, 20 * .4, 10 * .4,
+            50, 60, 10,
+            20 * .5, 30 * .5, 20 * .5))
+        }
+      }
+    }
+
+    "FptpRidingElectionStrategy:" - {
+      val c = Seq(
+        Candidate("1", "R1", AB, "C1", Con, 100, 100, false, RidingSeat),
+        Candidate("1", "R1", AB, "C2", Lib, 200, 200, false, RidingSeat),
+        Candidate("1", "R1", AB, "C3", NDP, 150, 150, false, RidingSeat)
+      )
+
+      val c2 = c :+ Candidate("1", "R1", AB, "C4", Con, 150, 150, false, RidingSeat)
+
+      "on candidates with distinct parties" - {
+        val (elected, unelected) = FptpRidingElectionStrategy.runElection(c, 1)
+        assert(elected == List(Candidate("1", "R1", AB, "C2", Lib, 200, 200, true, RidingSeat)))
+        assert(unelected == List(
+          Candidate("1", "R1", AB, "C1", Con, 100, 100, false, RidingSeat),
+          Candidate("1", "R1", AB, "C3", NDP, 150, 150, false, RidingSeat)
+        ))
+      }
+
+      "on candidates with same party" - {
+        val (elected, unelected) = FptpRidingElectionStrategy.runElection(c2, 1)
+        assert(elected == List(Candidate("1", "R1", AB, "C4", Con, 150, 250, true, RidingSeat)))
+        assert(unelected.length == 3)
+        assert(unelected.map { c ⇒ c.name }.toSet == Set("C1", "C2", "C3"))
+        assert(unelected(0).party == Con && unelected(0).effVotes == 0)
+        assert(unelected(1).effVotes > 0)
       }
     }
     /*

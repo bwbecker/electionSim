@@ -20,8 +20,6 @@ object Input {
   case class RawCandidate(riding_id: Int,
                           candidate_name: String,
                           party_id: Party,
-                          incumbent: Boolean,
-                          elected: Boolean,
                           votes: Double)
 
 
@@ -96,7 +94,7 @@ object Input {
   * @param originalRidings
   * @param candidates
   */
-private class DesignReader(rawJson: String,
+class DesignReader(rawJson: String,
                            originalRidings: Vector[RawFptpRiding],
                            candidates: Vector[Input.RawCandidate]
                           ) {
@@ -117,13 +115,15 @@ private class DesignReader(rawJson: String,
       oldRiding.riding_id
     }).distinct
 
-    candidates.foreach { c ⇒ if (!designRidings.contains(c.riding_id)) {
-      println(s"${c.candidate_name} has riding ${c.riding_id} that isn't in list of ridings.")
+    candidates.foreach { c ⇒
+      if (!designRidings.contains(c.riding_id)) {
+        println(s"${c.candidate_name} has riding ${c.riding_id} that isn't in list of ridings.")
+      }
     }
-    }
-    designRidings.sorted.foreach { r ⇒ if (!candidates.exists(c ⇒ c.riding_id == r)) {
-      println(s"Riding ${r} does not have any candidates.")
-    }
+    designRidings.sorted.foreach { r ⇒
+      if (!candidates.exists(c ⇒ c.riding_id == r)) {
+        println(s"Riding ${r} does not have any candidates.")
+      }
     }
 
     d.transform()
