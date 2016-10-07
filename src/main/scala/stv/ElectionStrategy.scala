@@ -10,7 +10,7 @@ trait ElectionStrategy {
   val help: TypedTag[String]
 
   val description: TypedTag[String]
-  val debug = false
+  val debug = true
 
 }
 
@@ -343,9 +343,7 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
   }
 
   private def threshhold(candidates: Set[MutCandidate], toElect: Int): Double = {
-    val votes = candidates.map {
-      _.votes
-    }.sum
+    val votes = candidates.foldLeft(0.0)(_ + _.votes)
     votes / (toElect + 1) + 1
   }
 

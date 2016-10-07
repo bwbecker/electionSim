@@ -11,7 +11,7 @@ import stv.io.DesignReader
 /**
   * Created by bwbecker on 2016-05-31.
   */
-object ETest extends TestSuite {
+object DesignInputTest extends TestSuite {
 
   implicit val precision = Precision(0.0001)
 
@@ -114,34 +114,6 @@ object ETest extends TestSuite {
             50, 60, 10,
             20 * .5, 30 * .5, 20 * .5))
         }
-      }
-    }
-
-    "FptpRidingElectionStrategy:" - {
-      val c = Seq(
-        Candidate("1", "R1", AB, "C1", Con, 100, 100, false, RidingSeat),
-        Candidate("1", "R1", AB, "C2", Lib, 200, 200, false, RidingSeat),
-        Candidate("1", "R1", AB, "C3", NDP, 150, 150, false, RidingSeat)
-      )
-
-      val c2 = c :+ Candidate("1", "R1", AB, "C4", Con, 150, 150, false, RidingSeat)
-
-      "on candidates with distinct parties" - {
-        val (elected, unelected) = FptpRidingElectionStrategy.runElection(c, 1)
-        assert(elected == List(Candidate("1", "R1", AB, "C2", Lib, 200, 200, true, RidingSeat)))
-        assert(unelected == List(
-          Candidate("1", "R1", AB, "C1", Con, 100, 100, false, RidingSeat),
-          Candidate("1", "R1", AB, "C3", NDP, 150, 150, false, RidingSeat)
-        ))
-      }
-
-      "on candidates with same party" - {
-        val (elected, unelected) = FptpRidingElectionStrategy.runElection(c2, 1)
-        assert(elected == List(Candidate("1", "R1", AB, "C4", Con, 150, 250, true, RidingSeat)))
-        assert(unelected.length == 3)
-        assert(unelected.map { c ⇒ c.name }.toSet == Set("C1", "C2", "C3"))
-        assert(unelected(0).party == Con && unelected(0).effVotes == 0)
-        assert(unelected(1).effVotes > 0)
       }
     }
     /*
