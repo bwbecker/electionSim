@@ -5,6 +5,7 @@ import scalatags.Text.all._
 
 import stv.Analysis.StatsByParty
 import ca.bwbecker.enrichments._
+import stv.Party.Oth
 
 /**
   * Created by bwbecker on 2016-06-01.
@@ -100,9 +101,13 @@ object Analysis {
   *
   * @param allCandidates All the candidates (both winning and losing) that competed in the area to be analyzed.
   * @param totalSeats    The total number of seats (riding + top-up) that represent the area to be analyzed.
+  * @param nationWide    Should the number of MPs take into account provincial differences in pop/MP?
+  *                      If false, the calc is just pctVote * totalSeats.  If true, calc under/over
+  *                      rep for each province and sum
   */
 class Analysis(val allCandidates: Seq[Candidate],
-               val totalSeats: Int
+               val totalSeats: Int,
+               val nationWide: Boolean = false
               ) {
 
   lazy val elected = allCandidates.filter(c ⇒ c.winner)
@@ -153,16 +158,54 @@ class Analysis(val allCandidates: Seq[Candidate],
     * @return
     */
   private def calcStatsByParty: Seq[StatsByParty] = {
-    for {
-      party ← parties
-    } yield {
-      calcStatsByParty(party)
+    if (this.nationWide) {
+      /*
+       * The over/under rep by party is different if you sum the individual provinces vs. calculating for
+       * the nation as a whole due to differences in the ratio of MPs to population across the different
+       * provinces.
+       */
+      //      val statsByProv:Seq[Seq[StatsByParty]] = for {
+      //        prov ← ProvName.values
+      //      } yield {
+      //        val cand = this.allCandidates.filter(c ⇒ c.provName == prov)
+      //        new Analysis(cand, 0).statsByParty
+      //      }
+
+      val stats: Seq[StatsByParty] = ProvName.values.flatMap { prov ⇒
+        val cand = this.allCandidates.filter(c ⇒ c.provName == prov)
+        val seats = cand.count(_.winner)
+        new Analysis(cand, seats).statsByParty
+      }
+      val statsByParty = stats.groupBy(s ⇒ s.party)
+
+      for {
+        (party, stats) ← statsByParty.toSeq
+      } yield {
+        val s = calcStatsByParty(party)
+        s.copy(deservedMPs = stats.foldLeft(0.0)((accum, stat) ⇒ accum + stat.deservedMPs))
+      }
+
+    } else {
+      for {
+        party ← parties
+      } yield {
+        calcStatsByParty(party)
+      }
     }
   }
 
 
   def statsByPartyAsHTML(includeNotes: Boolean = false) = {
-    val stats = this.statsByParty.filter(_.pctVote >= 0.01)
+    val (majorParties, others) = this.statsByParty.partition(p ⇒ p.pctVote >= 0.01)
+    val stats = if (this.nationWide) {
+      val oth:StatsByParty = others.fold(StatsByParty(Oth, 0, 0.0, 0, 0.0, 0.0, 0, 0)){
+        (a, b) ⇒ StatsByParty(Oth, a.popVote + b.popVote, a.pctVote + b.pctVote, a.mps + b.mps, a.pctMPs + b.pctMPs,
+          a.deservedMPs + b.deservedMPs, a.numRidingMPs + b.numRidingMPs, a.numTopupSeats + b.numTopupSeats)
+      }
+      majorParties :+ oth
+    } else {
+      majorParties
+    }
 
     def noteRef(i: Int): Option[TypedTag[String]] = if (includeNotes) Some(sup(i)) else None
 
@@ -186,7 +229,7 @@ class Analysis(val allCandidates: Seq[Candidate],
               td(cls := "stat")(f"${p.pctVote * 100}%3.1f%%"),
               td(cls := "stat")(p.mps),
               td(cls := "stat")(f"${p.pctMPs * 100}%3.1f%%"),
-              td(cls := "stat")(f"${p.pctVote * elected.length}%3.1f"),
+              td(cls := "stat")(f"${p.deservedMPs}%3.1f"),
               td(cls := "stat")(f"${(p.pctMPs - p.pctVote) * 100}%3.1f%%")
             )
           }).toSeq

@@ -40,14 +40,15 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
     )
   }
 
-  private def sensitivityPairs:List[(Party, Party)] = {
+  private def sensitivityPairs: List[(Party, Party)] = {
     val stats = sim.analysis.statsByParty.sortBy(s ⇒ -s.pctVote).take(3)
 
     List((stats(1).party, stats(0).party), (stats(2).party, stats(0).party), (Party.Grn, stats(0).party))
   }
 
   private def summaryStats = {
-    val withTopups = sim.results.analysisByRegion(sim.regions)
+    //val withTopups = sim.results.analysisByRegion(sim.regions)
+    val withTopups = new Analysis(sim.results.allCandidates, sim.numMPs, nationWide = true)
 
     div(
       h2("Summary Statistics"),
@@ -669,7 +670,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
            toPartyName = toParty.longName
       } yield {
         val data = sim.sensitivityAnalysis(fromParty, toParty)
-        val avgGallagher = data.foldLeft(0.0)(_ + _.gallagher)/data.length
+        val avgGallagher = data.foldLeft(0.0)(_ + _.gallagher) / data.length
         val canvasId = s"c$fromParty$toParty"
         div(
           h3(s"Voters shift between ${fromPartyName} and ${toPartyName}"),

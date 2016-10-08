@@ -49,7 +49,9 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
           """This page shows the riding-by-riding result of simulating the election using the given
           model.  In most models (STV, most versions of MMP, RUP) existing ridings have been combined
           in various ways to make the new ridings.  These are listed in the "Composed from" column."""),
-        p("""In other models (FPTP, AV) the existing ridings are used without modification.""")
+        p("""In other models (FPTP, AV) the existing ridings are used without modification."""),
+        p(s"Single Member Elections: ${params.singleMemberElectionStrategy.name}"),
+        p(s"Multi Member Elections: ${params.multiMemberElectionStrategy.name}")
       )
     )
 

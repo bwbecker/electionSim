@@ -114,6 +114,13 @@ object DesignInputTest extends TestSuite {
             50, 60, 10,
             20 * .5, 30 * .5, 20 * .5))
         }
+        "candidate objects are not shared (later mutated)" - {
+          val r0C1C = d1.regions(0).ridings(0).candidates0.find(_.name == "C1-C")
+          val r1C1C = d1.regions(0).ridings(1).candidates0.find(_.name == "C1-C")
+
+          // References should not be equal
+          assert(r0C1C.get ne r1C1C)
+        }
       }
     }
     /*
