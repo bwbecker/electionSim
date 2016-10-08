@@ -524,6 +524,15 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
         labels: ${data.map(s ⇒ f"'${s.shift * 100}%4.0f%%'").mkString("[", ", ", "]")},
         datasets: [
         {
+            label: 'Gallagher',
+            data: ${toData(data.map(_.gallagher))},
+            backgroundColor: 'rgba(30, 30, 30, 0)',
+            borderColor: 'rgba(5, 5, 5, 1)',
+            borderWidth: 2,
+            borderDash: [2,2],
+            pointStyle: 'cross'
+        },
+        {
             label: 'Lib Votes',
             data: ${toData(data.map(_.libVotes))},
             backgroundColor: 'rgba(5, 5, 5, 0)',
@@ -596,13 +605,22 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
             pointRadius: 5
         },
         {
-            label: 'Gallagher',
-            data: ${toData(data.map(_.gallagher))},
-            backgroundColor: 'rgba(30, 30, 30, 0)',
-            borderColor: 'rgba(5, 5, 5, 1)',
-            borderWidth: 2,
-            borderDash: [2,2],
-            pointStyle: 'cross'
+            label: 'Bloc Votes',
+            data: ${toData(data.map(_.blocVotes))},
+            backgroundColor: 'rgba(50, 50, 50, 0)',
+            borderColor: 'rgba(66, 232, 244, 1)',
+            borderWidth: 3,
+            pointStyle: 'crossRot',
+            pointRadius: 4
+        },
+        {
+            label: 'Bloc MPs',
+            data: ${toData(data.map(_.blocMPs))},
+            backgroundColor: 'rgba(55, 55, 55, 0)',
+            borderColor: 'rgba(66, 232, 244, 1)',
+            borderWidth: 1,
+            pointStyle: 'crossRot',
+            pointRadius: 5
         }
       ]
     },
@@ -651,13 +669,14 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
            toPartyName = toParty.longName
       } yield {
         val data = sim.sensitivityAnalysis(fromParty, toParty)
+        val avgGallagher = data.foldLeft(0.0)(_ + _.gallagher)/data.length
         val canvasId = s"c$fromParty$toParty"
         div(
           h3(s"Voters shift between ${fromPartyName} and ${toPartyName}"),
           canvas(id := canvasId, width := 400.px, height := 400.px),
 
           sensitivityGraph(canvasId, fromPartyName, toPartyName, data),
-          p(f"Average Gallagher Index: ${sim.sensitivityAvgGallagher(data) * 100}%4.1f%%")
+          p(f"Average Gallagher Index: ${avgGallagher * 100}%4.1f%%")
         )
       }
     )

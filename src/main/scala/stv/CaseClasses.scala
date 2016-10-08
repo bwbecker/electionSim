@@ -56,7 +56,10 @@ case class SensitivityDataPoint(shift: Double,
                                 ndpMPs: Double,
                                 grnVotes: Double,
                                 grnMPs: Double,
-                                gallagher: Double)
+                                blocVotes:Double,
+                                blocMPs: Double,
+                                gallagher: Double
+                               )
 
 
 case class RawFptpRiding(fptp_id: Int,

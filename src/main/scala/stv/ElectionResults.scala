@@ -58,5 +58,20 @@ case class ElectionResults(val elected: Vector[Candidate],
     ridings.flatMap(r ⇒ this.candidatesByRiding(r.ridingId).filterNot(c ⇒ c.topupWinner)) ++ topups,
     ridings.map(_.districtMagnitude).sum + topups.length
   )
-  
+
+
+  /**
+    * The average of the Gallagher index for each province, weighted by seats
+    */
+  def compositeGallagher: Double = {
+    import ProvName._
+    implicit val sim = this
+
+    val aLst = ProvName.values.map { p ⇒ this.analysisByProvince(List(p)) }
+    val totSeats = aLst.foldLeft(0)(_ + _.totalSeats)  //aLst.map(a ⇒ a.totalSeats).sum
+    val wtGallagher = aLst.foldLeft(0.0)((accum, a) ⇒ accum + a.gallagherIndex*a.totalSeats/totSeats)//aLst.map(a ⇒ a.gallagherIndex * a.totalSeats / totSeats).sum
+
+    wtGallagher
+  }
+
 }

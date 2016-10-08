@@ -1,6 +1,6 @@
 package stv
 
-import stv.Party.{Con, Grn, Lib, NDP}
+import stv.Party.{Bloc, Con, Grn, Lib, NDP}
 
 import scala.collection.mutable
 
@@ -231,66 +231,24 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
       val conMPs = analysis.pctMPs(Con)
       val grnVotes = analysis.pctVote(Grn)
       val grnMPs = analysis.pctMPs(Grn)
+      val blocVotes = analysis.pctVote(Bloc)
+      val blocMPs = analysis.pctMPs(Bloc)
 
-      SensitivityDataPoint(d, libVotes, libMPs, conVotes, conMPs, ndpVotes, ndpMPs, grnVotes, grnMPs, analysis.gallagherIndex)
+      SensitivityDataPoint(d, libVotes, libMPs, conVotes, conMPs,
+        ndpVotes, ndpMPs, grnVotes, grnMPs, blocVotes, blocMPs,
+        results.compositeGallagher
+      )
     }).toVector
     this.sensitivityCache += (party1, party2) → lst
     lst
   }
 
 
-  /**
-    * Given a list of SensitivityDataPOints, calculate the average Gallagher index.
-    */
-  def sensitivityAvgGallagher(lst: Vector[SensitivityDataPoint]): Double = {
-    val sum = lst.map(_.gallagher).sum
-    sum / lst.length
-  }
 
   /**
-    * Average of all the sensitivity analysis we've done for this model.
-    * Works best if called late in the game :)
+    * The average of the Gallagher index for each province, weighted by seats
     */
-  def sensitivityAvgGallagher: Double = {
-    var sum = 0.0
-    var num = 0
-    for {
-      oneRun ← this.sensitivityCache.values
-      datapoint ← oneRun
-    } {
-      sum = sum + datapoint.gallagher
-      num = num + 1
-    }
-    sum / num
-  }
-
-
-  /**
-    * Average several Gallagher indices for this simulation:
-    * -- the 2015 simulation
-    * -- the average from the sensitivity analysis
-    * -- the following regions:  BC, Praries, ON+QC, Maritimes
-    *
-    * @return
-    */
-  def compositeGallagher: Double = {
-    import ProvName._
-    implicit val sim = this
-
-    //    val aLst = List(Analysis(List(BC)), Analysis(List(AB, SK, MB)), Analysis(List(ON)),
-    //      Analysis(List(QC)), Analysis(List(NB, PE, NS, NL)), Analysis(List(YT, NT, NU)))
-    //    val totSeats = aLst.map(a ⇒ a.seats).sum
-    //    val wtGallagher = aLst.map(a ⇒ a.gallagherIndex * a.seats / totSeats).sum
-    //
-    //    wtGallagher
-
-    val aLst = ProvName.values.map { p ⇒ this.results.analysisByProvince(List(p)) }
-    val totSeats = aLst.map(a ⇒ a.totalSeats).sum
-    val wtGallagher = aLst.map(a ⇒ a.gallagherIndex * a.totalSeats / totSeats).sum
-
-    wtGallagher
-
-  }
+  lazy val compositeGallagher: Double = this.results.compositeGallagher
 }
 
 
