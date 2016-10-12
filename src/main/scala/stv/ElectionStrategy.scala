@@ -10,7 +10,7 @@ trait ElectionStrategy {
   val help: TypedTag[String]
 
   val description: TypedTag[String]
-  val debug = true
+  val debug = false
 
 }
 

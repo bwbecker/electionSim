@@ -292,11 +292,8 @@ case class OverviewFeaturedHTML(sims: List[Sim], numAllSims: Int, val pgTitle: S
         "See the second table on the ",
         a(href := "allSimulations.html")("All Systems"),
         " page."),
-      p(strong("2016-10-08"), ": Added AV+ to the list of featured systems.  Several changes to the Vote " +
-        "Swing Analysis graphs:  Added the Greens and Bloc, graphed the Composite Gallagher rather than " +
-        "the simple Gallagher, extended the range to be equal in both positive and negative vote swings, " +
-        "adjusted the selection of which parties to graph, and added a graph showing votes shifting to " +
-        "the Greens.  Adjusted the Summary Statistics to account for constitutional considerations on " +
+      p(strong("2016-10-12"), ": Added AV+ to the list of featured systems.  Several changes to the Vote " +
+        "Swing Analysis graphs. Adjusted the Summary Statistics to account for constitutional considerations on " +
         "provinces for the Proportional MPs column.")
     )
 
