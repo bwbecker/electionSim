@@ -45,7 +45,7 @@ case class AboutHTML(sim: Option[Sim]) extends Page {
 
       
       h2(id := "contact")("Contact"),
-      p(a(href := "mailto:mail@election-modelling.ca")("Byron Weber Becker"), "(mail@election-modelling.ca)")
+      p(a(href := "mailto:bwbecker@election-modelling.ca")("Byron Weber Becker"), "(bwbecker@election-modelling.ca)")
     )
   }
 
