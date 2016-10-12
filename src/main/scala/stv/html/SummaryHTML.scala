@@ -53,7 +53,9 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
     div(
       h2("Summary Statistics"),
       div(cls := "blockIndent")(
-        p("""Statistics concerning all of the MPs elected -- both in ridings and as top-ups."""),
+        p("""Statistics concerning all of the MPs elected -- both in local ridings and as top-ups.
+        The "Proportional MPs" column takes into account provincial and territorial boundaries, as
+        required by Canada's constitution."""),
         withTopups.statsByPartyAsHTML(true)
       )
     )

@@ -45,9 +45,13 @@ object DesignName extends EnumP[DesignName] {
 
   case object mmp_enlargeP extends DesignName("ME", "MMP with 338 local ridings (enlarged Parliament)")
 
+  case object mmp_lite_prov extends DesignName("ML", "MMP with 338 local ridings (enlarged Parliament; provincial regions)")
+
   case object ru_singles extends DesignName("RS", "Rural-Urban with more single-member ridings")
 
   case object ru_enlargeP extends DesignName("RE", "Rural-Urban with more single-member ridings and an enlarged Parliament")
+
+  case object ru_lite_prov extends DesignName("RE", "Rural-Urban with more single-member ridings and 10% top-up; provincial regions")
 
   case object ru_multiples extends DesignName("RM", "Rural-Urban with more multi-member ridings and fewer single-member ridings")
 

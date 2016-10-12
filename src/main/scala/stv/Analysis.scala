@@ -77,21 +77,21 @@ object Analysis {
             td(colspan := 3, cls := "center")(f"${a2.gallagherIndex * 100}%5.2f"))
         )
       ),
-      includeNotes.option(
-        div(cls := "footnotes")(
-          p(sup(1), "The number of votes each party received in the 2015 election."),
-          p(sup(2), "The percentage of the votes each party received."),
-          p(sup(3), "The number of candidates elected for each party."),
-          p(sup(4), "The percentage of MPs that this party was awarded.  Ideally, this will match the percentage of " +
-            "the vote."),
-          p(sup(5), "The number of MPs this party would have if the results were perfectly proportional at the " +
-            "national level."),
-          p(sup(6), "The over (or under) representation of this party in Parliment.  That is, the difference between " +
-            "the percentage of MPs and the percentage of the vote.")
-        )
-      )
+      includeNotes.option(partyStatsFootnotes)
     )
   }
+
+
+  def partyStatsFootnotes = div(cls := "footnotes")(
+    p(sup(1), "The number of votes each party received in the 2015 election."),
+    p(sup(2), "The percentage of the votes each party received."),
+    p(sup(3), "The number of candidates elected for each party."),
+    p(sup(4), "The percentage of MPs that this party was awarded.  Ideally, this will match the percentage of " +
+      "the vote."),
+    p(sup(5), "The number of MPs this party would have if the results were perfectly proportional."),
+    p(sup(6), "The over (or under) representation of this party in Parliment.  That is, the difference between " +
+      "the percentage of MPs and the percentage of the vote.")
+  )
 
 }
 
@@ -198,7 +198,7 @@ class Analysis(val allCandidates: Seq[Candidate],
   def statsByPartyAsHTML(includeNotes: Boolean = false) = {
     val (majorParties, others) = this.statsByParty.partition(p ⇒ p.pctVote >= 0.01)
     val stats = if (this.nationWide) {
-      val oth:StatsByParty = others.fold(StatsByParty(Oth, 0, 0.0, 0, 0.0, 0.0, 0, 0)){
+      val oth: StatsByParty = others.fold(StatsByParty(Oth, 0, 0.0, 0, 0.0, 0.0, 0, 0)) {
         (a, b) ⇒ StatsByParty(Oth, a.popVote + b.popVote, a.pctVote + b.pctVote, a.mps + b.mps, a.pctMPs + b.pctMPs,
           a.deservedMPs + b.deservedMPs, a.numRidingMPs + b.numRidingMPs, a.numTopupSeats + b.numTopupSeats)
       }
@@ -238,19 +238,7 @@ class Analysis(val allCandidates: Seq[Candidate],
       p(span(cls := "numMPs")(s"MPs: ${this.elected.length}"),
         span(cls := "gallagher")(f"Gallagher Index: ${this.gallagherIndex * 100}%5.2f")
       ),
-      includeNotes.option(
-        div(cls := "footnotes")(
-          p(sup(1), "The number of votes each party received in the 2015 election."),
-          p(sup(2), "The percentage of the votes each party received."),
-          p(sup(3), "The number of candidates elected for each party."),
-          p(sup(4), "The percentage of MPs that this party was awarded.  Ideally, this will match the percentage of " +
-            "the vote."),
-          p(sup(5), "The number of MPs this party would have if the results were perfectly proportional at the " +
-            "national level."),
-          p(sup(6), "The over (or under) representation of this party in Parliment.  That is, the difference between " +
-            "the percentage of MPs and the percentage of the vote.")
-        )
-      )
+      includeNotes.option(Analysis.partyStatsFootnotes)
     )
   }
 
