@@ -84,6 +84,7 @@ trait Page {
               li(a(href := "ridingStats.html")("Riding Stats")),
               li(a(href := "regionResults.html")("Region Results")),
               li(a(href := "regionStats.html")("Region Stats")),
+              li(a(href := "provResults.html")("Provincial Results")),
               li(a(href := "params.html")("Parameters"))
             )
           )

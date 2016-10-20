@@ -59,6 +59,7 @@ object Output {
     RidingStatsHTML(params, sim).print
     RegionResultsHTML(params, sim).print
     RegionStatsHTML(params, sim).print
+    ProvResultsHTML(params, sim).print
     ParametersHTML(params, sim).print
     AboutHTML(Some(sim)).print
   }

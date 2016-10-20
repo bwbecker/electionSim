@@ -13,15 +13,15 @@ case class Design(
                  ) {
 
   val regions: Vector[Region] = this.provinces.flatMap(p => p.regions)
+  val ridings: Vector[Riding] = this.regions.flatMap(r ⇒ r.ridings)
 
+  val numSingleMemberRidings = ridings.count(r ⇒ r.districtMagnitude == 1)
+  val numMultiMemberRidings = ridings.count(r ⇒ r.districtMagnitude > 1)
+  val numTopupRegions = regions.count(r ⇒ r.topUpSeats > 0)
 
-  def hasSingleMemberRidings = {
-    provinces.exists(p => p.regions.exists(region => region.ridings.exists(riding => riding.districtMagnitude == 1)))
-  }
+  val hasSingleMemberRidings = this.numSingleMemberRidings > 0
 
-  def hasMultiMemberRidings = {
-    provinces.exists(p => p.regions.exists(region => region.ridings.exists(riding => riding.districtMagnitude > 1)))
-  }
+  val hasMultiMemberRidings = this.numMultiMemberRidings > 0
 
 
   def singleMbrStrategies: Vector[RidingElectionStrategy] = {

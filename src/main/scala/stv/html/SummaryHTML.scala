@@ -22,7 +22,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
   protected def content: TypedTag[String] = {
     div(
 
-      params.description,
+      parameters,
 
       summaryStats,
 
@@ -39,6 +39,20 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
       this.methodology
     )
   }
+
+  private def parameters = div(cls := "blockIndent")(
+    params.description,
+     table(
+        tr(td(cls := "right")("Number of Constituency MPs:"), td(cls := "right padLeft")(sim.numRidingMPs)),
+        tr(td(cls := "right")("Number of Top-Up MPs:"), td(cls := "right padLeft")(sim.numRegionalMPs)),
+        tr(td(cls := "right")("Total MPs:"), td(cls := "right padLeft")(sim.numMPs)),
+        tr(td(cls := "right")("Number of Single-Member Ridings:"), td(cls := "right padLeft")(sim.design.numSingleMemberRidings)),
+        tr(td(cls := "right")("Number of Multi-Member Ridings:"), td(cls := "right padLeft")(sim.design.numMultiMemberRidings)),
+        tr(td(cls := "right")("Total Ridings:"), td(cls := "right padLeft")(sim.design.numSingleMemberRidings + sim.design.numMultiMemberRidings)),
+        tr(td(cls := "right")("Number of Top-up Regions:"), td(cls := "right padLeft")(sim.design.numTopupRegions))
+      )
+
+  )
 
   private def sensitivityPairs: List[(Party, Party)] = {
     val stats = sim.analysis.statsByParty.sortBy(s ⇒ -s.pctVote).take(3)
