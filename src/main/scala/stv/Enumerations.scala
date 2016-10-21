@@ -59,6 +59,8 @@ object DesignName extends EnumP[DesignName] {
 
   //case object markbc_best extends DesignName("MBC", "Mark BC's STV+ Best Regions")
 
+  case object erre_ru extends DesignName("ER", "ERRE RU that gets top-ups from large multi-member ridings")
+
 }
 
 
