@@ -40,7 +40,7 @@ object Main {
           for {
             singleMbrStrategy ← design.singleMbrStrategies
             multiMbrStrategy ← design.multiMbrStrategies
-          // if both single and multi strategies use a ranked ballot, they both use the same transfer function
+            // if both single and multi strategies use a ranked ballot, they both use the same transfer function
             if (!singleMbrStrategy.isInstanceOf[StvRidingElectionStrategy] ||
               !multiMbrStrategy.isInstanceOf[StvRidingElectionStrategy] ||
               singleMbrStrategy.asInstanceOf[StvRidingElectionStrategy].voteXfer == multiMbrStrategy
@@ -105,6 +105,13 @@ object Main {
 
     opt[Seq[DesignName]]("designs").valueName(DesignName.values.mkString("<", ">,<", ">")).action((x, c) =>
       c.copy(designs = x)).text("designs for the simulations")
+
+
+    opt[Unit]("erre").action((_, c) ⇒
+      c.copy(years = Vector(2015),
+        designs = Seq(DesignName.erre_ru),
+        overview = true
+      )).text("Simulations requested by ERRE.")
 
     //    checkConfig(c =>
     //      (c.all, c.years.length, c.designs.length) match {
