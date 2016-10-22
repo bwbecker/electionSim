@@ -47,6 +47,7 @@ object TestDesigns {
   val d1 = """
   {
     "design_name": "mmp_small",
+    "description": "d1",
     "is_proportional": true,
     "provinces": [
         {
