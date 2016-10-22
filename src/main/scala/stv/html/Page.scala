@@ -32,6 +32,7 @@ trait Page {
         //link(rel := "stylesheet", href := "https://yui.yahooapis.com/pure/0.6.0/base-min.css"),
         link(rel := "stylesheet", href := "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"),
         script(src := "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"),
+        script(src := "../js/tablesort.min.js"),
         scalatags.Text.tags2.title(pgTitle)),
       body(
         div(cls := "centreColumn")(

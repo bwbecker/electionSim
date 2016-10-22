@@ -35,22 +35,26 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
       (prov, popPerMP.sum / popPerMP.length)
     }).toMap
 
+    println(pgTitle)
+    println(avgPopPerMPByProv)
+
+    val sortByNum = "data-sort-method".attr := "number"
     /**
       * Statistics on each riding:  DM, area, population, etc.
       */
     div(cls := "blockInput")(
       p("""Statistics for each new riding in the model."""),
-      table(cls := "ridingStats")(
+      table(id := "ridingStats", cls := "ridingStats")(
         thead(
           tr(th(colspan := 7)(),
             th(colspan := 5)("MPs Elected")),
           tr(th("Riding Name"),
             th("Prov"),
-            th("#MPs"),
-            th("Area"),
-            th("Pop"),
-            th("Pop/MP"),
-            th("Pop/MP Var"),
+            th(sortByNum)("#MPs"),
+            th(sortByNum)("Area"),
+            th(sortByNum)("Pop"),
+            th(sortByNum)("Pop/MP"),
+            th(sortByNum)("Pop/MP Var"),
             th("Con"),
             th("Bloc"),
             th("Grn"),
@@ -73,24 +77,27 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
               td(f"${riding.area}%,10d"),
               td(f"${riding.population}%,10d"),
               td(f"${riding.population / riding.districtMagnitude}%,d"),
-              td(f"${popVariation*100}%3.1f%%"),
+              td(f"${popVariation * 100}%3.1f%%"),
               td(cls := "Con")(elected.count(_.party == Con)),
               td(cls := "Bloc")(elected.count(_.party == Bloc)),
               td(cls := "Grn")(elected.count(_.party == Grn)),
               td(cls := "Lib")(elected.count(_.party == Lib)),
               td(cls := "NDP")(elected.count(_.party == NDP))
             )
-          }) :+ tfoot(
-            tr(cls := "totalsRow")(
-              td(colspan := 2)("Averages:"),
-              td(right)(f"${avgMPs}%4.2f"),
-              td(right)(f"${avgArea}%,4.0f"),
-              td(right)(f"${avgPop}%,4.0f"),
-              td(right)(f"${avgPopPerMP}%,4.0f")
-            )
+          })),
+
+        tfoot(
+          tr(cls := "totalsRow")(
+            td(colspan := 2)("Averages:"),
+            td(right)(f"${avgMPs}%4.2f"),
+            td(right)(f"${avgArea}%,4.0f"),
+            td(right)(f"${avgPop}%,4.0f"),
+            td(right)(f"${avgPopPerMP}%,4.0f")
           )
         )
-      )
+      ),
+
+      script("""new Tablesort(document.getElementById('ridingStats'));""")
     )
   }
 

@@ -37,7 +37,8 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
       doTable,
       (sim.design.is_proportional && this.totals(LibOverRepColumn) >= 10).option {
         libAdvantage
-      }
+      },
+      script("""new Tablesort(document.getElementById('regionStats'));""")
     )
 
   }
@@ -67,8 +68,9 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
     }
 
     val right = cls := "right"
+    val sortByNum = "data-sort-method".attr := "number"
 
-    table(cls := "regionStats")(
+    table(id := "regionStats", cls := "regionStats")(
       thead(
         tr(
           th()(),
@@ -82,10 +84,10 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
           for {i <- 1 to 3
                (p, idx) <- parties
           } yield {
-            th(p.toString) // parties of interest, repeated 3 times
+            th(sortByNum)(p.toString) // parties of interest, repeated 3 times
           },
-          th("Oth"),
-          th("Gallagher")
+          th(sortByNum)("Oth"),
+          th(sortByNum)("Gallagher")
         )
       ),
       tbody(

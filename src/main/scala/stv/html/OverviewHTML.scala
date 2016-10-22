@@ -36,10 +36,11 @@ abstract class AbstractOverview extends Page {
   }
 
 
-  protected   def color(tGreen: Double, tYellow: Double)(v: Double): String = {
+  protected def color(tGreen: Double, tYellow: Double)(v: Double): String = {
     if (Math.abs(v) < tGreen) "green" else if (Math.abs(v) < tYellow) "yellow" else "red"
   }
-  protected   def fmtOverRep(os: Option[StatsByParty]) = {
+
+  protected def fmtOverRep(os: Option[StatsByParty]) = {
     val pct = os.map { s ⇒ s.pctMPs - s.pctVote }.getOrElse(0.0)
     val warn = color(0.05, 0.10)(pct)
     td(cls := "colPct0 " + warn)(pctFmt.format(pct))
@@ -57,32 +58,49 @@ abstract class AbstractOverview extends Page {
   }
 
   protected def generateResultsTable(sims: List[Sim]) = {
-
-    table(
-      thead(
-        img(cls := "hdr")(src := "../img/ResultsTableHeader.svg")
-      ),
-      tbody(
-        tableRows(sims, sim => {
-          val statsByParty: Map[Party, StatsByParty] = sim.analysis.statsByParty.map(s ⇒ (s.party, s)).toMap
-
-          tr(cls := "row")(
-            td(cls := "name")(
-              a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
-            td(cls := "num3")(sim.numRidingMPs),
-            td(cls := "num3")(sim.numRegionalMPs),
-            fmtOverRep(statsByParty.get(Lib)),
-            fmtOverRep(statsByParty.get(Con)),
-            fmtOverRep(statsByParty.get(NDP)),
-            fmtOverRep(statsByParty.get(Bloc)),
-            fmtOverRep(statsByParty.get(Grn)),
-            fmtGallagher(sim.analysis.gallagherIndex),
-            fmtGallagher(sim.compositeGallagher),
-            fmtPrefParty(sim.pctVotersWithPreferredPartyLocally),
-            fmtPrefParty(sim.pctVotersWithPreferredPartyRegionally),
-            td(cls := "shortName")(sim.shortName)
+    val sortByNum = "data-sort-method".attr := "number"
+    div(
+      img(cls := "hdr")(src := "../img/ResultsTableHeader.svg"),
+      table(id := "overview")(
+        thead(
+          tr(
+            th(cls := "name")(""),
+            th(sortByNum, cls:= "num3")(""),
+            th(sortByNum, cls:= "num3")(""),
+            th(sortByNum, cls:= "colPct0")(""),
+            th(sortByNum, cls:= "colPct0")(""),
+            th(sortByNum, cls:= "colPct0")(""),
+            th(sortByNum, cls:= "colPct0")(""),
+            th(sortByNum, cls:= "colPct0")(""),
+            th(sortByNum, cls:= "colPct1")(""),
+            th(sortByNum, cls:= "colPct1")(""),
+            th(sortByNum, cls:= "colPct0")(""),
+            th(sortByNum, cls:= "colPct0")(""),
+            th(cls := "shortName")("")
           )
-        }
+        ),
+        tbody(
+          tableRows(sims, sim => {
+            val statsByParty: Map[Party, StatsByParty] = sim.analysis.statsByParty.map(s ⇒ (s.party, s)).toMap
+
+            tr(cls := "row")(
+              td(cls := "name")(
+                a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
+              td(cls := "num3")(sim.numRidingMPs),
+              td(cls := "num3")(sim.numRegionalMPs),
+              fmtOverRep(statsByParty.get(Lib)),
+              fmtOverRep(statsByParty.get(Con)),
+              fmtOverRep(statsByParty.get(NDP)),
+              fmtOverRep(statsByParty.get(Bloc)),
+              fmtOverRep(statsByParty.get(Grn)),
+              fmtGallagher(sim.analysis.gallagherIndex),
+              fmtGallagher(sim.compositeGallagher),
+              fmtPrefParty(sim.pctVotersWithPreferredPartyLocally),
+              fmtPrefParty(sim.pctVotersWithPreferredPartyRegionally),
+              td(cls := "shortName")(sim.shortName)
+            )
+          }
+          )
         )
       )
     )
@@ -281,7 +299,8 @@ case class OverviewFeaturedHTML(sims: List[Sim], numAllSims: Int, val pgTitle: S
       resultsTable,
       observations,
       properties(this.sims),
-      descriptions(sims)
+      descriptions(sims),
+      script("""new Tablesort(document.getElementById('overview'));""")
     )
   }
 
@@ -359,7 +378,9 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
       resultsTable,
       tableII,
       properties(this.sims),
-      descriptions(sims)
+      descriptions(sims),
+      script("""new Tablesort(document.getElementById('tableII'));"""),
+      script("""new Tablesort(document.getElementById('overview'));""")
     )
   }
 
@@ -383,22 +404,24 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
   }
 
   def tableII = {
+    val sortByNum = "data-sort-method".attr := "number"
+
     div(cls := "results")(
       h2("More Details"),
-      table(
+      table(id := "tableII")(
         thead(
           tr(
             td("System Name"),
             td("Riding Design"),
             td("Single Mbr Riding Elections"),
             td("Multi-Mbr Riding Elections"),
-            td("Year"),
-            td("Gallagher"),
-            td("Composite Gallagher")
+            td(sortByNum)("Year"),
+            td(sortByNum)("Gallagher"),
+            td(sortByNum)("Composite Gallagher")
           )
         ),
         tbody(
-          for{
+          for {
             sim ← sims.sortBy(s ⇒ (
               s.params.designName.toString,
               s.params.singleMemberElectionStrategy.name,
