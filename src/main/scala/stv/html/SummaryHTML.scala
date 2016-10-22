@@ -70,7 +70,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
         p("""Statistics concerning all of the MPs elected -- both in local ridings and as top-ups.
         The "Proportional MPs" column takes into account provincial and territorial boundaries, as
         required by Canada's constitution."""),
-        withTopups.statsByPartyAsHTML(true)
+        withTopups.statsByPartyAsHTML(true, Some(sim.compositeGallagher))
       )
     )
   }

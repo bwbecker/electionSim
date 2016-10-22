@@ -195,7 +195,7 @@ class Analysis(val allCandidates: Seq[Candidate],
   }
 
 
-  def statsByPartyAsHTML(includeNotes: Boolean = false) = {
+  def statsByPartyAsHTML(includeNotes: Boolean = false, compositeGallagher: Option[Double] = None) = {
     val (majorParties, others) = this.statsByParty.partition(p ⇒ p.pctVote >= 0.01)
     val stats = if (this.nationWide) {
       val oth: StatsByParty = others.fold(StatsByParty(Oth, 0, 0.0, 0, 0.0, 0.0, 0, 0)) {
@@ -236,7 +236,8 @@ class Analysis(val allCandidates: Seq[Candidate],
         )
       ),
       p(span(cls := "numMPs")(s"MPs: ${this.elected.length}"),
-        span(cls := "gallagher")(f"Gallagher Index: ${this.gallagherIndex * 100}%5.2f")
+        span(cls := "gallagher")(f"Gallagher Index: ${this.gallagherIndex * 100}%5.2f"),
+        compositeGallagher.map(cg ⇒ span(cls := "gallagher")(f"Composite Gallagher Index: ${cg*100}%5.2f"))
       ),
       includeNotes.option(Analysis.partyStatsFootnotes)
     )

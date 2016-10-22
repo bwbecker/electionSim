@@ -109,7 +109,7 @@ object Main {
 
     opt[Unit]("erre").action((_, c) ⇒
       c.copy(years = Vector(2015),
-        designs = Seq(DesignName.erre_ru),
+        designs = Seq(DesignName.erre_ru, DesignName.fptp),
         overview = true
       )).text("Simulations requested by ERRE.")
 

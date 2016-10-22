@@ -27,6 +27,14 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
     val avgPop = ridings.map(_.population).sum / numRidings.toDouble
     val avgPopPerMP = ridings.map(r ⇒ r.population / r.districtMagnitude).sum / numRidings.toDouble
 
+    val ridingByProv = sim.newRidingsVec.groupBy(r ⇒ r.province)
+    val avgPopPerMPByProv = (for {
+      (prov, ridingLst) ← ridingByProv
+    } yield {
+      val popPerMP = ridingLst.map(r ⇒ r.population / r.districtMagnitude)
+      (prov, popPerMP.sum / popPerMP.length)
+    }).toMap
+
     /**
       * Statistics on each riding:  DM, area, population, etc.
       */
@@ -34,14 +42,15 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
       p("""Statistics for each new riding in the model."""),
       table(cls := "ridingStats")(
         thead(
-          tr(th(colspan := 6)(),
+          tr(th(colspan := 7)(),
             th(colspan := 5)("MPs Elected")),
           tr(th("Riding Name"),
-            th("Province"),
+            th("Prov"),
             th("#MPs"),
             th("Area"),
-            th("Population"),
+            th("Pop"),
             th("Pop/MP"),
+            th("Pop/MP Var"),
             th("Con"),
             th("Bloc"),
             th("Grn"),
@@ -51,8 +60,11 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
         ),
 
         tbody(
+
           (for (riding ← sim.newRidingsVec.sortBy(t ⇒ t.province + t.ridingId)) yield {
             val elected = sim.results.electedByRiding(riding.ridingId)
+            val popVariation = (riding.population / riding.districtMagnitude - avgPopPerMPByProv(riding.province)) /
+              avgPopPerMPByProv(riding.province).toDouble
 
             tr(
               td(left)(riding.name),
@@ -61,6 +73,7 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
               td(f"${riding.area}%,10d"),
               td(f"${riding.population}%,10d"),
               td(f"${riding.population / riding.districtMagnitude}%,d"),
+              td(f"${popVariation*100}%3.1f%%"),
               td(cls := "Con")(elected.count(_.party == Con)),
               td(cls := "Bloc")(elected.count(_.party == Bloc)),
               td(cls := "Grn")(elected.count(_.party == Grn)),
