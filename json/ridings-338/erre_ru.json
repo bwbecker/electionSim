@@ -155,7 +155,7 @@
             "regions": [
                 {
                     "region_id": "R_BC.IntNorthIsland",
-                    "top_up_seats": 0,
+                    "top_up_seats": 1,
                     "new_ridings": [
                         {
                             "riding_id": "BC.13",
@@ -217,17 +217,11 @@
                         },
                         {
                             "riding_id": "BC.Nanaimo",
-                            "district_mag": 3,
+                            "district_mag": 5,
                             "old_ridings": [
                                 "59009, 100, Courtenay-Alberni",
                                 "59010, 100, Cowichan-Malahat-Langford",
-                                "59018, 100, Nanaimo-Ladysmith"
-                            ]
-                        },
-                        {
-                            "riding_id": "BCCapitalR",
-                            "district_mag": 3,
-                            "old_ridings": [
+                                "59018, 100, Nanaimo-Ladysmith",
                                 "59026, 100, Esquimalt-Saanich-Sooke",
                                 "59027, 100, Saanich-Gulf Islands",
                                 "59041, 100, Victoria"
@@ -377,52 +371,28 @@
             "regions": [
                 {
                     "region_id": "R_NB",
-                    "top_up_seats": 0,
+                    "top_up_seats": 1,
                     "new_ridings": [
                         {
-                            "riding_id": "NB.01",
-                            "district_mag": 1,
+                            "riding_id": "NB.NorthWest",
+                            "district_mag": 4,
                             "old_ridings": [
+                                "13005, 100, Madawaska-Restigouche",
+                                "13010, 100, Tobique-Mactaquac",
+                                "13006, 100, Miramichi-Grand Lake",
                                 "13001, 100, Acadie-Bathurst"
                             ]
                         },
                         {
-                            "riding_id": "NB.Madawaska",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "13005, 100, Madawaska-Restigouche"
-                            ]
-                        },
-                        {
-                            "riding_id": "NB.MoncBeauMira",
-                            "district_mag": 3,
+                            "riding_id": "NB.SouthWest",
+                            "district_mag": 5,
                             "old_ridings": [
                                 "13002, 100, Beauséjour",
-                                "13006, 100, Miramichi-Grand Lake",
-                                "13007, 100, Moncton-Riverview-Dieppe"
-                            ]
-                        },
-                        {
-                            "riding_id": "NB.NBSouthwest",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "13008, 100, New Brunswick Southwest"
-                            ]
-                        },
-                        {
-                            "riding_id": "NB.StJohnFred",
-                            "district_mag": 3,
-                            "old_ridings": [
+                                "13007, 100, Moncton-Riverview-Dieppe",
+                                "13008, 100, New Brunswick Southwest",
                                 "13003, 100, Fredericton",
                                 "13004, 100, Fundy Royal",
                                 "13009, 100, Saint John-Rothesay"
-                            ]
-                        },
-                        {
-                            "riding_id": "NB.Tobique",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "13010, 100, Tobique-Mactaquac"
                             ]
                         }
                     ]
@@ -434,46 +404,34 @@
             "regions": [
                 {
                     "region_id": "R_NL",
-                    "top_up_seats": 0,
+                    "top_up_seats": 3,
                     "new_ridings": [
                         {
-                            "riding_id": "NL.03",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "10005, 100, Long Range Mountains"
-                            ]
-                        },
-                        {
-                            "riding_id": "NL.04",
+                            "riding_id": "NL.Labrador",
                             "district_mag": 1,
                             "old_ridings": [
                                 "10004, 100, Labrador"
                             ]
                         },
                         {
-                            "riding_id": "NL.Avalon",
+                            "riding_id": "NL.West",
                             "district_mag": 1,
                             "old_ridings": [
-                                "10001, 100, Avalon"
-                            ]
-                        },
-                        {
-                            "riding_id": "NL.Bonavista",
-                            "district_mag": 1,
-                            "old_ridings": [
-                                "10002, 100, Bonavista-Burin-Trinity"
-                            ]
-                        },
-                        {
-                            "riding_id": "NL.CoastOfBays",
-                            "district_mag": 1,
-                            "old_ridings": [
+                                "10005, 100, Long Range Mountains",
                                 "10003, 100, Coast of Bays-Central-Notre Dame"
                             ]
                         },
                         {
+                            "riding_id": "NL.Centre",
+                            "district_mag": 1,
+                            "old_ridings": [
+                                "10001, 100, Avalon",
+                                "10002, 100, Bonavista-Burin-Trinity"
+                            ]
+                        },
+                        {
                             "riding_id": "NL.StJohns",
-                            "district_mag": 2,
+                            "district_mag": 1,
                             "old_ridings": [
                                 "10006, 100, St. John's East",
                                 "10007, 100, St. John's South-Mount Pearl"
@@ -679,7 +637,8 @@
                 },
                 {
                     "region_id": "R_ON.GTA",
-                    "top_up_seats": 9,
+                    "top_up_seats": 8,
+                    "comment": "Transferred one top-up seat from GTA to Northern Ontario.",
                     "new_ridings": [
                         {
                             "riding_id": "ON.Brampton",
@@ -800,7 +759,7 @@
                 },
                 {
                     "region_id": "R_ON.Northern",
-                    "top_up_seats": 0,
+                    "top_up_seats": 1,
                     "new_ridings": [
                         {
                             "riding_id": "ON.G2.AlgomaMK",
@@ -1008,11 +967,11 @@
             "regions": [
                 {
                     "region_id": "R_PEI",
-                    "top_up_seats": 0,
+                    "top_up_seats": 1,
                     "new_ridings": [
                         {
                             "riding_id": "PEI",
-                            "district_mag": 4,
+                            "district_mag": 3,
                             "old_ridings": [
                                 "11001, 100, Cardigan",
                                 "11002, 100, Charlottetown",
@@ -1334,7 +1293,7 @@
             "regions": [
                 {
                     "region_id": "R_SK",
-                    "top_up_seats": 0,
+                    "top_up_seats": 2,
                     "new_ridings": [
                         {
                             "riding_id": "SK.01",
@@ -1366,7 +1325,7 @@
                         },
                         {
                             "riding_id": "SK.ReginaMJaw",
-                            "district_mag": 4,
+                            "district_mag": 3,
                             "old_ridings": [
                                 "47005, 100, Moose Jaw-Lake Centre-Lanigan",
                                 "47007, 100, Regina-Lewvan",
@@ -1376,7 +1335,7 @@
                         },
                         {
                             "riding_id": "SK.Saskatoon",
-                            "district_mag": 4,
+                            "district_mag": 3,
                             "old_ridings": [
                                 "47004, 100, Carlton Trail-Eagle Creek",
                                 "47012, 100, Saskatoon West",
