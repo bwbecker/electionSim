@@ -41,7 +41,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
   }
 
   private def parameters = div(cls := "blockIndent")(
-    params.description,
+    params.description.getOrElse(p(sim.design.description)),
      table(
         tr(td(cls := "right")("Number of Constituency MPs:"), td(cls := "right padLeft")(sim.numRidingMPs)),
         tr(td(cls := "right")("Number of Top-Up MPs:"), td(cls := "right padLeft")(sim.numRegionalMPs)),

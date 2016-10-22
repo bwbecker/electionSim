@@ -8,6 +8,7 @@ package stv
 
 case class Design(
                    design_name: DesignName,
+                   description: String,
                    is_proportional: Boolean,
                    provinces: Vector[Province]
                  ) {

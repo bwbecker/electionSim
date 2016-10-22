@@ -132,12 +132,14 @@ class DesignReader(rawJson: String,
 
   private case class JsonDesign(
                                  design_name: DesignName,
+                                 description: String,
                                  is_proportional: Boolean,
                                  provinces: Vector[JsonProv]
                                ) {
 
     def transform(): Design = Design(
       design_name,
+      description,
       is_proportional,
       provinces.map(p => p.toProvince())
     )

@@ -50,7 +50,7 @@ object Main {
             val params = namedSystems.find(_.matches(designName, year, singleMbrStrategy, multiMbrStrategy))
               .getOrElse {
                 val name = s"${designName}-${singleMbrStrategy.name}-${multiMbrStrategy.name}"
-                Params(name, year, name, designName, name, p("Description"), singleMbrStrategy, multiMbrStrategy)
+                Params(name, year, name, designName, name, None, singleMbrStrategy, multiMbrStrategy)
               }
 
             val sim = Sim(design, params, ridings)
@@ -109,7 +109,7 @@ object Main {
 
     opt[Unit]("erre").action((_, c) ⇒
       c.copy(years = Vector(2015),
-        designs = Seq(DesignName.erre_ru, DesignName.fptp),
+        designs = Seq(DesignName.erre_ru, DesignName.erre_ru2, DesignName.fptp),
         overview = true
       )).text("Simulations requested by ERRE.")
 
@@ -341,56 +341,56 @@ object Main {
   val featuredSystems = List(
 
     Params("fptp", 2015, "First-Past-The-Post",
-      DesignName.fptp, s"fptp", fptpDescr, FptpRidingElectionStrategy, NotApplicableRidingElectionStrategy),
+      DesignName.fptp, s"fptp", Some(fptpDescr), FptpRidingElectionStrategy, NotApplicableRidingElectionStrategy),
 
     Params("av", 2015, "Alternative Vote",
-      DesignName.fptp, s"av", avDescr, EkosAvRidingElectionStrategy, NotApplicableRidingElectionStrategy),
+      DesignName.fptp, s"av", Some(avDescr), EkosAvRidingElectionStrategy, NotApplicableRidingElectionStrategy),
 
     Params("stv_med", 2015, "Single Transferable Vote (Medium-sized Regions)",
-      DesignName.stv_med, s"stv_med", stvMedDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.stv_med, s"stv_med", Some(stvMedDescr), EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
     Params("stv_small", 2015, "Single Transferable Vote (Small Regions)",
-      DesignName.stv_small, s"stv_small", stvSmallDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.stv_small, s"stv_small", Some(stvSmallDescr), EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
 
     Params("mmp-8-fptp", 2015, "Mixed Member Proportional (Small Regions)",
-      DesignName.mmp_small, s"mmp-8-fptp", mmp8fptpDescr, FptpRidingElectionStrategy,
+      DesignName.mmp_small, s"mmp-8-fptp", Some(mmp8fptpDescr), FptpRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
 
     Params("mmpLite", 2015, "Mixed Member Proportional (Lite)",
-      DesignName.mmp_enlargeP, s"mmp-15pct", mmpLiteDescr, FptpRidingElectionStrategy,
+      DesignName.mmp_enlargeP, s"mmp-15pct", Some(mmpLiteDescr), FptpRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
     Params("av+", 2015, "AV+",
-      DesignName.mmp_enlargeP, s"av-plus", avPlusDescr, EkosAvRidingElectionStrategy,
+      DesignName.mmp_enlargeP, s"av-plus", Some(avPlusDescr), EkosAvRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
     Params("rup-338", 2015, "Rural-Urban PR (More Singles, 338 Seats)",
-      DesignName.ru_singles, s"rup-338", rup338Descr, EkosAvRidingElectionStrategy, ListRidingElectionStrategy),
+      DesignName.ru_singles, s"rup-338", Some(rup338Descr), EkosAvRidingElectionStrategy, ListRidingElectionStrategy),
 
     Params("rup-15pct", 2015, "Rural-Urban PR (More Singles, 389 Seats)",
-      DesignName.ru_enlargeP, s"rup-15pct", rup15PctDescr, FptpRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.ru_enlargeP, s"rup-15pct", Some(rup15PctDescr), FptpRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
     Params("rup-stv", 2015, "Rural-Urban PR (Few Singles)",
-      DesignName.ru_multiples, s"rup-stv", stvPlusDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy)
+      DesignName.ru_multiples, s"rup-stv", Some(stvPlusDescr), EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy)
   )
 
   val variantSystems = List(
     Params("mmp-8-av", 2015, "MMP (Small Regions, AV)",
-      DesignName.mmp_small, s"mmp-8-av", mmp8avDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.mmp_small, s"mmp-8-av", Some(mmp8avDescr), EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
     Params("mmp-14-av", 2015, "MMP (Medium Regions, AV)",
-      DesignName.mmp_med, s"mmp-14-av", mmp14avDescr, EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
+      DesignName.mmp_med, s"mmp-14-av", Some(mmp14avDescr), EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy),
 
     Params("mmp-14-fptp", 2015, "MMP (Medium Regions, FPTP)",
-      DesignName.mmp_med, s"mmp-14-fptp", mmp14fptpDescr, FptpRidingElectionStrategy,
+      DesignName.mmp_med, s"mmp-14-fptp", Some(mmp14fptpDescr), FptpRidingElectionStrategy,
       NotApplicableRidingElectionStrategy),
 
     Params("rup-338-list", 2015, "Rural-Urban PR (More Singles, 338 Seats, ListPR)",
-      DesignName.ru_singles, s"rup-338-list", rup338ListDescr, FptpRidingElectionStrategy, ListRidingElectionStrategy),
+      DesignName.ru_singles, s"rup-338-list", Some(rup338ListDescr), FptpRidingElectionStrategy, ListRidingElectionStrategy),
 
     Params("rup-15pct-stv", 2015, "Rural-Urban PR (More Singles, More Seats)",
-      DesignName.ru_enlargeP, s"rup-15pct-stv", rup15PctDescr, EkosAvRidingElectionStrategy,
+      DesignName.ru_enlargeP, s"rup-15pct-stv", Some(rup15PctDescr), EkosAvRidingElectionStrategy,
       EkosStvRidingElectionStrategy)
 
   )
@@ -412,7 +412,7 @@ case class Params(name: String, // identify this set of parameters
                   title: String, // Title to put on web pages
                   designName: DesignName, // how ridings are grouped, etc.
                   outDir0: String,
-                  description: Text.TypedTag[String],
+                  description: Option[Text.TypedTag[String]],
                   singleMemberElectionStrategy: RidingElectionStrategy,
                   multiMemberElectionStrategy: RidingElectionStrategy,
                   voteAdjustment: Option[VoteSwing] = None
