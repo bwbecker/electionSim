@@ -62,6 +62,7 @@ object TopupStrategy extends TopupElectionStrategy {
   Double): Vector[Candidate] = {
 
     val numRidingSeats = allCandidates.count(c ⇒ c.winner)
+    var order = 0
 
     def helper(topups: Vector[Candidate]): Vector[Candidate] = {
       if (topups.length == numTopupSeats) {
@@ -74,7 +75,8 @@ object TopupStrategy extends TopupElectionStrategy {
         val disadvantaged = stats.maxBy(s ⇒ s.deservedMPs - s.mps)
 
         val cand = Candidate("", regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0,
-          0.0, true, SeatType.TopupSeat)
+          0.0, true, SeatType.TopupSeat, order)
+        order = order + 1
         helper(topups :+ cand)
 
       }
@@ -241,7 +243,8 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
                                   party: Party,
                                   votes: Double,
                                   var effVotes: Double,
-                                  var winner: Boolean) {
+                                  var winner: Boolean,
+                                  var order: Int) {
 
 
     override def toString = s"Candidate(${ridingId}, ${name}, ${party}, ${votes}, ${effVotes})"
@@ -252,10 +255,10 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
   (Seq[Candidate],
     Seq[Candidate]) = {
     def c2m(c: Candidate): MutCandidate = MutCandidate(c.ridingId, c.regionId, c.provName, c.name, c.party, c.votes,
-      c.votes, false)
+      c.votes, false, c.order)
     def m2c(m: MutCandidate): Candidate = Candidate(m.ridingId, m.regionId, m.provName, m.name, m.party, m.votes, m
       .effVotes, m.winner,
-      SeatType.RidingSeat)
+      SeatType.RidingSeat, m.order)
 
     val (win, lose) = stvElection(
       candidates.map(c2m(_)).toSet, dm, xferVoteProb)(debug)
@@ -280,6 +283,7 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
                           xferVoteProb: VoteXferFunc)(
                            implicit debug: Boolean = false): (List[MutCandidate], List[MutCandidate]) = {
 
+    var order = 0;
 
     val threshhold = this.threshhold(candidates, dm)
     dp(s"   threshhold = ${threshhold}")
@@ -292,11 +296,12 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
       val totalVotes = candidates.map(_.effVotes).sum
 
       dp(s"\nSTV: c=${candidates.toList.sortBy(_.effVotes).mkString("\t", "\n\t", "")}")
-      dp(s"""\te=$elected\n\tne=${notElected}\ttVotes = $totalVotes, thr = $threshhold, dm = ${dm}""")
+      dp(s"""\te=${elected.mkString("\t", "\n\t", "")}\n\tne=${notElected.mkString("\t", "\n\t", "")}\n\ttVotes =
+$totalVotes, thr = $threshhold, dm = ${dm}""")
       if (dm == elected.length) {
         // We have all the winners we need -- election is over
         dp("All done")
-        (elected.reverse, notElected ::: candidates.toList)
+        (elected.reverse, notElected ::: candidates.map{c ⇒ c.order = order; c}.toList)
       } else if (candidates.size == 0) {
         throw new Exception("Ran out of candidates")
       } else {
@@ -312,11 +317,13 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
               xferVoteProb)
             hasThreshold.winner = true
             hasThreshold.effVotes = threshhold
+            hasThreshold.order = order
+            order = order + 1
             helper(remainingCandidates, hasThreshold :: elected, notElected)
           case None               ⇒
             if (elected.length + candidates.size == dm) {
               dp(s"Exactly enough candidates left to finish the election.  ${candidates}")
-              candidates.foreach(_.winner = true)
+              candidates.foreach{c ⇒ c.winner = true; c.order = order}
               ((candidates.toList ::: elected).reverse, notElected)
             } else {
               val loser = candidates.minBy(_.effVotes)
@@ -325,6 +332,8 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
                 xferVoteProb)
               loser.effVotes = 0.0
               loser.winner = false
+              loser.order = order
+              order = order + 1
               helper(remainingCandidates, elected, loser :: notElected)
             }
         }
@@ -437,7 +446,7 @@ object ListRidingElectionStrategy extends RidingElectionStrategy {
               candidates.head.regionId,
               candidates.head.provName,
               "Party ran insufficient candidates",
-              party, 0, 0, true, SeatType.RidingSeat) +: elected, unelected)
+              party, 0, 0, true, SeatType.RidingSeat, 0) +: elected, unelected)
         }
       }
     }

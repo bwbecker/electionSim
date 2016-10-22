@@ -18,7 +18,9 @@ case class Candidate(ridingId: RidingId,
                      votes: Double,
                      effVotes: Double,
                      winner: Boolean,
-                     seatType: SeatType) {
+                     seatType: SeatType,
+                     order: Int // order in which wins or loses
+                    ) {
 
   override def toString = f"Candidate(${ridingId}, ${name}, ${party}, ${votes}%,4.1f, ${effVotes}%,4.1f)"
 
@@ -56,7 +58,7 @@ case class SensitivityDataPoint(shift: Double,
                                 ndpMPs: Double,
                                 grnVotes: Double,
                                 grnMPs: Double,
-                                blocVotes:Double,
+                                blocVotes: Double,
                                 blocMPs: Double,
                                 gallagher: Double
                                )

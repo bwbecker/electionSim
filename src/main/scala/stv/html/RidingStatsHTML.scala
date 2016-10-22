@@ -35,8 +35,8 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
       (prov, popPerMP.sum / popPerMP.length)
     }).toMap
 
-    println(pgTitle)
-    println(avgPopPerMPByProv)
+    //println(pgTitle)
+    //println(avgPopPerMPByProv)
 
     val sortByNum = "data-sort-method".attr := "number"
     /**

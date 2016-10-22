@@ -189,7 +189,7 @@ class DesignReader(rawJson: String,
         // Change old riding ID to new riding Id.
         rawCandidates.map { cand => Candidate(riding_id, regionId, prov,
           cand.candidate_name, cand.party_id,
-          cand.votes * or.pct / 100.0, cand.votes * or.pct / 100.0, false, SeatType.RidingSeat)
+          cand.votes * or.pct / 100.0, cand.votes * or.pct / 100.0, false, SeatType.RidingSeat, 0)
         }
       }
 

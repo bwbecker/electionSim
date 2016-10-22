@@ -85,7 +85,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
 
   def doRiding(riding: Riding) = {
-    val cands = sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.votes, c.name))
+    val cands = sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ /*(-c.votes, c.name)*/ -c.order)
 
     for (c ← cands) yield {
       if (c == cands.head) {
@@ -99,6 +99,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
           td(cls := s"${c.party} party firstRow")(c.party.toString),
           td(cls := "votes firstRow")(f"${c.votes}%,8.0f"),
           td(cls := "effVotes firstRow")(f"${c.effVotes}%,8.1f"),
+          td(cls := "firstRow")(c.order),
           td(cls := "winner firstRow")(if (c.winner) {
             raw("&#10004;")
           } else "")
@@ -109,6 +110,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
           td(cls := s"${c.party} party")(c.party.toString),
           td(cls := "votes")(f"${c.votes}%,8.0f"),
           td(cls := "effVotes")(f"${c.effVotes}%,8.1f"),
+          td(c.order),
           td(cls := "winner")(if (c.winner) {
             raw("&#10004;")
           } else "")
