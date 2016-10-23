@@ -1,5 +1,6 @@
 {
     "design_name": "kingsley",
+    "description": "Single member ridings in sparsely populated areas; multi-member ridings in densely populated areas;  no top-ups.",
     "is_proportional": true,
     "provinces": [
         {

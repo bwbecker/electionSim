@@ -1,5 +1,6 @@
 {
     "design_name": "ru_enlargeP",
+    "description": "A total of 338 single and multi-member ridings.  Top-ups come from enlarging Parliament.",
     "is_proportional": true,
     "provinces": [
         {

@@ -1,5 +1,6 @@
 {
     "design_name": "stv_small",
+    "description":  "STV with smaller regions.",
     "is_proportional": true,
     "provinces": [
         {

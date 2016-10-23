@@ -1,5 +1,6 @@
 {
     "design_name": "mmp_enlargeP",
+    "description": "MMP with the 338 existing single-member ridings.  Enlarge parliament to get the top-ups.",
     "is_proportional": true,
     "provinces": [
         {

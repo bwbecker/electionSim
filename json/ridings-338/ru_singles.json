@@ -1,5 +1,6 @@
 {
     "design_name": "ru_singles",
+    "description": "Combine ridings to preserve the 338 seat total in parliament.",
     "is_proportional": true,
     "provinces": [
         {

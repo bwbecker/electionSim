@@ -1,5 +1,6 @@
 {
     "design_name": "mmp_med",
+    "description": "MMP with medium-sized regions",
     "is_proportional": true,
     "provinces": [
         {

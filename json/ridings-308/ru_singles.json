@@ -1,5 +1,6 @@
 {
     "design_name": "ru_singles",
+    "description": "308 redistricted ridings to give single- and -multi-member ridings plus top-ups.",
     "is_proportional": true,
     "provinces": [
         {

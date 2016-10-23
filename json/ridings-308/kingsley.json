@@ -1,5 +1,6 @@
 {
-    "design_name": "ru_enlargeP",
+    "design_name": "kingsley",
+    "description":  "308 ridings grouped into single- and multi-member ridings; no top-ups.",
     "is_proportional": true,
     "provinces": [
         {

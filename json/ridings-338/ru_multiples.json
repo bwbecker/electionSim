@@ -1,5 +1,6 @@
 {
     "design_name": "ru_multiples",
+    "description": "Mostly multi-member ridings formed by collapsing the 338 2015 ridings.  Get top-ups by enlarging parliament.",
     "is_proportional": true,
     "provinces": [
         {

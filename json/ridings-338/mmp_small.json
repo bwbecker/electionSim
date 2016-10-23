@@ -1,5 +1,6 @@
 {
     "design_name": "mmp_small",
+    "description": "MMP with small regions",
     "is_proportional": true,
     "provinces": [
         {
