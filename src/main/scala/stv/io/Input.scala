@@ -57,9 +57,19 @@ object Input {
                  candidates: Vector[RawCandidate]): Option[Design] = {
     assert(ridings.length > 250, s"Looks like ridings didn't get read; only found ${ridings.length}.")
     assert(candidates.length > 250, s"Looks like candidates didn't get read; only found ${candidates.length}.")
-    fileToString(s"json/ridings-${numRidings}/${dName}.json").map { json ⇒
-      new DesignReader(json, ridings, candidates).read
+
+    val fname = s"json/ridings-${numRidings}/${dName}.json"
+    try {
+      fileToString(fname).map { json ⇒
+        new DesignReader(json, ridings, candidates).read
+      }
+    } catch {
+      case e: upickle.Invalid.Json ⇒
+        println(s"\n\tError reading ${fname}")
+        println("\t" + e.msg)
+        None
     }
+
   }
 
   //  def readDesign(rawJson: String): Design = {
@@ -95,9 +105,9 @@ object Input {
   * @param candidates
   */
 class DesignReader(rawJson: String,
-                           originalRidings: Vector[RawFptpRiding],
-                           candidates: Vector[Input.RawCandidate]
-                          ) {
+                   originalRidings: Vector[RawFptpRiding],
+                   candidates: Vector[Input.RawCandidate]
+                  ) {
 
   private val originalRidingsMap = originalRidings.map(r => (r.fptp_id, r)).toMap
   private val candidatesByRiding: Map[Int, Vector[Input.RawCandidate]] = candidates.groupBy(_.riding_id)
