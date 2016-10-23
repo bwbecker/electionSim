@@ -62,6 +62,7 @@ object DesignName extends EnumP[DesignName] {
   case object erre_ru extends DesignName("ER", "ERRE RU that gets top-ups from large multi-member ridings")
 
   case object erre_ru2 extends DesignName("ER", "ERRE RU that gets top-ups from large multi-member ridings; region = province")
+  case object erre_mmp_5050_small extends DesignName("ER", "ERRE RU that gets top-ups from large multi-member ridings; region = province")
 
 }
 
