@@ -15,6 +15,7 @@ trait ElectionStrategy {
   val description: TypedTag[String]
   val debug = false
 
+  def sortCandidates(candidates:Seq[Candidate]):Seq[Candidate] = candidates.sortBy(c ⇒ (-c.order, -c.votes))
 }
 
 /**
@@ -61,6 +62,9 @@ object TopupStrategy extends TopupElectionStrategy {
   val help = p("Iteratively choose the most disadvantaged party.")
   val description = p("Iteratively choose the most disadvantaged party.")
 
+  override def sortCandidates(candidates: Seq[Candidate]): Seq[Candidate] = candidates.sortBy(c ⇒ (-c.votes, c.name))
+
+
   def runElection(regionId: String, allCandidates: Vector[Candidate], numTopupSeats: Int, threshhold:
   Double): Vector[Candidate] = {
 
@@ -93,7 +97,8 @@ object TopupStrategy extends TopupElectionStrategy {
 
 
 object RidingElectionStrategy {
-  val values = Vector(FptpRidingElectionStrategy,
+  val values = Vector(
+    FptpRidingElectionStrategy,
     EkosAvRidingElectionStrategy,
     //ThinAirAvRidingElectionStrategy,
     EkosStvRidingElectionStrategy,
@@ -102,14 +107,18 @@ object RidingElectionStrategy {
     NotApplicableRidingElectionStrategy
   )
 
-  val singleMbrStrategies = Vector(FptpRidingElectionStrategy,
+  val singleMbrStrategies = Vector(
+    FptpRidingElectionStrategy,
     //ThinAirAvRidingElectionStrategy,
     EkosAvRidingElectionStrategy
   )
 
-  val multiMbrStrategies = Vector(EkosStvRidingElectionStrategy,
+  val multiMbrStrategies = Vector(
+    EkosStvRidingElectionStrategy,
     //ThinAirStvRidingElectionStrategy,
-    ListRidingElectionStrategy)
+    ListRidingElectionStrategy,
+    new RcStvElectionStrategy(EkosXfer)
+  )
 }
 
 
@@ -121,6 +130,8 @@ object FptpRidingElectionStrategy extends RidingElectionStrategy {
     """.stripMargin
   )
   override val help = p("First-Past-The-Post -- the candidate with the most votes wins.")
+
+  override def sortCandidates(candidates: Seq[Candidate]): Seq[Candidate] = candidates.sortBy(c ⇒ (-c.votes, c.name))
 
   override def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
     assert(dm == 1)

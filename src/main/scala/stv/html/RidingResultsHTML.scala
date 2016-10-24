@@ -98,25 +98,22 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
   def doRiding(riding: Riding) = {
 
-
     val cands = if (riding.districtMagnitude > 1) {
-      if (sim.params.multiMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
-        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.order, -c.votes))
-      } else {
-        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.votes, c.name))
-      }
+      sim.params.multiMemberElectionStrategy.sortCandidates(sim.results.candidatesByRiding(riding.ridingId))
     } else {
-      if (sim.params.singleMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
-        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.order, -c.votes))
-      } else {
-        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.votes, c.name))
-      }
+      sim.params.singleMemberElectionStrategy.sortCandidates(sim.results.candidatesByRiding(riding.ridingId))
     }
+
+
 
     val oldRidings = riding.mapping.sortBy(r ⇒ r.ridingId).zipWithIndex
 
     def cName(c: Candidate): String = {
-      s"${oldRidings.find(t ⇒ t._1.ridingId == c.oldRidingId.toString).get._2 + 1}-${c.name}"
+      s"${
+        oldRidings.find(t ⇒ t._1.ridingId == c.oldRidingId.toString).get._2 + 1
+      }-${
+        c.name
+      }"
     }
 
     for (c ← cands) yield {
@@ -127,10 +124,18 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
             constituentRidings(riding.mapping),
             p(cls := "dataWarning")("This data can not be used to predict outcomes for individual candidates.")
           ),
-          td(cls := s"${c.party} candName firstRow")(cName(c)),
-          td(cls := s"${c.party} party firstRow")(c.party.toString),
-          td(cls := "votes firstRow")(f"${c.votes}%,8.0f"),
-          td(cls := "effVotes firstRow")(f"${c.effVotes}%,8.1f"),
+          td(cls := s"${
+            c.party
+          } candName firstRow")(cName(c)),
+          td(cls := s"${
+            c.party
+          } party firstRow")(c.party.toString),
+          td(cls := "votes firstRow")(f"${
+            c.votes
+          }%,8.0f"),
+          td(cls := "effVotes firstRow")(f"${
+            c.effVotes
+          }%,8.1f"),
           //td(cls := "firstRow")(c.order),
           td(cls := "winner firstRow")(if (c.winner) {
             raw("&#10004;")
@@ -138,10 +143,18 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
         )
       } else {
         tr(
-          td(cls := s"${c.party} candName")(cName(c)),
-          td(cls := s"${c.party} party")(c.party.toString),
-          td(cls := "votes")(f"${c.votes}%,8.0f"),
-          td(cls := "effVotes")(f"${c.effVotes}%,8.1f"),
+          td(cls := s"${
+            c.party
+          } candName")(cName(c)),
+          td(cls := s"${
+            c.party
+          } party")(c.party.toString),
+          td(cls := "votes")(f"${
+            c.votes
+          }%,8.0f"),
+          td(cls := "effVotes")(f"${
+            c.effVotes
+          }%,8.1f"),
           //td(c.order),
           td(cls := "winner")(if (c.winner) {
             raw("&#10004;")
@@ -155,7 +168,9 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
     div(h2(id := prov.prov.entryName)(prov.prov.longName),
       for (region ← prov.regions) yield {
         div(
-          h3(s"Region: ${region.regionId}"),
+          h3(s"Region: ${
+            region.regionId
+          }"),
           table(cls := "ridingSummary")(
             tr(th("Riding ID"),
               th("Composed from"),

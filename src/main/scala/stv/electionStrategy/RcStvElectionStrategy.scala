@@ -8,9 +8,9 @@ import stv.{Candidate, VoteXfer}
 /**
   * Created by bwbecker on 2016-10-24.
   */
-class RcStvElectionStrategy(val voteXfer: VoteXfer)  extends RidingElectionStrategy {
+class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrategy {
 
-  val name: String = "Riding-Centric STV"
+  val name: String = "Riding-CentricSTV"
   val shortName: String = "rcSTV"
   val help: TypedTag[String] = p("""An STV-like strategy that guarantees electing a candidate in each old riding
   that makes up a multi-member riding.""")
@@ -30,14 +30,15 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer)  extends RidingElectionStrat
   /** Find the candidate with the fewest effective votes that still has someone else from
     * their local riding that's in the race.
     */
-  def candidateToCut(remaining: Seq[Candidate]): Candidate = {
-    def helper(c: Seq[Candidate]): Candidate = {
+  def candidateToCut(remaining: Seq[Candidate]): Option[Candidate] = {
+    def helper(c: Seq[Candidate]): Option[Candidate] = {
       c match {
-        case head :: tail if (tail.find(c ⇒ c.ridingId == head.ridingId).isDefined) ⇒ head
-        case _ :: tail                                                              ⇒ helper(tail)
+        case head +: tail if (tail.find(c ⇒ c.oldRidingId == head.oldRidingId).isDefined) ⇒ Some(head)
+        case _ +: tail                                                                    ⇒ helper(tail)
+        case Seq()                                                                        ⇒ None
       }
     }
-    helper(remaining.sortBy(c ⇒ -c.effVotes))
+    helper(remaining.sortBy(c ⇒ c.effVotes))
   }
 
   /**
@@ -45,7 +46,7 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer)  extends RidingElectionStrat
     * to all the remaining candidates in the given party.  Later might consider taking into account
     * local riding effects.
     */
-  def transferVotes(cut:Candidate, remaining:Seq[Candidate]): Seq[Candidate] = {
+  def transferVotes(cut: Candidate, remaining: Seq[Candidate]): Seq[Candidate] = {
 
     for {
       (party, candList) ← remaining.filterNot(c ⇒ c == cut).groupBy(_.party).toSeq
@@ -53,8 +54,10 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer)  extends RidingElectionStrat
       cand ← candList
       xferPct = voteXfer.xfer(cut.party, party)
     } yield {
-      if (xferPct > 0) {
-        cand.copy(effVotes = cand.effVotes + cut.effVotes*xferPct/num)
+      if (cand.party == cut.party) {
+        cand.copy(effVotes = cand.effVotes + cut.effVotes / num)
+      } else if (xferPct > 0) {
+        cand.copy(effVotes = cand.effVotes + cut.effVotes * xferPct / num)
       } else {
         cand
       }
@@ -65,13 +68,13 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer)  extends RidingElectionStrat
   def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
 
 
-    def helper(remaining: Seq[Candidate], notElected: Seq[Candidate]): (Seq[Candidate],
-      Seq[Candidate]) = {
-      if (remaining.length == dm) {
-        (remaining, notElected)
-      } else {
-        val cut = candidateToCut(remaining)
-        helper(transferVotes(cut, remaining), cut +: notElected)
+    def helper(remaining: Seq[Candidate], notElected: Seq[Candidate]): (Seq[Candidate], Seq[Candidate]) = {
+      candidateToCut(remaining) match {
+        case None      ⇒ (remaining.sortBy(c ⇒ -c.effVotes).take(dm).zipWithIndex.map { t ⇒
+          val n = notElected.length
+          t._1.copy(winner = true, order = n + dm - t._2)
+        }, notElected)
+        case Some(cut) ⇒ helper(transferVotes(cut, remaining), cut.copy(order = notElected.length + 1) +: notElected)
       }
     }
 
