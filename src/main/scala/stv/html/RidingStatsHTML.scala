@@ -31,8 +31,10 @@ case class RidingStatsHTML(params: Params, sim: Sim) extends Page {
     val avgPopPerMPByProv = (for {
       (prov, ridingLst) ← ridingByProv
     } yield {
-      val popPerMP = ridingLst.map(r ⇒ r.population / r.districtMagnitude)
-      (prov, popPerMP.sum / popPerMP.length)
+//      val popPerMP = ridingLst.map(r ⇒ r.population / r.districtMagnitude)
+//      (prov, popPerMP.sum / popPerMP.length)
+      val (pop, mps) = ridingLst.foldLeft((0, 0)){(a,r) ⇒ (a._1 + r.population, a._2 + r.districtMagnitude)}
+      (prov, pop/mps.toDouble)
     }).toMap
 
     //println(pgTitle)
