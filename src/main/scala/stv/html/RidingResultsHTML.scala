@@ -41,6 +41,17 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
 
   private def descr = {
+    val smSort = if (sim.params.singleMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
+      "candidates sorted from the last selected/eliminated to the first."
+    } else {
+      "candidates sorted from most to fewest raw votes."
+    }
+    val mmSort = if (sim.params.multiMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
+      "candidates sorted from the last selected/eliminated to the first."
+    } else {
+      "candidates sorted from most to fewest raw votes."
+    }
+
     div(
       h3("Description"),
       //descriptions.get(params.name).getOrElse(div(p(s"Oops!  ${params.name} needs a description!")))
@@ -50,8 +61,8 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
           model.  In most models (STV, most versions of MMP, RUP) existing ridings have been combined
           in various ways to make the new ridings.  These are listed in the "Composed from" column."""),
         p("""In other models (FPTP, AV) the existing ridings are used without modification."""),
-        p(s"Single Member Elections: ${params.singleMemberElectionStrategy.name}"),
-        p(s"Multi Member Elections: ${params.multiMemberElectionStrategy.name}")
+        p(s"Single Member Elections: ${params.singleMemberElectionStrategy.name}; ", smSort),
+        p(s"Multi Member Elections: ${params.multiMemberElectionStrategy.name}; ", mmSort)
       )
     )
 
@@ -85,7 +96,22 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
 
   def doRiding(riding: Riding) = {
-    val cands = sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ /*(-c.votes, c.name)*/ -c.order)
+
+
+
+    val cands = if (riding.districtMagnitude > 1) {
+      if (sim.params.multiMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
+        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.order, -c.votes))
+      } else {
+        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.votes, c.name))
+      }
+    } else {
+      if (sim.params.singleMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
+        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.order, -c.votes))
+      } else {
+        sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.votes, c.name))
+      }
+    }
 
     for (c ← cands) yield {
       if (c == cands.head) {
@@ -99,7 +125,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
           td(cls := s"${c.party} party firstRow")(c.party.toString),
           td(cls := "votes firstRow")(f"${c.votes}%,8.0f"),
           td(cls := "effVotes firstRow")(f"${c.effVotes}%,8.1f"),
-          td(cls := "firstRow")(c.order),
+          //td(cls := "firstRow")(c.order),
           td(cls := "winner firstRow")(if (c.winner) {
             raw("&#10004;")
           } else "")
@@ -110,7 +136,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
           td(cls := s"${c.party} party")(c.party.toString),
           td(cls := "votes")(f"${c.votes}%,8.0f"),
           td(cls := "effVotes")(f"${c.effVotes}%,8.1f"),
-          td(c.order),
+          //td(c.order),
           td(cls := "winner")(if (c.winner) {
             raw("&#10004;")
           } else "")

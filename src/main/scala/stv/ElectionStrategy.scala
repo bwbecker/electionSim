@@ -283,7 +283,7 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
                           xferVoteProb: VoteXferFunc)(
                            implicit debug: Boolean = false): (List[MutCandidate], List[MutCandidate]) = {
 
-    var order = 0;
+    var order = 1;
 
     val threshhold = this.threshhold(candidates, dm)
     dp(s"   threshhold = ${threshhold}")
@@ -301,7 +301,7 @@ $totalVotes, thr = $threshhold, dm = ${dm}""")
       if (dm == elected.length) {
         // We have all the winners we need -- election is over
         dp("All done")
-        (elected.reverse, notElected ::: candidates.map{c ⇒ c.order = order; c}.toList)
+        (elected.reverse, notElected ::: candidates.map { c ⇒ c.order = order; c }.toList)
       } else if (candidates.size == 0) {
         throw new Exception("Ran out of candidates")
       } else {
@@ -323,14 +323,14 @@ $totalVotes, thr = $threshhold, dm = ${dm}""")
           case None               ⇒
             if (elected.length + candidates.size == dm) {
               dp(s"Exactly enough candidates left to finish the election.  ${candidates}")
-              candidates.foreach{c ⇒ c.winner = true; c.order = order}
+              candidates.foreach { c ⇒ c.winner = true; c.order = order }
               ((candidates.toList ::: elected).reverse, notElected)
             } else {
               val loser = candidates.minBy(_.effVotes)
               dp(s"Cutting ${loser}.")
               val remainingCandidates = this.distributeVotes(loser.effVotes, loser.party, candidates - loser, dm,
                 xferVoteProb)
-              loser.effVotes = 0.0
+              //loser.effVotes = 0.0
               loser.winner = false
               loser.order = order
               order = order + 1
@@ -418,10 +418,7 @@ object ListRidingElectionStrategy extends RidingElectionStrategy {
     val totalVotes = cand.map(_.votes).sum
 
     val candByParty = cand.groupBy(_.party).toList
-    val votesByParty = candByParty.map { case (p, cLst) => (p, cLst.map {
-      _.votes
-    }.sum)
-    }
+    val votesByParty = candByParty.map { case (p, cLst) => (p, cLst.map {_.votes}.sum) }
     val quotientsByParty = votesByParty.map { case (p, votes) => (p, dm * votes / totalVotes) }
 
     implicit val priority = Ordering.by { foo: (Party, Double) => foo._2 }
