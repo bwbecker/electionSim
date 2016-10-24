@@ -17,7 +17,7 @@ trait VoteXfer {
 
   def source: Option[String]
 
-  def xfer(p1: Party, p2: Party, dm: Int): Double
+  def xfer(p1: Party, p2: Party): Double
 
 
   /**
@@ -39,7 +39,7 @@ trait VoteXfer {
         tr(td(left)(p1.toString),
           for {
             p2 ← Party.values.sortBy(_.entryName)
-            pct = (xfer(p1, p2, 2) * 100).toInt
+            pct = (xfer(p1, p2) * 100).toInt
           } yield {
 
             td(right)(if (pct > 0) pct.toString else "")
@@ -98,7 +98,7 @@ object EkosXfer extends VoteXfer {
 
   def source = Some("http://www.ekospolitics.com/wp-content/uploads/full_report_october_15_2015.pdf")
 
-  def xfer(p1: Party, p2: Party, dm: Int): Double = map(p1, p2)
+  def xfer(p1: Party, p2: Party): Double = map(p1, p2)
 }
 
 object ThinAirXfer extends VoteXfer {
@@ -145,7 +145,7 @@ object ThinAirXfer extends VoteXfer {
 
   def source = None
 
-  def xfer(p1: Party, p2: Party, dm: Int): Double = map(p1, p2)
+  def xfer(p1: Party, p2: Party): Double = map(p1, p2)
 }
 
 
@@ -165,7 +165,7 @@ object XferProb2013 extends VoteXfer {
   def source = Some("http://www.theglobeandmail.com/news/politics/why-a-change-to-your-ballot-would-give-the-ndp" +
     "-an-edge-next-election/article10454286/?page=all")
 
-  def xfer(p1: Party, p2: Party, dm: Int): Double = {
+  def xfer(p1: Party, p2: Party): Double = {
     (p1, p2) match {
       case (Con, Lib) ⇒ 0.57
       case (Con, Grn) ⇒ 0.08
@@ -216,7 +216,7 @@ object XferProbLeger2015 extends VoteXfer {
 
   def source = Some("http://leger360.com/admin/upload/publi_pdf/soen20151017.pdf")
 
-  def xfer(p1: Party, p2: Party, dm: Int): Double = {
+  def xfer(p1: Party, p2: Party): Double = {
     (p1, p2) match {
       case (Con, Lib) ⇒ 0.37
       case (Con, Grn) ⇒ 0.09
@@ -260,7 +260,7 @@ object XferProbFPTP extends VoteXfer {
 
   def source = None
 
-  def xfer(p1: Party, p2: Party, dm: Int): Double = 0.0
+  def xfer(p1: Party, p2: Party): Double = 0.0
 
 }
 

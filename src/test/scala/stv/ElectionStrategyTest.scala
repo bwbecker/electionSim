@@ -61,7 +61,7 @@ object ElectionStrategyTest extends TestSuite {
         val description = p("TestXfer")
         val source = None
 
-        def xfer(p1: Party, p2: Party, dm: Int): Double = {
+        def xfer(p1: Party, p2: Party): Double = {
           (p1, p2) match {
             case (x, y) if (x == y) ⇒ 1.0
             case (Con, Lib)         ⇒ 0.25

@@ -78,7 +78,7 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
 
 
   def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
-    this.stvElection(candidates, dm, voteXfer.xfer, debug)
+    this.stvElection(candidates, dm, (p1: Party, p2: Party, dm: Int) => voteXfer.xfer(p1, p2), debug)
   }
 
 
