@@ -1,164 +1,8 @@
-package stv
+package stv.electionStrategy
 
-import scala.collection.mutable
-import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
-trait ElectionStrategy {
-  val name: String
-  val shortName: String
-  val help: TypedTag[String]
-
-  val description: TypedTag[String]
-  val debug = false
-
-}
-
-/**
-  * Created by bwbecker on 2016-08-18.
-  */
-trait RidingElectionStrategy extends ElectionStrategy {
-
-
-  def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate])
-
-  /**
-    * Return the same list but with the effective votes either the total of
-    * all votes for the party (assigned to the candidate with the most votes)
-    * or 0.
-    *
-    */
-  def collapseCandidates(candidates: Seq[Candidate]): Seq[Candidate] = {
-    val byParty = candidates.groupBy(_.party)
-    val winnersByParty = byParty.map(
-      t ⇒ t._1 → t._2.maxBy(_.votes)
-    )
-    for (c ← candidates) yield {
-      if (c == winnersByParty(c.party)) {
-        c.copy(effVotes = byParty(c.party).map(_.votes).sum)
-      } else {
-        c.copy(effVotes = 0)
-      }
-    }
-  }
-
-}
-
-trait TopupElectionStrategy extends ElectionStrategy {
-
-  def runElection(regionId: String,
-                  allCandidates: Vector[Candidate],
-                  numSeats: Int,
-                  threshhold: Double): Vector[Candidate]
-}
-
-object TopupStrategy extends TopupElectionStrategy {
-  val name = "Top-up"
-  val shortName = "Top-up"
-  val help = p("Iteratively choose the most disadvantaged party.")
-  val description = p("Iteratively choose the most disadvantaged party.")
-
-  def runElection(regionId: String, allCandidates: Vector[Candidate], numTopupSeats: Int, threshhold:
-  Double): Vector[Candidate] = {
-
-    val numRidingSeats = allCandidates.count(c ⇒ c.winner)
-    var order = 0
-
-    def helper(topups: Vector[Candidate]): Vector[Candidate] = {
-      if (topups.length == numTopupSeats) {
-        topups //.reverse
-      } else {
-        val a = new Analysis(allCandidates ++ topups, numRidingSeats + numTopupSeats)
-        val stats = a.statsByParty.filter(s ⇒ s.pctVote >= threshhold)
-
-
-        val disadvantaged = stats.maxBy(s ⇒ s.deservedMPs - s.mps)
-
-        val cand = Candidate("", regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0,
-          0.0, true, SeatType.TopupSeat, order)
-        order = order + 1
-        helper(topups :+ cand)
-
-      }
-    }
-
-    helper(Vector())
-
-  }
-
-}
-
-
-object RidingElectionStrategy {
-  val values = Vector(FptpRidingElectionStrategy,
-    EkosAvRidingElectionStrategy,
-    //ThinAirAvRidingElectionStrategy,
-    EkosStvRidingElectionStrategy,
-    //ThinAirStvRidingElectionStrategy,
-    ListRidingElectionStrategy,
-    NotApplicableRidingElectionStrategy
-  )
-
-  val singleMbrStrategies = Vector(FptpRidingElectionStrategy,
-    //ThinAirAvRidingElectionStrategy,
-    EkosAvRidingElectionStrategy
-  )
-
-  val multiMbrStrategies = Vector(EkosStvRidingElectionStrategy,
-    //ThinAirStvRidingElectionStrategy,
-    ListRidingElectionStrategy)
-}
-
-/*
-object FptpElectionStrategy extends ElectionStrategy {
-  val name:String = "FPTP"
-  val description:String =
-    """After collapsing all candidates running for the same party into one virtual
-      |candiate, choose the virtual candidate with the most votes.
-    """.stripMargin
-
-  def runElection(candidates:List[Candidate], dm:Int):(List[Candidate], List[Candidate]) = {
-    assert(dm == 1)
-    val cCands = this.collapseCandidates(candidates)
-    val winner = cCands.maxBy(_.votes)
-    val (elected, unelected) = cCands.partition(c => c == winner)
-    assert(elected.length == 1)
-    assert(unelected.length == cCands.length - 1)
-    (elected, unelected)
-  }
-}
-*/
-
-object FptpRidingElectionStrategy extends StvRidingElectionStrategy(XferProbFPTP) {
-  override val name = "FPTP"
-  override val shortName = "F"
-  override val description = p("A version of FPTP that deals with merged ridings.")
-  override val help = p("First-Past-The-Post -- the candidate with the most votes wins.")
-
-  override def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
-    assert(dm == 1)
-    val cCands = this.collapseCandidates(candidates)
-    val winner = cCands.maxBy(_.effVotes)
-    val (elected, unelected) = cCands.partition(c => c == winner)
-    assert(elected.length == 1)
-    assert(unelected.length == cCands.length - 1)
-    (elected.map { c ⇒ c.copy(winner = true) }, unelected)
-  }
-}
-
-object NotApplicableRidingElectionStrategy extends RidingElectionStrategy {
-  val name: String = "NA"
-  val shortName = "x"
-  val help = p("No election strategy is applicable in this situation.")
-  val description: TypedTag[String] = p("An election strategy for where none are applicable.  For example, for " +
-    "multi-member" +
-    " ridings in a FPTP simulation.")
-
-  def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
-    throw new Exception("Election Strategy is not applicable.")
-  }
-
-}
+import stv.{Candidate, Party, ProvName, SeatType, VoteXfer, _}
 
 
 /**
@@ -200,6 +44,8 @@ object ThinAirStvRidingElectionStrategy extends StvRidingElectionStrategy(ThinAi
   override val name = "STV-ThinAir"
   override val shortName = "T"
 }
+
+
 
 class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrategy {
 
@@ -390,70 +236,6 @@ $totalVotes, thr = $threshhold, dm = ${dm}""")
       assert(r.size == remaining.size)
       r
     }
-  }
-
-}
-
-
-object ListRidingElectionStrategy extends RidingElectionStrategy {
-  val name: String = "List"
-  val shortName: String = "L"
-  val description: TypedTag[String] = div(
-    p(
-      """Calculate the number of votes for each party and from that the determine the number of seats
-        |won by each party using a """.stripMargin,
-      a(href := "https://en.wikipedia.org/wiki/Highest_averages_method")("highest averages"),
-      """ method -- specifically as described in "Quota system".  After calculating the number of
-          seats for each party, make a list of all the candidates for the party, ordered by number of votes in
-         the 2015 election, and choose the first n candidates as the winners.
-      """.stripMargin)
-  )
-  val help = description
-
-  def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
-    //assert(!candidates.exists(c => c.winner))
-
-    //val cand = candidates.filter(c => c.party.mainStream)
-    val cand = candidates
-    val totalVotes = cand.map(_.votes).sum
-
-    val candByParty = cand.groupBy(_.party).toList
-    val votesByParty = candByParty.map { case (p, cLst) => (p, cLst.map {_.votes}.sum) }
-    val quotientsByParty = votesByParty.map { case (p, votes) => (p, dm * votes / totalVotes) }
-
-    implicit val priority = Ordering.by { foo: (Party, Double) => foo._2 }
-    val q = mutable.PriorityQueue[(Party, Double)](quotientsByParty: _*)
-
-    def winners(elected: Seq[Candidate], unelected: Seq[Candidate]): (Seq[Candidate], Seq[Candidate]) = {
-      if (elected.length == dm) {
-        (elected, unelected)
-      } else {
-        val (party, quot) = q.dequeue()
-        //        println(s"$party, $quot")
-        //        println(s"   elected   = ${elected.mkString("\n\t")}")
-        //        println(s"   unelected = ${unelected.mkString("\n\t")}")
-        try {
-          val winner = unelected.filter(c => c.party == party).maxBy(c => c.votes)
-          q.enqueue((party, quot - 1))
-          winners(winner.copy(winner = true) +: elected, unelected.filterNot(c => c == winner))
-        } catch {
-          case e: UnsupportedOperationException =>
-            println(s"${party} didn't run enough candidates.")
-            winners(Candidate(candidates.head.ridingId,
-              candidates.head.regionId,
-              candidates.head.provName,
-              "Party ran insufficient candidates",
-              party, 0, 0, true, SeatType.RidingSeat, 0) +: elected, unelected)
-        }
-      }
-    }
-
-    val result = winners(List(), candidates)
-    //assert(!result._2.exists(c => c.winner))
-    //    if (candidates.find(c => c.votes == 38229).isDefined) {
-    //      println(result)
-    //    }
-    result
   }
 
 }

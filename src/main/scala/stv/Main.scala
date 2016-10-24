@@ -4,6 +4,7 @@ import scalatags.Text
 import scalatags.Text.all._
 
 import ca.bwbecker.io.CachedMkdir
+import stv.electionStrategy._
 import stv.io.Input.RawCandidate
 
 //import stv.html.OverviewHTML

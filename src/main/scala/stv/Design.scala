@@ -1,5 +1,7 @@
 package stv
 
+import stv.electionStrategy.{NotApplicableRidingElectionStrategy, RidingElectionStrategy, TopupElectionStrategy}
+
 /**
   * The model design that we read from a JSON file.
   *

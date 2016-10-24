@@ -5,6 +5,7 @@ import scalatags.Text.all._
 
 import ca.bwbecker.io._
 import stv._
+import stv.electionStrategy.StvRidingElectionStrategy
 
 import java.io.File
 

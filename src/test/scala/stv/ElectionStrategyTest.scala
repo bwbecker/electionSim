@@ -7,11 +7,11 @@ import stv.ProvName._
 import stv.Party._
 import stv.SeatType._
 import stv.io.DesignReader
-
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
 import stv.SeatType.RidingSeat
+import stv.electionStrategy.{FptpRidingElectionStrategy, StvRidingElectionStrategy}
 
 /**
   * Created by bwbecker on 2016-10-07.

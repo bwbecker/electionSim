@@ -3,7 +3,9 @@ package stv.html
 
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
+
 import stv._
+import stv.electionStrategy.{NotApplicableRidingElectionStrategy, RidingElectionStrategy}
 
 /**
   * Created by bwbecker on 2016-07-04.

@@ -1,6 +1,7 @@
 package stv
 
 import stv.Party.{Bloc, Con, Grn, Lib, NDP}
+import stv.electionStrategy.TopupStrategy
 
 import scala.collection.mutable
 
