@@ -77,7 +77,7 @@ object TopupStrategy extends TopupElectionStrategy {
 
         val disadvantaged = stats.maxBy(s ⇒ s.deservedMPs - s.mps)
 
-        val cand = Candidate("", regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0,
+        val cand = Candidate("", 0, regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0,
           0.0, true, SeatType.TopupSeat, order)
         order = order + 1
         helper(topups :+ cand)

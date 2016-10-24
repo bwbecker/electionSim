@@ -53,6 +53,7 @@ object ListRidingElectionStrategy extends RidingElectionStrategy {
           case e: UnsupportedOperationException =>
             println(s"${party} didn't run enough candidates.")
             winners(Candidate(candidates.head.ridingId,
+              0,
               candidates.head.regionId,
               candidates.head.provName,
               "Party ran insufficient candidates",

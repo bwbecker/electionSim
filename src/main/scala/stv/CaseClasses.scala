@@ -11,6 +11,7 @@ case class Province(prov: ProvName,
   * A candidate that stood for election.
   */
 case class Candidate(ridingId: RidingId,
+                     oldRidingId: Int,
                      regionId: RegionId,
                      provName: ProvName,
                      name: String,

@@ -31,7 +31,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
   }
 
   private def constituentRidings(map: Seq[OldRiding]): TypedTag[String] = {
-    ul(
+    ol(
       for {
         OldRiding(ridingId, pct, name) ← map.toList.sortBy(t ⇒ t.ridingId)
       } yield {
@@ -99,7 +99,6 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
   def doRiding(riding: Riding) = {
 
 
-
     val cands = if (riding.districtMagnitude > 1) {
       if (sim.params.multiMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
         sim.results.candidatesByRiding(riding.ridingId).sortBy(c ⇒ (-c.order, -c.votes))
@@ -114,6 +113,12 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
       }
     }
 
+    val oldRidings = riding.mapping.sortBy(r ⇒ r.ridingId).zipWithIndex
+
+    def cName(c: Candidate): String = {
+      s"${oldRidings.find(t ⇒ t._1.ridingId == c.oldRidingId.toString).get._2 + 1}-${c.name}"
+    }
+
     for (c ← cands) yield {
       if (c == cands.head) {
         tr(
@@ -122,7 +127,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
             constituentRidings(riding.mapping),
             p(cls := "dataWarning")("This data can not be used to predict outcomes for individual candidates.")
           ),
-          td(cls := s"${c.party} candName firstRow")(c.name),
+          td(cls := s"${c.party} candName firstRow")(cName(c)),
           td(cls := s"${c.party} party firstRow")(c.party.toString),
           td(cls := "votes firstRow")(f"${c.votes}%,8.0f"),
           td(cls := "effVotes firstRow")(f"${c.effVotes}%,8.1f"),
@@ -133,7 +138,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
         )
       } else {
         tr(
-          td(cls := s"${c.party} candName")(c.name),
+          td(cls := s"${c.party} candName")(cName(c)),
           td(cls := s"${c.party} party")(c.party.toString),
           td(cls := "votes")(f"${c.votes}%,8.0f"),
           td(cls := "effVotes")(f"${c.effVotes}%,8.1f"),

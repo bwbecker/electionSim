@@ -199,7 +199,7 @@ class DesignReader(rawJson: String,
       val candidates = oldRidings.flatMap { or =>
         val rawCandidates = candidatesByRiding(or.riding_id)
         // Change old riding ID to new riding Id.
-        rawCandidates.map { cand => Candidate(riding_id, regionId, prov,
+        rawCandidates.map { cand => Candidate(riding_id, or.riding_id, regionId, prov,
           cand.candidate_name, cand.party_id,
           cand.votes * or.pct / 100.0, cand.votes * or.pct / 100.0, false, SeatType.RidingSeat, 0)
         }

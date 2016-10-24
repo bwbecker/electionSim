@@ -48,7 +48,7 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer)  extends RidingElectionStrat
   def transferVotes(cut:Candidate, remaining:Seq[Candidate]): Seq[Candidate] = {
 
     for {
-      (party, candList) ← remaining.filterNot(c ⇒ c == cut).groupBy(_.party)
+      (party, candList) ← remaining.filterNot(c ⇒ c == cut).groupBy(_.party).toSeq
       num = candList.length
       cand ← candList
       xferPct = voteXfer.xfer(cut.party, party)

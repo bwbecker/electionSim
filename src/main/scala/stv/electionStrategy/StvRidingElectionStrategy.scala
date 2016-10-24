@@ -46,7 +46,6 @@ object ThinAirStvRidingElectionStrategy extends StvRidingElectionStrategy(ThinAi
 }
 
 
-
 class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrategy {
 
   val name = "STV"
@@ -83,6 +82,7 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
 
 
   private case class MutCandidate(ridingId: RidingId,
+                                  oldRidingId: Int,
                                   regionId: RegionId,
                                   provName: ProvName,
                                   name: String,
@@ -100,11 +100,13 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
   private def stvElection(candidates: Seq[Candidate], dm: Int, xferVoteProb: VoteXferFunc, debug: Boolean):
   (Seq[Candidate],
     Seq[Candidate]) = {
-    def c2m(c: Candidate): MutCandidate = MutCandidate(c.ridingId, c.regionId, c.provName, c.name, c.party, c.votes,
+    def c2m(c: Candidate): MutCandidate = MutCandidate(c.ridingId, c.oldRidingId, c.regionId, c.provName, c.name, c
+      .party, c.votes,
       c.votes, false, c.order)
-    def m2c(m: MutCandidate): Candidate = Candidate(m.ridingId, m.regionId, m.provName, m.name, m.party, m.votes, m
+    def m2c(m: MutCandidate): Candidate = Candidate(m.ridingId, m.oldRidingId, m.regionId, m.provName, m.name, m
+      .party, m.votes, m
       .effVotes, m.winner,
-      SeatType.RidingSeat, m.order)
+    SeatType.RidingSeat, m.order)
 
     val (win, lose) = stvElection(
       candidates.map(c2m(_)).toSet, dm, xferVoteProb)(debug)
