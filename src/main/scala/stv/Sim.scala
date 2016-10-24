@@ -27,7 +27,7 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
   val regions: Vector[Region] = design.regions
 
   // Sort for consistent output later.
-  val newRidingsVec: Vector[Riding] = regions.flatMap { rg => rg.ridings }.toVector
+  val newRidingsVec: Vector[Riding] = regions.flatMap { rg => rg.ridings }
   val newRidings: Map[RidingId, Riding] = newRidingsVec.sortBy(_.ridingId).map { r => (r.ridingId, r) }.toMap
 
   val analysis = results.analysisByRegion(regions)
@@ -77,7 +77,7 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
   }.sum
 
 
-  def numRidingMPs: Int = this.newRidings.map { r ⇒ r._2.districtMagnitude }.sum
+  def numRidingMPs: Int = this.newRidingsVec.foldLeft(0) { (a, r) ⇒ a + r.districtMagnitude }
 
 
   def numRegionalMPs: Int = this.regions.map {
@@ -242,7 +242,6 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
     this.sensitivityCache += (party1, party2) → lst
     lst
   }
-
 
 
   /**
