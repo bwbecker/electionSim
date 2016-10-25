@@ -88,6 +88,8 @@ object SeatType extends EnumP[SeatType] {
 
   case object TopupSeat extends SeatType
 
+  case object AdjustmentSeat extends SeatType
+
 }
 
 

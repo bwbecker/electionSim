@@ -69,7 +69,8 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
   case object RcSTV extends ElectionStrategyEnum(
     FptpRidingElectionStrategy,
     new RcStvElectionStrategy(EkosXfer),
-    RcStvTopupStrategy)
+    RcStvTopupStrategy
+  )
 
 
   case object STVplus extends ElectionStrategyEnum(

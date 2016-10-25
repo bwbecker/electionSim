@@ -16,7 +16,9 @@ import stv.electionStrategy.{FptpRidingElectionStrategy, StvRidingElectionStrate
 /**
   * Created by bwbecker on 2016-10-07.
   */
+/*
 object ElectionStrategyTest extends TestSuite {
+
 
   val c = Seq(
     Candidate("1", "R1", AB, "C0", Con, 100, 100, false, RidingSeat, 0),
@@ -153,4 +155,6 @@ object ElectionStrategyTest extends TestSuite {
     }
 
   }
+
 }
+*/

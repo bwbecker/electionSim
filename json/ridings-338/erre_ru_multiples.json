@@ -264,11 +264,11 @@
       "regions": [
         {
           "region_id": "R_NB",
-          "top_up_seats": 2,
+          "top_up_seats": 5,
           "new_ridings": [
             {
               "riding_id": "NB.AcadieMiramichi",
-              "district_mag": 2,
+              "district_mag": 1,
               "old_ridings": [
                 "13001, 100, Acadie-Bathurst",
                 "13006, 100, Miramichi-Grand Lake"
@@ -276,7 +276,7 @@
             },
             {
               "riding_id": "NB.Fundy",
-              "district_mag": 2,
+              "district_mag": 1,
               "old_ridings": [
                 "13004, 100, Fundy Royal",
                 "13009, 100, Saint John-Rothesay"
@@ -284,7 +284,7 @@
             },
             {
               "riding_id": "NB.Fredericton",
-              "district_mag": 2,
+              "district_mag": 1,
               "old_ridings": [
                 "13003, 100, Fredericton",
                 "13008, 100, New Brunswick Southwest"
@@ -292,7 +292,7 @@
             },
             {
               "riding_id": "NB.Moncton",
-              "district_mag": 2,
+              "district_mag": 1,
               "old_ridings": [
                 "13002, 100, Beauséjour",
                 "13007, 100, Moncton-Riverview-Dieppe"
@@ -300,7 +300,7 @@
             },
             {
               "riding_id": "NB.MadaTob",
-              "district_mag": 2,
+              "district_mag": 1,
               "old_ridings": [
                 "13005, 100, Madawaska-Restigouche",
                 "13010, 100, Tobique-Mactaquac"

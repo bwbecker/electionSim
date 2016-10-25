@@ -3,7 +3,7 @@ package stv.electionStrategy
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
-import stv.{Candidate, VoteXfer}
+import stv.{Candidate, SeatType, VoteXfer}
 
 /**
   * Created by bwbecker on 2016-10-24.
@@ -98,6 +98,12 @@ object RcStvTopupStrategy extends TopupElectionStrategy {
   )
   override val debug = false
 
+  def candidatesInRidingsWithNoMP(allCandidates: Vector[Candidate]): Map[Int, Vector[Candidate]] = {
+    val byOldRiding = allCandidates.groupBy(_.oldRidingId)
+    val noMPs = byOldRiding.filter { case (id, lst) ⇒ !lst.exists(c ⇒ c.winner) }
+
+    noMPs
+  }
 
   def runElection(regionId: String,
                   allCandidates: Vector[Candidate],
@@ -105,8 +111,11 @@ object RcStvTopupStrategy extends TopupElectionStrategy {
                   threshhold: Double): Vector[Candidate] = {
     println("Running RcStvTopupStrategy")
 
-    val genericCandidates = TopupStrategy.runElection(regionId, allCandidates, numSeats, threshhold)
+    val parties = TopupStrategy.runElection(regionId, allCandidates, numSeats, threshhold).map(_.party)
+    val ridingsWithoutMPs = this.candidatesInRidingsWithNoMP(allCandidates)
 
-    genericCandidates
+    // ToDo: Not yet smart enough!
+    val cand = ridingsWithoutMPs.values.map(lst ⇒ lst.head)
+    cand.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat)).toVector
   }
 }

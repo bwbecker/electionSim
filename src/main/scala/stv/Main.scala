@@ -35,11 +35,11 @@ object Main {
           design ← Input.readDesign(designName, numRidings, ridings, candidates)
         } yield {
 
+
           // Seems like these ought to be included in the outer for; but gives a type error
           for {
             electStrat ← design.electionStrategies
           } yield {
-            println(s"Processing ${year} ${numRidings} ${designName} ${electStrat}")
 
             val params = namedSystems.find(_.matches(designName, year, electStrat.sm, electStrat.mm))
               .getOrElse {

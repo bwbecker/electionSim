@@ -1,5 +1,6 @@
 package stv.html
 
+import scalatags.Text
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
@@ -116,6 +117,14 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
       }"
     }
 
+    def optCheck(c: Candidate): Text.RawFrag = {
+      (c.winner, c.seatType) match {
+        case (true, SeatType.RidingSeat)     ⇒ raw("&#10004;")
+        case (true, SeatType.AdjustmentSeat) ⇒ raw("A")
+        case (_, _)                          ⇒ raw("")
+      }
+    }
+
     for (c ← cands) yield {
       if (c == cands.head) {
         tr(
@@ -137,9 +146,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
             c.effVotes
           }%,8.1f"),
           //td(cls := "firstRow")(c.order),
-          td(cls := "winner firstRow")(if (c.winner) {
-            raw("&#10004;")
-          } else "")
+          td(cls := "winner firstRow")(optCheck(c))
         )
       } else {
         tr(
@@ -156,9 +163,7 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
             c.effVotes
           }%,8.1f"),
           //td(c.order),
-          td(cls := "winner")(if (c.winner) {
-            raw("&#10004;")
-          } else "")
+          td(cls := "winner")(optCheck(c))
         )
       }
     }

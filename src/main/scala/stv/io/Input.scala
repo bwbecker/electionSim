@@ -136,7 +136,7 @@ class DesignReader(rawJson: String,
                                  election_strategies: List[ElectionStrategyEnum],
                                  provinces: Vector[JsonProv]
                                ) {
-    
+
     def transform(): Design = Design(
       design_name,
       description,
