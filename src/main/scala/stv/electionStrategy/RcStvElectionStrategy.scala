@@ -3,7 +3,9 @@ package stv.electionStrategy
 import scalatags.Text.TypedTag
 import scalatags.Text.all._
 
-import stv.{Candidate, SeatType, VoteXfer}
+import stv._
+
+//import scala.collection.mutable.{Map ⇒ MutMap, Set ⇒ MutSet}
 
 /**
   * Created by bwbecker on 2016-10-24.
@@ -57,7 +59,8 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
       if (cand.party == cut.party) {
         cand.copy(effVotes = cand.effVotes + cut.effVotes / num)
       } else if (xferPct > 0) {
-        cand.copy(effVotes = cand.effVotes + cut.effVotes * xferPct / num)
+        cand
+        //cand.copy(effVotes = cand.effVotes + cut.effVotes * xferPct / num)
       } else {
         cand
       }
@@ -68,54 +71,93 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
   def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
 
 
+    // Return (list of elected, list of unelected)
     def helper(remaining: Seq[Candidate], notElected: Seq[Candidate]): (Seq[Candidate], Seq[Candidate]) = {
+      // Keep cutting candidates until we're down to one for each old riding.  Then take
+      // the dm candidates with the most votes.
       candidateToCut(remaining) match {
-        case None      ⇒ (remaining.sortBy(c ⇒ -c.effVotes).take(dm).zipWithIndex.map { t ⇒
+        case None ⇒
           val n = notElected.length
-          t._1.copy(winner = true, order = n + dm - t._2)
-        }, notElected)
+          val candByPriority = remaining.sortBy(c ⇒ -c.effVotes).zipWithIndex
+          val take = candByPriority.take(dm).map { t ⇒
+            t._1.copy(winner = true, order = n + dm - t._2)
+          }
+          val leave = candByPriority.drop(dm).map { t ⇒
+            t._1.copy(order = n + dm - t._2)
+          }
+          assert(take.length + leave.length == remaining.length)
+          (take, leave ++ notElected)
+
         case Some(cut) ⇒ helper(transferVotes(cut, remaining), cut.copy(order = notElected.length + 1) +: notElected)
       }
     }
 
-    helper(candidates, Vector[Candidate]())
+    val (elected, unelected) = helper(candidates, Vector[Candidate]())
+    assert(elected.length + unelected.length == candidates.length)
+    (elected, unelected)
   }
 
 
 }
 
 
-object RcStvTopupStrategy extends TopupElectionStrategy {
 
-  val name: String = "RidingCentricAdjustment"
-  val shortName: String = "rcSTV_adjust"
-  val help: TypedTag[String] = p("Assign adjustment MPs from ridings that don't yet have an MP.")
+object RcStvProvAdjustment {
 
-  val description: TypedTag[String] = div(
-    p("Figure out which parties should get the adjustment seats using the same algorithm as elsewhere.  But " +
-      "go one step further to find a riding not yet represented that is most unrepresented by that party and " +
-      "and assign that riding's best MP from that party.")
-  )
-  override val debug = false
 
-  def candidatesInRidingsWithNoMP(allCandidates: Vector[Candidate]): Map[Int, Vector[Candidate]] = {
-    val byOldRiding = allCandidates.groupBy(_.oldRidingId)
-    val noMPs = byOldRiding.filter { case (id, lst) ⇒ !lst.exists(c ⇒ c.winner) }
+  def adjustmentMPs(prov: Province,
+                    alreadyElected: Vector[Candidate],
+                    notYetElected: Vector[Candidate]): Vector[Candidate] = {
+    /*
+     * prov is just here for the structure.  Digging down to the candidates isn't useful because they haven't
+     * been elected yet.  That's why we have the alreadyElected list.
+     */
 
-    noMPs
-  }
+    val mpsNeeded = prov.regions.foldLeft(0) { (a, r) ⇒ a + r.topUpSeats }
 
-  def runElection(regionId: String,
-                  allCandidates: Vector[Candidate],
-                  numSeats: Int,
-                  threshhold: Double): Vector[Candidate] = {
-    println("Running RcStvTopupStrategy")
 
-    val parties = TopupStrategy.runElection(regionId, allCandidates, numSeats, threshhold).map(_.party)
-    val ridingsWithoutMPs = this.candidatesInRidingsWithNoMP(allCandidates)
+    def helper(adjustMPs: Set[Candidate],
+               notElected: Set[Candidate],
+               oldRidingsWithNoMP: Set[Int]): Vector[Candidate] = {
 
-    // ToDo: Not yet smart enough!
-    val cand = ridingsWithoutMPs.values.map(lst ⇒ lst.head)
-    cand.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat)).toVector
+      adjustMPs.foreach { c ⇒
+        assert(!oldRidingsWithNoMP.contains(c.oldRidingId))
+      }
+      oldRidingsWithNoMP.foreach { id ⇒
+        assert(!adjustMPs.exists(c ⇒ c.oldRidingId == id) && !alreadyElected.exists(c ⇒ c.oldRidingId == id))
+      }
+
+      if (adjustMPs.size == mpsNeeded) {
+        adjustMPs.toVector.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat))
+      } else {
+        val a = new Analysis(alreadyElected ++ adjustMPs ++ notElected, mpsNeeded, false)
+        val mostDisadvantagedParty = a.statsByParty.minBy(s ⇒ s.pctMPs - s.pctVote).party
+
+        // Candidate in the right party and a riding with no MP that has the most votes.
+        val candList = notElected.filter(c ⇒
+          c.party == mostDisadvantagedParty &&
+            oldRidingsWithNoMP.contains(c.oldRidingId))
+
+
+        if (candList.nonEmpty) {
+          val cand = candList.maxBy(c ⇒ c.votes)
+          helper(adjustMPs + cand.copy(winner = true, seatType = SeatType.AdjustmentSeat),
+            notElected - cand,
+            oldRidingsWithNoMP - cand.oldRidingId)
+        } else {
+          println(s"\n*** Can't find a riding without an MP for with a candidate from ${mostDisadvantagedParty}.")
+          adjustMPs.toVector.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat))
+        }
+      }
+    }
+
+    val allOldRidingIds = Set(prov.regions.flatMap(region ⇒
+      region.ridings.flatMap(riding ⇒
+        riding.candidates0.map(c ⇒ c.oldRidingId))
+    ): _*)
+    val oldRidingIdsWithMPs = Set(alreadyElected.map(c ⇒ c.oldRidingId): _*)
+
+    helper(Set[Candidate](), Set(notYetElected: _*), allOldRidingIds -- oldRidingIdsWithMPs)
+
   }
 }

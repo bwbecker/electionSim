@@ -86,9 +86,9 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
   // RU-PR: single- and multi-member, top-ups
   //-----------------------------------------------
   case object RcSTV extends ElectionStrategyEnum(
-    FptpRidingElectionStrategy,
+    EkosAvRidingElectionStrategy,
     new RcStvElectionStrategy(EkosXfer),
-    RcStvTopupStrategy
+    NotApplicableTopupElectionStrategy
   )
 
 

@@ -1,7 +1,6 @@
 package stv
 
-import stv.electionStrategy.{ElectionStrategyEnum, NotApplicableRidingElectionStrategy, RidingElectionStrategy,
-TopupElectionStrategy}
+import stv.electionStrategy._
 
 /**
   * The model design that we read from a JSON file.
@@ -76,31 +75,52 @@ case class Design(
     var topup = Vector[Candidate]()
 
     for {
-      prov ← this.provinces
-      region ← prov.regions
+      prov ← this.provinces //.filter(p ⇒ p.prov == ProvName.PE)
     } {
-      var regElected = Vector[Candidate]()
-      var regUnelected = Vector[Candidate]()
+      var provElected = Vector[Candidate]()
+      var provUnelected = Vector[Candidate]()
+
       for {
-        baseRiding ← region.ridings
-        riding = baseRiding.swingVotes(voteSwing)
+        region ← prov.regions
       } {
-        val eStrategy = electionStrat.get(riding)
-        val (e, u) = eStrategy.runElection(riding.candidates0, riding.districtMagnitude)
-        regElected = regElected ++ e
-        regUnelected = regUnelected ++ u
-      }
-      if (this.numTopupRegions > 0) {
-        topup = topup ++ electionStrat.topup.runElection(
-          region.regionId,
-          regElected ++ regUnelected, region.topUpSeats, 0.01)
+        var regionElected = Vector[Candidate]()
+        var regionUnelected = Vector[Candidate]()
+        for {
+          baseRiding ← region.ridings
+          riding = baseRiding.swingVotes(voteSwing)
+        } {
+          val eStrategy = electionStrat.get(riding)
+          val (e, u) = eStrategy.runElection(riding.candidates0, riding.districtMagnitude)
+          regionElected = regionElected ++ e
+          regionUnelected = regionUnelected ++ u
+        }
+        if (this.numTopupRegions > 0 && electionStrat != ElectionStrategyEnum.RcSTV) {
+          // Regional-level adjustments
+          topup = topup ++ electionStrat.topup.runElection(
+            region.regionId,
+            regionElected ++ regionUnelected, region.topUpSeats, 0.01)
+        }
+
+        provElected = provElected ++ regionElected
+        provUnelected = provUnelected ++ regionUnelected
       }
 
-      elected = elected ++ regElected
-      unelected = unelected ++ regUnelected
+      if (electionStrat == ElectionStrategyEnum.RcSTV) {
+        // Provincial-level adjustments
+        topup = topup ++ RcStvProvAdjustment.adjustmentMPs(prov, provElected, provUnelected)
+
+        // topups were previously listed as unelected.  So remove them from that list.
+        provUnelected = provUnelected.filterNot(c ⇒ topup.exists(tc ⇒ tc.ridingId == c.ridingId && tc.name == c.name))
+      }
+
+      elected = elected ++ provElected
+      unelected = unelected ++ provUnelected
     }
 
-    assert(elected.length + topup.length == 338, s"${elected.length} + ${topup.length} != 338 (338 shouldn't be hardcoded")
+
+
+//    assert(elected.length + topup.length == 338, s"${elected.length} + ${topup.length} != 338 (338 shouldn't be " +
+//      s"hardcoded")
     ElectionResults(elected, unelected, topup, this)
   }
 
