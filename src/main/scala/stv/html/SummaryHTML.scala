@@ -500,8 +500,9 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
       p(
         """The black line, hopefully along the bottom of the graph, shows the
       Gallagher Index, an index of voting proportionality.  Smaller numbers
-      are better."""),
+      are better.""")
 
+      /*
       if (sim.design.is_proportional) {
         p(
           """The Liberals are consistenly over-represented in the graph, below.  Why?""",
@@ -519,7 +520,7 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
       } else {
         p()
       }
-
+      */
     )
 
     def sensitivityGraph(canvasId: String,

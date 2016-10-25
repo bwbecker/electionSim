@@ -1,5 +1,7 @@
 package stv
 
+import scalatags.Text.TypedTag
+
 import stv.electionStrategy._
 
 /**
@@ -10,11 +12,11 @@ import stv.electionStrategy._
 
 case class Design(
                    design_name: DesignName,
-                   description: String,
-                   is_proportional: Boolean,
+                   description: TypedTag[String],
                    election_strategies: List[ElectionStrategyEnum],
                    provinces: Vector[Province]
                  ) {
+
 
   val regions: Vector[Region] = this.provinces.flatMap(p => p.regions)
   val ridings: Vector[Riding] = this.regions.flatMap(r ⇒ r.ridings)
@@ -119,8 +121,9 @@ case class Design(
 
 
 
-//    assert(elected.length + topup.length == 338, s"${elected.length} + ${topup.length} != 338 (338 shouldn't be " +
-//      s"hardcoded")
+    //    assert(elected.length + topup.length == 338, s"${elected.length} + ${topup.length} != 338 (338 shouldn't be
+    // " +
+    //      s"hardcoded")
     ElectionResults(elected, unelected, topup, this)
   }
 

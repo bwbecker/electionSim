@@ -35,9 +35,9 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
     div(cls := "blockInput")(
       definitions,
       doTable,
-      (sim.design.is_proportional && this.totals(LibOverRepColumn) >= 10).option {
-        libAdvantage
-      },
+      //      (sim.design.is_proportional && this.totals(LibOverRepColumn) >= 10).option {
+      //        libAdvantage
+      //      },
       script("""new Tablesort(document.getElementById('regionStats'));""")
     )
 
@@ -95,7 +95,8 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
           val ridingSeats = region.ridings.map(r ⇒ r.districtMagnitude).sum
           //val analysis = Analysis(sim.results.candidatesByRegion(region.regionId), region.totalCandidates)
           val analysis = sim.results.analysisByRegion(Seq(region))
-          val sbp = analysis.statsByParty.map(s => (s.party, s)).toMap.withDefault((p) => StatsByParty(p, 0, 0.0, 0, 0.0, 0.0, 0, 0))
+          val sbp = analysis.statsByParty.map(s => (s.party, s)).toMap.withDefault((p) => StatsByParty(p, 0, 0.0, 0,
+            0.0, 0.0, 0, 0))
 
           tr(
             td(a(href := s"regionResults.html#${region.regionId}")(region.regionId)),
@@ -135,42 +136,43 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
     )
   }
 
-
-  private def libAdvantage: TypedTag[String] = {
-    div(
-      h3("Liberal Advantage"),
-      p(
-        s"""The above table shows an over-representation for the Liberals of
-            |${fmt.format(this.totals(this.LibOverRepColumn))} seats.
-            |Why?  There are several reasons:
-         """.stripMargin),
-      ol(
-        li(p(
-          """The Northwest Territories, Nunavut, and Yukon all elected Liberal MPs but don't have any
-            |compensatory mechanism for non-Liberal voters.  There are no top-up seats or multi-member
-            |ridings to help make results proportional.""".stripMargin)),
-        li(p(
-          """Several small regions such as New Brunswick and Nova Scotia were disproportionate enough
-            |in the local seats that the compensatory mechanisms were overwhelmed and couldn't
-            |adequately compensate.  Typically this is due to having only 1 top-up seat for the region
-            |or a high proportion of single-member districts.
-          """.stripMargin)
-        ),
-        li(
-          p(
-            """When a voter does not get their first choice, the Liberals benefit more than any other
-              |party from the vote transfers.  A test in which NDP voter's second choice was typically
-              |Conservative rather than Liberal showed the Conservatives with the over-representation
-              |instead of the Liberals.
-            """.stripMargin),
-          p(
-            """The model used for vote transfers is clearly inadequate.  It doesn't distinguish 3rd and
-              |subsequent choices from 2nd choices.  It doesn't account for regional differences.  It's
-              |based on relatively small sample sizes.  Real life will likely be different from this simulation.
+  /*
+    private def libAdvantage: TypedTag[String] = {
+      div(
+        h3("Liberal Advantage"),
+        p(
+          s"""The above table shows an over-representation for the Liberals of
+              |${fmt.format(this.totals(this.LibOverRepColumn))} seats.
+              |Why?  There are several reasons:
+           """.stripMargin),
+        ol(
+          li(p(
+            """The Northwest Territories, Nunavut, and Yukon all elected Liberal MPs but don't have any
+              |compensatory mechanism for non-Liberal voters.  There are no top-up seats or multi-member
+              |ridings to help make results proportional.""".stripMargin)),
+          li(p(
+            """Several small regions such as New Brunswick and Nova Scotia were disproportionate enough
+              |in the local seats that the compensatory mechanisms were overwhelmed and couldn't
+              |adequately compensate.  Typically this is due to having only 1 top-up seat for the region
+              |or a high proportion of single-member districts.
             """.stripMargin)
+          ),
+          li(
+            p(
+              """When a voter does not get their first choice, the Liberals benefit more than any other
+                |party from the vote transfers.  A test in which NDP voter's second choice was typically
+                |Conservative rather than Liberal showed the Conservatives with the over-representation
+                |instead of the Liberals.
+              """.stripMargin),
+            p(
+              """The model used for vote transfers is clearly inadequate.  It doesn't distinguish 3rd and
+                |subsequent choices from 2nd choices.  It doesn't account for regional differences.  It's
+                |based on relatively small sample sizes.  Real life will likely be different from this simulation.
+              """.stripMargin)
+          )
         )
       )
-    )
-  }
+    }
+    */
 
 }

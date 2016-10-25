@@ -76,6 +76,7 @@ object DesignName extends EnumP[DesignName] {
   case object erre_mmp_5050_large extends DesignName("ER", "ERRE MMP that gets top-ups from twinned 2015 ridings; " +
     "larger regions")
 
+  case object erre_mmp5050_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
 }
 
 

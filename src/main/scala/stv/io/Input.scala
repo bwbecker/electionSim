@@ -1,8 +1,10 @@
 package stv.io
 
+import scalatags.Text.all._
+
 import stv._
 import stv.Pickler
-import stv.electionStrategy.{ElectionStrategyEnum}
+import stv.electionStrategy.ElectionStrategyEnum
 
 import scala.collection.mutable
 
@@ -131,16 +133,20 @@ class DesignReader(rawJson: String,
 
   private case class JsonDesign(
                                  design_name: DesignName,
-                                 description: String,
-                                 is_proportional: Boolean,
+                                 description: Vector[Vector[String]],
                                  election_strategies: List[ElectionStrategyEnum],
                                  provinces: Vector[JsonProv]
                                ) {
 
+    val descr = div(description.map { para ⇒
+      val s: String = para.mkString("")
+      p(s)
+    })
+
+
     def transform(): Design = Design(
       design_name,
-      description,
-      is_proportional,
+      descr,
       election_strategies,
       provinces.map(p => p.toProvince())
     )
