@@ -2,6 +2,7 @@
     "design_name": "fptp",
     "is_proportional": false,
     "description": "338 single-member ridings, no top-ups.  Use with FPTP and AV.",
+    "election_strategies": ["FPTP", "AV"],
     "provinces": [
         {
             "prov": "AB",

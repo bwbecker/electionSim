@@ -2,6 +2,7 @@
     "design_name": "mmp_lite_prov",
     "description": "338 single-member ridings with 10% top-up using the provinces as regions",
     "is_proportional": false,
+    "election_strategies": [],
     "provinces": [
         {
             "prov": "AB",

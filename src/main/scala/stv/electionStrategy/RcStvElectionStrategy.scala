@@ -83,3 +83,30 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
 
 
 }
+
+
+object RcStvTopupStrategy extends TopupElectionStrategy {
+
+  val name: String = "RidingCentricAdjustment"
+  val shortName: String = "rcSTV_adjust"
+  val help: TypedTag[String] = p("Assign adjustment MPs from ridings that don't yet have an MP.")
+
+  val description: TypedTag[String] = div(
+    p("Figure out which parties should get the adjustment seats using the same algorithm as elsewhere.  But " +
+      "go one step further to find a riding not yet represented that is most unrepresented by that party and " +
+      "and assign that riding's best MP from that party.")
+  )
+  override val debug = false
+
+
+  def runElection(regionId: String,
+                  allCandidates: Vector[Candidate],
+                  numSeats: Int,
+                  threshhold: Double): Vector[Candidate] = {
+    println("Running RcStvTopupStrategy")
+
+    val genericCandidates = TopupStrategy.runElection(regionId, allCandidates, numSeats, threshhold)
+
+    genericCandidates
+  }
+}

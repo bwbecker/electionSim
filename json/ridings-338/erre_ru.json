@@ -2,6 +2,7 @@
     "design_name": "erre_ru",
     "description": "Obtain top-up seats by reducing by 1 multi-member ridings with 5 or more members and reduce by 2 m-m ridings with 8 or more.",
     "is_proportional": true,
+    "election_strategies": [],
     "provinces": [
         {
             "prov": "AB",

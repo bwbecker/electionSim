@@ -2,6 +2,7 @@
   "design_name": "erre_ru_singles",
   "description": "338 ridings total.  Topups taken out of larger multi-member ridings.  Emphasis on singles.",
   "is_proportional": true,
+  "election_strategies": ["RcSTV", "MultiMbrList", "STVplus"],
   "provinces": [
     {
       "prov": "AB",

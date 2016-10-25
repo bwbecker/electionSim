@@ -2,6 +2,7 @@
     "design_name": "kingsley",
     "description":  "308 ridings grouped into single- and multi-member ridings; no top-ups.",
     "is_proportional": true,
+    "election_strategies": [],
     "provinces": [
         {
             "prov": "AB",

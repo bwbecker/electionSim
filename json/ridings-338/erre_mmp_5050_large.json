@@ -2,6 +2,7 @@
   "design_name": "erre_mmp_5050_large",
   "description": "Pair current ridings to make approximately 50% constituency ridings and 50% top-ups.  Use larger regions.",
   "is_proportional": true,
+  "election_strategies": ["MMP_FPTP", "MMP_AV"],
   "provinces": [
     {
       "prov": "AB",

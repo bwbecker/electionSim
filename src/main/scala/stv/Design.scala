@@ -1,6 +1,6 @@
 package stv
 
-import stv.electionStrategy.{NotApplicableRidingElectionStrategy, RidingElectionStrategy, TopupElectionStrategy}
+import stv.electionStrategy.{ElectionStrategyEnum, NotApplicableRidingElectionStrategy, RidingElectionStrategy, TopupElectionStrategy}
 
 /**
   * The model design that we read from a JSON file.
@@ -12,6 +12,7 @@ case class Design(
                    design_name: DesignName,
                    description: String,
                    is_proportional: Boolean,
+                   election_strategies: List[ElectionStrategyEnum],
                    provinces: Vector[Province]
                  ) {
 
@@ -26,6 +27,9 @@ case class Design(
 
   val hasMultiMemberRidings = this.numMultiMemberRidings > 0
 
+  def electionStrategies:List[ElectionStrategyEnum] = {
+    this.election_strategies
+  }
 
   def singleMbrStrategies: Vector[RidingElectionStrategy] = {
     if (this.hasSingleMemberRidings) {
@@ -93,9 +97,11 @@ case class Design(
         regElected = regElected ++ e
         regUnelected = regUnelected ++ u
       }
-      topup = topup ++ topUpStrategy.runElection(
-        region.regionId,
-        regElected ++ regUnelected, region.topUpSeats, 0.01)
+      if (this.numTopupRegions > 0) {
+        topup = topup ++ topUpStrategy.runElection(
+          region.regionId,
+          regElected ++ regUnelected, region.topUpSeats, 0.01)
+      }
 
       elected = elected ++ regElected
       unelected = unelected ++ regUnelected

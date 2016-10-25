@@ -2,6 +2,7 @@ package stv.io
 
 import stv._
 import stv.Pickler
+import stv.electionStrategy.{ElectionStrategyEnum}
 
 import scala.collection.mutable
 
@@ -47,10 +48,6 @@ object Input {
     * Read the design from a json file.  Cached so it can be re-read without a significant performance
     * penalty.
     */
-  //  def readDesignFromFile(fileName: String): Design = {
-  //    this.readDesign(fileToString(fileName).get)
-  //  }
-
   def readDesign(dName: DesignName,
                  numRidings: Int,
                  ridings: Vector[RawFptpRiding],
@@ -72,10 +69,6 @@ object Input {
 
   }
 
-  //  def readDesign(rawJson: String): Design = {
-  //    new DesignReader(rawJson, originalRidings(338), candidates(2015)).read
-  //  }
-
   /**
     * Read the contents of a file and return it as a string.
     */
@@ -90,10 +83,6 @@ object Input {
       None
     }
   }
-
-  //  def getSim(fileName: String, params: Params, ridings: Vector[RawFptpRiding]): Sim = {
-  //    Sim(Input.readDesignFromFile(fileName), params, ridings)
-  //  }
 
 }
 
@@ -144,13 +133,15 @@ class DesignReader(rawJson: String,
                                  design_name: DesignName,
                                  description: String,
                                  is_proportional: Boolean,
+                                 election_strategies: List[ElectionStrategyEnum],
                                  provinces: Vector[JsonProv]
                                ) {
-
+    
     def transform(): Design = Design(
       design_name,
       description,
       is_proportional,
+      election_strategies,
       provinces.map(p => p.toProvince())
     )
   }

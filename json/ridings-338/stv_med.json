@@ -2,6 +2,7 @@
     "design_name": "stv_med",
     "description":  "STV with medium-sized regions.",
     "is_proportional": true,
+    "election_strategies": [],
     "provinces": [
         {
             "prov": "AB",

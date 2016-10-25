@@ -15,7 +15,6 @@ trait ElectionStrategy {
   val description: TypedTag[String]
   val debug = false
 
-  def sortCandidates(candidates:Seq[Candidate]):Seq[Candidate] = candidates.sortBy(c ⇒ (-c.order, -c.votes))
 }
 
 /**
@@ -23,6 +22,7 @@ trait ElectionStrategy {
   */
 trait RidingElectionStrategy extends ElectionStrategy {
 
+  def sortCandidates(candidates:Seq[Candidate]):Seq[Candidate] = candidates.sortBy(c ⇒ (-c.order, -c.votes))
 
   def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate])
 
@@ -62,9 +62,6 @@ object TopupStrategy extends TopupElectionStrategy {
   val help = p("Iteratively choose the most disadvantaged party.")
   val description = p("Iteratively choose the most disadvantaged party.")
 
-  override def sortCandidates(candidates: Seq[Candidate]): Seq[Candidate] = candidates.sortBy(c ⇒ (-c.votes, c.name))
-
-
   def runElection(regionId: String, allCandidates: Vector[Candidate], numTopupSeats: Int, threshhold:
   Double): Vector[Candidate] = {
 
@@ -90,10 +87,24 @@ object TopupStrategy extends TopupElectionStrategy {
     }
 
     helper(Vector())
+  }
+}
 
+
+object NotApplicableTopupElectionStrategy extends TopupElectionStrategy {
+  val name: String = "NA"
+  val shortName = "x"
+  val help = p("No election strategy is applicable in this situation.")
+  val description: TypedTag[String] = p("A placeholder election strategy for where no top-up strategy is applicable.")
+
+  def runElection(regionId: String, allCandidates: Vector[Candidate],
+                  numTopupSeats: Int, threshhold: Double): Vector[Candidate] = {
+    throw new Exception("Election Strategy is not applicable.")
   }
 
 }
+
+
 
 
 object RidingElectionStrategy {
@@ -157,5 +168,4 @@ object NotApplicableRidingElectionStrategy extends RidingElectionStrategy {
   }
 
 }
-
 

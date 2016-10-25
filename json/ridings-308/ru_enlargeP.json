@@ -2,6 +2,7 @@
     "design_name": "ru_enlargeP",
     "description": "308 single- and multi-member ridings;  enlarge parliament to get top-ups",
     "is_proportional": true,
+    "election_strategies": [],
     "provinces": [
         {
             "prov": "AB",

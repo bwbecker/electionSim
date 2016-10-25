@@ -34,24 +34,17 @@ object Main {
           designName ← config.designs
           design ← Input.readDesign(designName, numRidings, ridings, candidates)
         } yield {
-          println(s"Processing ${year} ${numRidings} ${designName}")
-
 
           // Seems like these ought to be included in the outer for; but gives a type error
           for {
-            singleMbrStrategy ← design.singleMbrStrategies
-            multiMbrStrategy ← design.multiMbrStrategies
-            // if both single and multi strategies use a ranked ballot, they both use the same transfer function
-            if (!singleMbrStrategy.isInstanceOf[StvRidingElectionStrategy] ||
-              !multiMbrStrategy.isInstanceOf[StvRidingElectionStrategy] ||
-              singleMbrStrategy.asInstanceOf[StvRidingElectionStrategy].voteXfer == multiMbrStrategy
-                .asInstanceOf[StvRidingElectionStrategy].voteXfer)
+            electStrat ← design.electionStrategies
           } yield {
+            println(s"Processing ${year} ${numRidings} ${designName} ${electStrat}")
 
-            val params = namedSystems.find(_.matches(designName, year, singleMbrStrategy, multiMbrStrategy))
+            val params = namedSystems.find(_.matches(designName, year, electStrat.sm, electStrat.mm))
               .getOrElse {
-                val name = s"${designName}-${singleMbrStrategy.name}-${multiMbrStrategy.name}"
-                Params(name, year, name, designName, name, None, singleMbrStrategy, multiMbrStrategy)
+                val name = s"${designName}-${electStrat}"
+                Params(name, year, name, designName, name, None, electStrat.sm, electStrat.mm)
               }
 
             val sim = Sim(design, params, ridings)
