@@ -16,8 +16,7 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
               ) {
 
 
-  val results = design.doElection(params.singleMemberElectionStrategy, params.multiMemberElectionStrategy,
-    TopupStrategy, None)
+  val results = design.doElection(params.electionStrat, None)
 
   //val SENSITIVITY_STEPS =   0.02
   val SENSITIVITY_STEPS = 0.1
@@ -40,8 +39,8 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
 
   val shortName = {
     val dn = design.design_name.shortName
-    val sme = params.singleMemberElectionStrategy.shortName
-    val mme = params.multiMemberElectionStrategy.shortName
+    val sme = params.electionStrat.sm.shortName
+    val mme = params.electionStrat.mm.shortName
     s"${dn}-${sme}-${mme}"
   }
 
@@ -220,8 +219,7 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
         params.copy(voteAdjustment = Some(VoteSwing(d, party1, party2)))
       }
 
-      val results = this.design.doElection(p.singleMemberElectionStrategy, p.multiMemberElectionStrategy,
-        TopupStrategy, p.voteAdjustment)
+      val results = this.design.doElection(p.electionStrat, p.voteAdjustment)
       val analysis = results.analysisByRegion(this.regions)
 
       val libVotes = analysis.pctVote(Lib)

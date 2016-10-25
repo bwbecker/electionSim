@@ -25,7 +25,7 @@ case class Candidate(ridingId: RidingId,
 
   override def toString = f"Candidate(${ridingId}(${oldRidingId}), ${name}, ${party}, ${votes}%,4.1f, ${effVotes}%,4.1f, ${order})"
 
-  val topupWinner: Boolean = this.seatType == SeatType.TopupSeat
+  val topupWinner: Boolean = this.seatType == SeatType.TopupSeat || this.seatType == SeatType.AdjustmentSeat
 
 }
 

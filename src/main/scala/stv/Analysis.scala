@@ -145,7 +145,7 @@ class Analysis(val allCandidates: Seq[Candidate],
     val pctMPs = mps / (elected.length).toDouble
     val deservedMPs = totalSeats * pctVote
     val numLocalMPs = cand.count(c => c.seatType == SeatType.RidingSeat && c.winner)
-    val numTopupSeats = cand.count(c => c.seatType == SeatType.TopupSeat && c.winner)
+    val numTopupSeats = cand.count(c => c.seatType != SeatType.RidingSeat && c.winner)
     assert(numLocalMPs + numTopupSeats == mps, s"$numLocalMPs + $numTopupSeats != $mps")
 
 

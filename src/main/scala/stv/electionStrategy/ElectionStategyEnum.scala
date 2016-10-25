@@ -1,7 +1,7 @@
 package stv.electionStrategy
 
 import enumeratum.EnumEntry
-import stv.{EkosXfer, EnumP}
+import stv.{EkosXfer, EnumP, Riding}
 
 /**
   * Created by bwbecker on 2016-10-24.
@@ -9,7 +9,11 @@ import stv.{EkosXfer, EnumP}
 sealed abstract class ElectionStrategyEnum(val sm: RidingElectionStrategy,
                                            val mm: RidingElectionStrategy,
                                            val topup: TopupElectionStrategy
-                                          ) extends EnumEntry
+                                          ) extends EnumEntry {
+  def get(riding: Riding): RidingElectionStrategy = {
+    if (riding.districtMagnitude == 1) {sm} else {mm}
+  }
+}
 
 object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
   val values = findValues
@@ -36,16 +40,31 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
   //-----------------------------------------------
   case object MMP_FPTP extends ElectionStrategyEnum(
     FptpRidingElectionStrategy,
-    ListRidingElectionStrategy, // mmp_505_* has a very few very small multi-member ridings
+    NotApplicableRidingElectionStrategy,
     TopupStrategy
   )
 
   case object MMP_AV extends ElectionStrategyEnum(
     EkosAvRidingElectionStrategy,
-    EkosStvRidingElectionStrategy,  // mmp_5050_* has a very few very small multi-member ridings
+    NotApplicableRidingElectionStrategy,
     TopupStrategy
   )
 
+
+  //-----------------------------------------------
+  // MMP with a few multi-member ridings
+  //-----------------------------------------------
+  case object MMP_FPTP_mm extends ElectionStrategyEnum(
+    FptpRidingElectionStrategy,
+    ListRidingElectionStrategy, // mmp_505_* has a very few very small multi-member ridings
+    TopupStrategy
+  )
+
+  case object MMP_AV_mm extends ElectionStrategyEnum(
+    EkosAvRidingElectionStrategy,
+    EkosStvRidingElectionStrategy, // mmp_5050_* has a very few very small multi-member ridings
+    TopupStrategy
+  )
 
   //-----------------------------------------------
   // Multi-member, probably with at least a few single-member, no top-up

@@ -43,12 +43,12 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
 
   private def descr = {
-    val smSort = if (sim.params.singleMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
+    val smSort = if (sim.params.electionStrat.sm.isInstanceOf[StvRidingElectionStrategy]) {
       "candidates sorted from the last selected/eliminated to the first."
     } else {
       "candidates sorted from most to fewest raw votes."
     }
-    val mmSort = if (sim.params.multiMemberElectionStrategy.isInstanceOf[StvRidingElectionStrategy]) {
+    val mmSort = if (sim.params.electionStrat.mm.isInstanceOf[StvRidingElectionStrategy]) {
       "candidates sorted from the last selected/eliminated to the first."
     } else {
       "candidates sorted from most to fewest raw votes."
@@ -63,8 +63,8 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
           model.  In most models (STV, most versions of MMP, RUP) existing ridings have been combined
           in various ways to make the new ridings.  These are listed in the "Composed from" column."""),
         p("""In other models (FPTP, AV) the existing ridings are used without modification."""),
-        p(s"Single Member Elections: ${params.singleMemberElectionStrategy.name}; ", smSort),
-        p(s"Multi Member Elections: ${params.multiMemberElectionStrategy.name}; ", mmSort)
+        p(s"Single Member Elections: ${params.electionStrat.sm.name}; ", smSort),
+        p(s"Multi Member Elections: ${params.electionStrat.mm.name}; ", mmSort)
       )
     )
 
@@ -100,9 +100,9 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
   def doRiding(riding: Riding) = {
 
     val cands = if (riding.districtMagnitude > 1) {
-      sim.params.multiMemberElectionStrategy.sortCandidates(sim.results.candidatesByRiding(riding.ridingId))
+      sim.params.electionStrat.mm.sortCandidates(sim.results.candidatesByRiding(riding.ridingId))
     } else {
-      sim.params.singleMemberElectionStrategy.sortCandidates(sim.results.candidatesByRiding(riding.ridingId))
+      sim.params.electionStrat.sm.sortCandidates(sim.results.candidatesByRiding(riding.ridingId))
     }
 
 

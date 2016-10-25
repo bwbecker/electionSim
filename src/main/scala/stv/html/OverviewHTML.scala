@@ -31,8 +31,8 @@ abstract class AbstractOverview extends Page {
     */
   protected def tableRows(sims: Seq[Sim], f: Sim => TypedTag[String]): Seq[TypedTag[String]] = {
     for (sim <- sims.sortBy(s => (s.design.design_name.entryName,
-      s.params.singleMemberElectionStrategy.name,
-      s.params.multiMemberElectionStrategy.name))) yield (f(sim))
+      s.params.electionStrat.sm.name,
+      s.params.electionStrat.mm.name))) yield (f(sim))
   }
 
 
@@ -280,8 +280,8 @@ abstract class AbstractOverview extends Page {
         h3(param.title),
         div(cls := "blockIndent")(
           p(param.description),
-          p("Elections in single-member ridings are conducted with ", param.singleMemberElectionStrategy.name),
-          p("Elections in multi-member ridings are conducted with ", param.multiMemberElectionStrategy.name)
+          p("Elections in single-member ridings are conducted with ", param.electionStrat.sm.name),
+          p("Elections in multi-member ridings are conducted with ", param.electionStrat.mm.name)
         )
       )
     }
@@ -424,8 +424,8 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
           for {
             sim ← sims.sortBy(s ⇒ (
               s.params.designName.toString,
-              s.params.singleMemberElectionStrategy.name,
-              s.params.multiMemberElectionStrategy.name,
+              s.params.electionStrat.sm.name,
+              s.params.electionStrat.mm.name,
               s.params.year
               ))
             ana = sim.analysis
@@ -435,8 +435,8 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
               td(cls := "name")(
                 a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
               td(parms.designName.toString),
-              td(parms.singleMemberElectionStrategy.name),
-              td(parms.multiMemberElectionStrategy.name),
+              td(parms.electionStrat.sm.name),
+              td(parms.electionStrat.mm.name),
               td(parms.year),
               fmtGallagher(ana.gallagherIndex),
               fmtGallagher(sim.compositeGallagher)

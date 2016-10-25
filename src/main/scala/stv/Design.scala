@@ -1,6 +1,7 @@
 package stv
 
-import stv.electionStrategy.{ElectionStrategyEnum, NotApplicableRidingElectionStrategy, RidingElectionStrategy, TopupElectionStrategy}
+import stv.electionStrategy.{ElectionStrategyEnum, NotApplicableRidingElectionStrategy, RidingElectionStrategy,
+TopupElectionStrategy}
 
 /**
   * The model design that we read from a JSON file.
@@ -27,7 +28,7 @@ case class Design(
 
   val hasMultiMemberRidings = this.numMultiMemberRidings > 0
 
-  def electionStrategies:List[ElectionStrategyEnum] = {
+  def electionStrategies: List[ElectionStrategyEnum] = {
     this.election_strategies
   }
 
@@ -66,16 +67,8 @@ case class Design(
 
   /**
     * Run an election on this voting design.
-    *
-    * @param singleMbrStrategy The election strategy to use in single-member ridings
-    * @param multiMbrStrategy  The election strategy to use in multi-member ridings
-    * @param topUpStrategy     The election strategy to use for top-up seats
-    * @param voteSwing         Whether to swing the votes by a given percentage first
-    * @return
     */
-  def doElection(singleMbrStrategy: RidingElectionStrategy,
-                 multiMbrStrategy: RidingElectionStrategy,
-                 topUpStrategy: TopupElectionStrategy,
+  def doElection(electionStrat: ElectionStrategyEnum,
                  voteSwing: Option[VoteSwing]): ElectionResults = {
 
     var elected = Vector[Candidate]()
@@ -92,13 +85,13 @@ case class Design(
         baseRiding ← region.ridings
         riding = baseRiding.swingVotes(voteSwing)
       } {
-        val eStrategy = if (riding.districtMagnitude == 1) {singleMbrStrategy} else {multiMbrStrategy}
+        val eStrategy = electionStrat.get(riding)
         val (e, u) = eStrategy.runElection(riding.candidates0, riding.districtMagnitude)
         regElected = regElected ++ e
         regUnelected = regUnelected ++ u
       }
       if (this.numTopupRegions > 0) {
-        topup = topup ++ topUpStrategy.runElection(
+        topup = topup ++ electionStrat.topup.runElection(
           region.regionId,
           regElected ++ regUnelected, region.topUpSeats, 0.01)
       }
@@ -107,6 +100,7 @@ case class Design(
       unelected = unelected ++ regUnelected
     }
 
+    assert(elected.length + topup.length == 338, s"${elected.length} + ${topup.length} != 338 (338 shouldn't be hardcoded")
     ElectionResults(elected, unelected, topup, this)
   }
 

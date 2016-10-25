@@ -78,8 +78,8 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
   private def methodology: TypedTag[String] = {
 
-    val smes = params.singleMemberElectionStrategy
-    val mmes = params.multiMemberElectionStrategy
+    val smes = params.electionStrat.sm
+    val mmes = params.electionStrat.mm
 
     if (smes == mmes) {
       div(cls := "blockIndent")(
