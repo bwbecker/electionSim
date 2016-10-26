@@ -36,6 +36,7 @@ object DesignName extends EnumP[DesignName] {
   case object fptp extends DesignName("FP", "338 single-member ridings")
 
   case object stv_huge extends DesignName("", "")
+
   case object stv_med extends DesignName("SM", "STV with medium-sized multi-member ridings")
 
   case object stv_small extends DesignName("SS", "STV with small multi-member ridings")
@@ -66,10 +67,15 @@ object DesignName extends EnumP[DesignName] {
 
   case object erre_ru extends DesignName("ER", "ERRE RU that gets top-ups from large multi-member ridings")
 
-  case object erre_ru_singles extends DesignName("ER", "ERRE RU that gets top-ups from large multi-member ridings; region = " +
+  case object erre_ru_singles extends DesignName("ER", "ERRE RU that gets top-ups from large multi-member ridings; " +
+    "region = " +
     "province")
 
-  case object erre_ru_multiples extends DesignName("", "")
+  case object erre_ru_multiples_20pct extends DesignName("", "")
+
+  case object erre_ru_multiples_15pct extends DesignName("", "")
+  case object erre_ru_multiples_10pct extends DesignName("", "")
+
 
   case object erre_mmp_5050_small extends DesignName("ER", "ERRE MMP that gets top-ups from twinned 2015 ridings; " +
     "smaller regions")
@@ -78,8 +84,11 @@ object DesignName extends EnumP[DesignName] {
     "larger regions")
 
   case object erre_mmp5050_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
+
   case object erre_mmp5050_LargeRegions extends DesignName("XX", "DesignName parameter not filled in.")
+
   case object erre_ru3367_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
+
 }
 
 

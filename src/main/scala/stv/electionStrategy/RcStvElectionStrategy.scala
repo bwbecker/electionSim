@@ -130,16 +130,16 @@ object RcStvProvAdjustment {
         adjustMPs.toVector.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat))
       } else {
         val a = new Analysis(alreadyElected ++ adjustMPs ++ notElected, mpsNeeded, false)
-        val mostDisadvantagedParty = if (false) {
+        val mostDisadvantagedParty = if (true) {
           // Favour larger parties
           a.statsByParty
-            .filter(s ⇒ s.pctVote > 0.02) // filter out small parties
+            .filter(s ⇒ s.party.mainStream) // filter out small parties
             .minBy(s ⇒ s.pctMPs - s.pctVote)
             .party
         } else {
           // Favour smaller parties
           a.statsByParty
-            .filter(s ⇒ s.pctVote > 0.02) // filter out small parties
+            .filter(s ⇒ s.party.mainStream) // filter out small parties
             .maxBy(s ⇒ 1 - (s.numRidingMPs + s.numTopupMPs) / s.deservedMPs)
             .party
         }

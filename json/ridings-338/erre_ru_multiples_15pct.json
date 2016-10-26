@@ -1,8 +1,9 @@
 {
-  "design_name": "erre_ru_multiples",
+  "design_name": "erre_ru_multiples_15pct",
   "description": [
     [
-      "338 ridings total.  Topups taken out of larger multi-member ridings.  Emphasis on multiples."
+      "A Riding-Centric Rural-Urban design, similar to erre_ru_multiples but with fewer adjustment MPs.  That's ",
+      "accomplished by being less aggressive in assigning seats from multi-member ridings as adjustment seats."
     ]
   ],
   "is_proportional": true,
@@ -13,7 +14,7 @@
       "regions": [
         {
           "region_id": "R_AB",
-          "top_up_seats": 8,
+          "top_up_seats": 5,
           "new_ridings": [
             {
               "riding_id": "AB.Calgary1",
@@ -60,7 +61,7 @@
             },
             {
               "riding_id": "AB.Yellowhead",
-              "district_mag": 2,
+              "district_mag": 3,
               "old_ridings": [
                 "48021, 100, Edmonton-Wetaskiwin",
                 "48033, 100, Sturgeon River-Parkland",
@@ -79,7 +80,7 @@
             },
             {
               "riding_id": "AB.RedDeerBanff",
-              "district_mag": 2,
+              "district_mag": 3,
               "old_ridings": [
                 "48001, 100, Banff-Airdrie",
                 "48029, 100, Red Deer-Mountain View",
@@ -96,7 +97,7 @@
             },
             {
               "riding_id": "AB.FortMac",
-              "district_mag": 2,
+              "district_mag": 3,
               "old_ridings": [
                 "48002, 100, Battle River-Crowfoot",
                 "48023, 100, Fort McMurray-Cold Lake",
@@ -268,46 +269,28 @@
       "regions": [
         {
           "region_id": "R_NB",
-          "top_up_seats": 5,
+          "top_up_seats": 1,
           "new_ridings": [
             {
-              "riding_id": "NB.AcadieMiramichi",
-              "district_mag": 1,
+              "riding_id": "NB.AcaMirMadTob",
+              "district_mag": 4,
               "old_ridings": [
                 "13001, 100, Acadie-Bathurst",
-                "13006, 100, Miramichi-Grand Lake"
+                "13006, 100, Miramichi-Grand Lake",
+                "13005, 100, Madawaska-Restigouche",
+                "13010, 100, Tobique-Mactaquac"
               ]
             },
             {
               "riding_id": "NB.Fundy",
-              "district_mag": 1,
+              "district_mag": 5,
               "old_ridings": [
                 "13004, 100, Fundy Royal",
-                "13009, 100, Saint John-Rothesay"
-              ]
-            },
-            {
-              "riding_id": "NB.Fredericton",
-              "district_mag": 1,
-              "old_ridings": [
+                "13009, 100, Saint John-Rothesay",
                 "13003, 100, Fredericton",
-                "13008, 100, New Brunswick Southwest"
-              ]
-            },
-            {
-              "riding_id": "NB.Moncton",
-              "district_mag": 1,
-              "old_ridings": [
+                "13008, 100, New Brunswick Southwest",
                 "13002, 100, Beauséjour",
                 "13007, 100, Moncton-Riverview-Dieppe"
-              ]
-            },
-            {
-              "riding_id": "NB.MadaTob",
-              "district_mag": 1,
-              "old_ridings": [
-                "13005, 100, Madawaska-Restigouche",
-                "13010, 100, Tobique-Mactaquac"
               ]
             }
           ]
@@ -355,7 +338,7 @@
       "regions": [
         {
           "region_id": "R_NS",
-          "top_up_seats": 3,
+          "top_up_seats": 2,
           "new_ridings": [
             {
               "riding_id": "NS.North",
@@ -379,7 +362,7 @@
             },
             {
               "riding_id": "NS.South",
-              "district_mag": 2,
+              "district_mag": 3,
               "old_ridings": [
                 "12007, 100, Kings-Hants",
                 "12009, 100, South Shore-St. Margarets",
@@ -395,7 +378,7 @@
       "regions": [
         {
           "region_id": "R_ON",
-          "top_up_seats": 23,
+          "top_up_seats": 17,
           "new_ridings": [
             {
               "riding_id": "ON.Barrie",
@@ -410,7 +393,7 @@
             },
             {
               "riding_id": "ON.BayHalNorPet",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "35006, 100, Bay of Quinte",
                 "35034, 100, Haliburton-Kawartha Lakes-Brock",
@@ -420,7 +403,7 @@
             },
             {
               "riding_id": "ON.Bruce",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "35014, 100, Bruce-Grey-Owen Sound",
                 "35022, 100, Dufferin-Caledon",
@@ -453,7 +436,7 @@
             },
             {
               "riding_id": "ON.Lanark",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "35039, 100, Hastings-Lennox and Addington",
                 "35044, 100, Kingston and the Islands",
@@ -475,7 +458,7 @@
             },
             {
               "riding_id": "ON.Niagara",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "35066, 100, Niagara Centre",
                 "35067, 100, Niagara Falls",
@@ -485,7 +468,7 @@
             },
             {
               "riding_id": "ON.Sudbury",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "35069, 100, Nickel Belt",
                 "35070, 100, Nipissing-Timiskaming",
@@ -602,7 +585,7 @@
             },
             {
               "riding_id": "ON.Essex",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "35017, 100, Chatham-Kent-Leamington",
                 "35026, 100, Essex",
@@ -698,7 +681,7 @@
       "regions": [
         {
           "region_id": "R_QC",
-          "top_up_seats": 17,
+          "top_up_seats": 12,
           "new_ridings": [
             {
               "riding_id": "QC.Drummond",
@@ -732,7 +715,7 @@
             },
             {
               "riding_id": "QC.Pontiac",
-              "district_mag": 2,
+              "district_mag": 3,
               "old_ridings": [
                 "24001, 100, Abitibi-Baie-James-Nunavik-Eeyou",
                 "24002, 100, Abitibi-Témiscamingue",
@@ -741,7 +724,7 @@
             },
             {
               "riding_id": "QC.Gatineau",
-              "district_mag": 2,
+              "district_mag": 3,
               "old_ridings": [
                 "24005, 100, Argenteuil-La Petite-Nation",
                 "24027, 100, Gatineau",
@@ -794,7 +777,7 @@
             },
             {
               "riding_id": "QC.Shefford",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "24016, 100, Brome-Missisquoi",
                 "24023, 100, Compton-Stanstead",
@@ -817,7 +800,7 @@
             },
             {
               "riding_id": "QC.Vimy",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "24004, 100, Alfred-Pellan",
                 "24040, 100, Laval-Les Îles",
@@ -862,7 +845,7 @@
             },
             {
               "riding_id": "QC.TroisRivieres",
-              "district_mag": 3,
+              "district_mag": 4,
               "old_ridings": [
                 "24058, 100, Portneuf-Jacques-Cartier",
                 "24070, 100, Saint-Maurice-Champlain",
