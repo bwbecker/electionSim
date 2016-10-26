@@ -77,6 +77,8 @@ object DesignName extends EnumP[DesignName] {
     "larger regions")
 
   case object erre_mmp5050_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
+  case object erre_mmp5050_LargeRegions extends DesignName("XX", "DesignName parameter not filled in.")
+  case object erre_ru3367_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
 }
 
 

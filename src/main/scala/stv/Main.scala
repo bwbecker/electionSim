@@ -41,6 +41,8 @@ object Main {
           for {
             electStrat ← design.electionStrategies
           } yield {
+            println(s"Running election for ${designName}-${year}.")
+
 
             val params = namedSystems.find(_.matches(designName, year, electStrat.sm, electStrat.mm))
               .getOrElse {
@@ -106,11 +108,12 @@ object Main {
       c.copy(years = Vector(2015),
         designs = Seq(
           DesignName.erre_mmp5050_ProvRegions,
-//          DesignName.erre_ru_multiples,
-//          DesignName.erre_mmp_5050_small,
-//          DesignName.erre_mmp_5050_large,
-//          DesignName.erre_ru,
-//          DesignName.erre_ru_singles,
+          DesignName.erre_ru3367_ProvRegions,
+          //          DesignName.erre_ru_multiples,
+          //          DesignName.erre_mmp_5050_small,
+          //          DesignName.erre_mmp_5050_large,
+          //          DesignName.erre_ru,
+          //          DesignName.erre_ru_singles,
           DesignName.fptp
         ),
         overview = true

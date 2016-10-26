@@ -96,7 +96,7 @@ case class Design(
           regionElected = regionElected ++ e
           regionUnelected = regionUnelected ++ u
         }
-        if (this.numTopupRegions > 0 && electionStrat != ElectionStrategyEnum.RcSTV) {
+        if (this.numTopupRegions > 0 && electionStrat != ElectionStrategyEnum.RcRUPR) {
           // Regional-level adjustments
           topup = topup ++ electionStrat.topup.runElection(
             region.regionId,
@@ -107,7 +107,7 @@ case class Design(
         provUnelected = provUnelected ++ regionUnelected
       }
 
-      if (electionStrat == ElectionStrategyEnum.RcSTV) {
+      if (electionStrat == ElectionStrategyEnum.RcRUPR) {
         // Provincial-level adjustments
         topup = topup ++ RcStvProvAdjustment.adjustmentMPs(prov, provElected, provUnelected)
 

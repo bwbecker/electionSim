@@ -2,7 +2,7 @@
   "design_name": "erre_ru_multiples",
   "description": "338 ridings total.  Topups taken out of larger multi-member ridings.  Emphasis on multiples.",
   "is_proportional": true,
-  "election_strategies": ["RcSTV"],
+  "election_strategies": ["RcRUPR"],
   "provinces": [
     {
       "prov": "AB",

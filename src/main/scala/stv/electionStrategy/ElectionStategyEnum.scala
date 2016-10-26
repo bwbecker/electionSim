@@ -60,12 +60,6 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
     TopupStrategy
   )
 
-  case object MMP_AV_mm extends ElectionStrategyEnum(
-    EkosAvRidingElectionStrategy,
-    EkosStvRidingElectionStrategy, // mmp_5050_* has a very few very small multi-member ridings
-    TopupStrategy
-  )
-
   //-----------------------------------------------
   // Multi-member, probably with at least a few single-member, no top-up
   //-----------------------------------------------
@@ -85,7 +79,7 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
   //-----------------------------------------------
   // RU-PR: single- and multi-member, top-ups
   //-----------------------------------------------
-  case object RcSTV extends ElectionStrategyEnum(
+  case object RcRUPR extends ElectionStrategyEnum(
     EkosAvRidingElectionStrategy,
     new RcStvElectionStrategy(EkosXfer),
     NotApplicableTopupElectionStrategy

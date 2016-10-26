@@ -40,19 +40,42 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
     )
   }
 
-  private def parameters = div(cls := "blockIndent")(
-    params.description.getOrElse(p(sim.design.description)),
-     table(
-        tr(td(cls := "right")("Number of Constituency MPs:"), td(cls := "right padLeft")(sim.numRidingMPs)),
-        tr(td(cls := "right")("Number of Top-Up MPs:"), td(cls := "right padLeft")(sim.numRegionalMPs)),
-        tr(td(cls := "right")("Total MPs:"), td(cls := "right padLeft")(sim.numMPs)),
-        tr(td(cls := "right")("Number of Single-Member Ridings:"), td(cls := "right padLeft")(sim.design.numSingleMemberRidings)),
-        tr(td(cls := "right")("Number of Multi-Member Ridings:"), td(cls := "right padLeft")(sim.design.numMultiMemberRidings)),
-        tr(td(cls := "right")("Total Ridings:"), td(cls := "right padLeft")(sim.design.numSingleMemberRidings + sim.design.numMultiMemberRidings)),
-        tr(td(cls := "right")("Number of Top-up Regions:"), td(cls := "right padLeft")(sim.design.numTopupRegions))
-      )
 
-  )
+  private def parameters = {
+
+    val rgt = cls := "right"
+    val rgtPadLft = cls := "right padLeft"
+    val lft = cls := "left padLeft"
+
+    def rowInt(label: String, content: Int): TypedTag[String] = tr(td(rgt)(label), td(rgtPadLft)(content))
+    def rowStr(label: String, content: String): TypedTag[String] = tr(td(rgt)(label), td(lft)(content))
+    def blankRow = tr(td(""), td(""))
+
+    val leftTable = table(
+      rowInt("Number of Constituency MPs:", sim.numRidingMPs),
+      rowInt("Number of Top-Up MPs:", sim.numRegionalMPs),
+      rowInt("Total MPs:", sim.numMPs),
+      blankRow,
+      rowInt("Number of Single-Member Ridings:", sim.design.numSingleMemberRidings),
+      rowInt("Number of Multi-Member Ridings:", sim.design.numMultiMemberRidings),
+      rowInt("Total Ridings:", sim.design.numSingleMemberRidings + sim.design.numMultiMemberRidings),
+      blankRow,
+      rowInt("Number of Top-up Regions:", sim.design.numTopupRegions)
+    )
+
+    val rightTable = table(cls := "padLeft")(
+      rowStr("Single Member Seats:", sim.params.electionStrat.sm.name),
+      rowStr("Multi Member Seats:", sim.params.electionStrat.mm.name),
+      rowStr("Compensatory Seats:", sim.params.electionStrat.topup.name)
+    )
+
+    div(cls := "blockIndent")(
+      params.description.getOrElse(p(sim.design.description)),
+      table(
+        tr(td(leftTable), td(rightTable))
+      )
+    )
+  }
 
   private def sensitivityPairs: List[(Party, Party)] = {
     val stats = sim.analysis.statsByParty.sortBy(s ⇒ -s.pctVote).take(3)
