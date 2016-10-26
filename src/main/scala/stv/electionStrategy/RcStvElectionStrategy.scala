@@ -101,7 +101,6 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
 }
 
 
-
 object RcStvProvAdjustment {
 
 
@@ -131,7 +130,19 @@ object RcStvProvAdjustment {
         adjustMPs.toVector.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat))
       } else {
         val a = new Analysis(alreadyElected ++ adjustMPs ++ notElected, mpsNeeded, false)
-        val mostDisadvantagedParty = a.statsByParty.minBy(s ⇒ s.pctMPs - s.pctVote).party
+        val mostDisadvantagedParty = if (false) {
+          // Favour larger parties
+          a.statsByParty
+            .filter(s ⇒ s.pctVote > 0.02) // filter out small parties
+            .minBy(s ⇒ s.pctMPs - s.pctVote)
+            .party
+        } else {
+          // Favour smaller parties
+          a.statsByParty
+            .filter(s ⇒ s.pctVote > 0.02) // filter out small parties
+            .maxBy(s ⇒ 1 - (s.numRidingMPs + s.numTopupMPs) / s.deservedMPs)
+            .party
+        }
 
         // Candidate in the right party and a riding with no MP that has the most votes.
         val candList = notElected.filter(c ⇒
@@ -139,15 +150,18 @@ object RcStvProvAdjustment {
             oldRidingsWithNoMP.contains(c.oldRidingId))
 
 
-        if (candList.nonEmpty) {
-          val cand = candList.maxBy(c ⇒ c.votes)
-          helper(adjustMPs + cand.copy(winner = true, seatType = SeatType.AdjustmentSeat),
-            notElected - cand,
-            oldRidingsWithNoMP - cand.oldRidingId)
+        val cand = if (candList.nonEmpty) {
+          candList.maxBy(c ⇒ c.votes)
         } else {
           println(s"\n*** Can't find a riding without an MP for with a candidate from ${mostDisadvantagedParty}.")
-          adjustMPs.toVector.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat))
+          // Construct an imaginary Candidate for now that is consistent in most respects.
+          val oldRidingId = oldRidingsWithNoMP.head
+          val modelCandidate = notYetElected.find(c ⇒ c.oldRidingId == oldRidingId).get // could bomb...
+          modelCandidate
         }
+        helper(adjustMPs + cand.copy(winner = true, seatType = SeatType.AdjustmentSeat),
+          notElected - cand,
+          oldRidingsWithNoMP - cand.oldRidingId)
       }
     }
 

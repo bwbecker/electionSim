@@ -10,16 +10,16 @@ import stv.html._
 import java.io.File
 
 /**
- * Created by bwbecker on 2016-06-01.
- */
+  * Created by bwbecker on 2016-06-01.
+  */
 object Output {
 
   val dirs = new CachedMkdir
 
 
   /**
-   * Copy the output of the less compiler to where we want it.
-   */
+    * Copy the output of the less compiler to where we want it.
+    */
   def copyLess(destDir: String): Unit = {
     import scala.language.implicitConversions
 
@@ -38,7 +38,7 @@ object Output {
 
     dirs.mkdirp(s"${Main.outdir}/overview")
 
-    val featuredSims = sims.filter(s => Main.featuredSystems.exists{f =>
+    val featuredSims = sims.filter(s => Main.featuredSystems.exists { f =>
       f.matches(s.params)
     })
 
@@ -49,12 +49,12 @@ object Output {
   }
 
 
-  def writeHtml(params: Params, sim: Sim): Unit = {
+  def writeHtml(params: Params, sim: Sim, doVoteSwingAnalysis: Boolean): Unit = {
     dirs.mkdirp(s"${Main.outdir}/${params.outDir}/")
 
     copyLess(Main.outdir)
 
-    SummaryHTML(params, sim).print
+    SummaryHTML(params, sim, doVoteSwingAnalysis).print
     RidingResultsHTML(params, sim).print
     RidingStatsHTML(params, sim).print
     RegionResultsHTML(params, sim).print

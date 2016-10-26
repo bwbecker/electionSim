@@ -51,7 +51,7 @@ object Main {
               }
 
             val sim = Sim(design, params, ridings)
-            Output.writeHtml(params, sim)
+            Output.writeHtml(params, sim, config.voteSwing)
             sim
           }
 
@@ -75,7 +75,9 @@ object Main {
   case class CLArgs(all: Boolean = false,
                     years: Seq[Int] = Vector[Int](),
                     designs: Seq[DesignName] = Vector[DesignName](),
-                    overview: Boolean = false)
+                    overview: Boolean = false,
+                    voteSwing: Boolean = false
+                   )
 
   /**
     * Parse the argument list
@@ -90,11 +92,15 @@ object Main {
       c.copy(all = true,
         years = numRidingsByElectionYr.keys.toVector.sorted,
         designs = DesignName.values,
-        overview = true
+        overview = true,
+        voteSwing = true
       )).text("Produce all possible combinations")
 
     opt[Unit]("overview").action((_, c) =>
       c.copy(overview = true)).text("Write the overview pages")
+
+    opt[Unit]("voteSwing").action((_, c) =>
+      c.copy(voteSwing = true)).text("Perform vote swing analysis")
 
     opt[Seq[Int]]("years").valueName(numRidingsByElectionYr.keys.toVector.sorted.mkString("<", ">,<", ">")).action(
       (x, c) =>
@@ -116,7 +122,8 @@ object Main {
           //          DesignName.erre_ru_singles,
           DesignName.fptp
         ),
-        overview = true
+        overview = true,
+        voteSwing = true
       )).text("Simulations requested by ERRE.")
 
     //    checkConfig(c =>

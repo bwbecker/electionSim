@@ -106,7 +106,7 @@ case class RegionStatsHTML(params: Params, sim: Sim) extends Page {
               td(cls := p + " ltGray")(v)
             },
             for ((p, i) <- parties) yield {
-              val v = sbp(p).numTopupSeats
+              val v = sbp(p).numTopupMPs
               totals(5 + i) = totals(5 + i) + v
               td(cls := p.toString)(v)
             },

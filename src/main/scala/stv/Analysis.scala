@@ -21,7 +21,7 @@ object Analysis {
                           pctMPs: Double,
                           deservedMPs: Double,
                           numRidingMPs: Int,
-                          numTopupSeats: Int) {
+                          numTopupMPs: Int) {
     override def toString = f"Stats(${party}: ${popVote}%,8d ${pctVote * 100}%5.2f  ${mps}%2d  " +
       f"${pctMPs * 100}%,5.2f  ${pctVote * 100 - pctMPs * 100}%5.2f"
   }
@@ -145,11 +145,11 @@ class Analysis(val allCandidates: Seq[Candidate],
     val pctMPs = mps / (elected.length).toDouble
     val deservedMPs = totalSeats * pctVote
     val numLocalMPs = cand.count(c => c.seatType == SeatType.RidingSeat && c.winner)
-    val numTopupSeats = cand.count(c => c.seatType != SeatType.RidingSeat && c.winner)
-    assert(numLocalMPs + numTopupSeats == mps, s"$numLocalMPs + $numTopupSeats != $mps")
+    val numTopupMPs = cand.count(c => c.seatType != SeatType.RidingSeat && c.winner)
+    assert(numLocalMPs + numTopupMPs == mps, s"$numLocalMPs + $numTopupMPs != $mps")
 
 
-    StatsByParty(party, popVote, pctVote, mps, pctMPs, deservedMPs, numLocalMPs, numTopupSeats)
+    StatsByParty(party, popVote, pctVote, mps, pctMPs, deservedMPs, numLocalMPs, numTopupMPs)
   }
 
   /**
@@ -200,7 +200,7 @@ class Analysis(val allCandidates: Seq[Candidate],
     val stats = if (this.nationWide) {
       val oth: StatsByParty = others.fold(StatsByParty(Oth, 0, 0.0, 0, 0.0, 0.0, 0, 0)) {
         (a, b) ⇒ StatsByParty(Oth, a.popVote + b.popVote, a.pctVote + b.pctVote, a.mps + b.mps, a.pctMPs + b.pctMPs,
-          a.deservedMPs + b.deservedMPs, a.numRidingMPs + b.numRidingMPs, a.numTopupSeats + b.numTopupSeats)
+          a.deservedMPs + b.deservedMPs, a.numRidingMPs + b.numRidingMPs, a.numTopupMPs + b.numTopupMPs)
       }
       majorParties :+ oth
     } else {
