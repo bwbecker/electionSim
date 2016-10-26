@@ -12,7 +12,7 @@ import stv._
 /**
   * Created by bwbecker on 2016-06-15.
   */
-case class SummaryHTML(params: Params, sim: Sim) extends Page {
+case class SummaryHTML(params: Params, sim: Sim, doVoteSwingAnalysis: Boolean) extends Page {
 
 
   protected val outDir: String = params.outDir
@@ -26,7 +26,11 @@ case class SummaryHTML(params: Params, sim: Sim) extends Page {
 
       summaryStats,
 
-      sensitivity(sensitivityPairs),
+      if (doVoteSwingAnalysis) {
+        sensitivity(sensitivityPairs)
+      } else {
+        p()
+      },
 
       subsets,
 

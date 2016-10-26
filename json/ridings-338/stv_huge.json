@@ -1,8 +1,10 @@
 {
-  "design_name": "stv_med",
+  "design_name": "stv_huge",
   "description": [
     [
-      "STV (Single Transferable Vote) with medium-sized ridings that average 10.9 seats ",
+      "STV (Single Transferable Vote) with ridings that are as large as possible to explore ",
+      "the question of how proportional the system can be in a Canadian context that places ",
+      "constitutional limits on riding sizes. that average 10.9 seats ",
       "each.  The three territories are left as single-member ridings and PEI is of ",
       "necessity only 4 seats.  All other ridings are 7 seats or larger -- ranging up to ",
       "one with 18 seats."
@@ -25,8 +27,8 @@
           "top_up_seats": 0,
           "new_ridings": [
             {
-              "riding_id": "Calgary",
-              "district_mag": 10,
+              "riding_id": "AB",
+              "district_mag": 34,
               "old_ridings": [
                 "48004, 100, Calgary Centre",
                 "48005, 100, Calgary Confederation",
@@ -37,13 +39,7 @@
                 "48010, 100, Calgary Rocky Ridge",
                 "48011, 100, Calgary Shepard",
                 "48012, 100, Calgary Signal Hill",
-                "48013, 100, Calgary Skyview"
-              ]
-            },
-            {
-              "riding_id": "MetroEdmonton",
-              "district_mag": 12,
-              "old_ridings": [
+                "48013, 100, Calgary Skyview",
                 "48014, 100, Edmonton Centre",
                 "48015, 100, Edmonton Griesbach",
                 "48016, 100, Edmonton Manning",
@@ -55,13 +51,7 @@
                 "48032, 100, Sherwood Park-Fort Saskatchewan",
                 "48031, 100, St. Albert-Edmonton",
                 "48033, 100, Sturgeon River-Parkland",
-                "48034, 100, Yellowhead"
-              ]
-            },
-            {
-              "riding_id": "SaNAlberta",
-              "district_mag": 12,
-              "old_ridings": [
+                "48034, 100, Yellowhead",
                 "48001, 100, Banff-Airdrie",
                 "48002, 100, Battle River-Crowfoot",
                 "48003, 100, Bow river",
@@ -88,8 +78,8 @@
           "top_up_seats": 0,
           "new_ridings": [
             {
-              "riding_id": "BCInterior",
-              "district_mag": 9,
+              "riding_id": "BC",
+              "district_mag": 42,
               "old_ridings": [
                 "59004, 100, Cariboo-Prince George",
                 "59005, 100, Central Okanagan-Similkameen-Nicola",
@@ -99,13 +89,7 @@
                 "59020, 100, North Okanagan-Shuswap",
                 "59024, 100, Prince George-Peace River-Northern Rockies",
                 "59028, 100, Skeena-Bulkley Valley",
-                "59029, 100, South Okanagan-West Kootenay"
-              ]
-            },
-            {
-              "riding_id": "SWVan",
-              "district_mag": 12,
-              "old_ridings": [
+                "59029, 100, South Okanagan-West Kootenay",
                 "59001, 100, Abbotsford",
                 "59006, 100, Chilliwack-Hope",
                 "59007, 100, Cloverdale-Langley City",
@@ -117,13 +101,7 @@
                 "59030, 100, South Surrey-White Rock",
                 "59031, 100, Steveston-Richmond East",
                 "59032, 100, Surrey Centre",
-                "59033, 100, Surrey-Newton"
-              ]
-            },
-            {
-              "riding_id": "Vancouver",
-              "district_mag": 14,
-              "old_ridings": [
+                "59033, 100, Surrey-Newton",
                 "59002, 100, Burnaby North-Seymour",
                 "59003, 100, Burnaby South",
                 "59008, 100, Coquitlam-Port Coquitlam",
@@ -137,13 +115,7 @@
                 "59038, 100, Vancouver Kingsway",
                 "59039, 100, Vancouver Quadra",
                 "59040, 100, Vancouver South",
-                "59042, 100, West Vancouver-Sunshine Coast-Sea to Sky Country"
-              ]
-            },
-            {
-              "riding_id": "VicIsland",
-              "district_mag": 7,
-              "old_ridings": [
+                "59042, 100, West Vancouver-Sunshine Coast-Sea to Sky Country",
                 "59009, 100, Courtenay-Alberni",
                 "59010, 100, Cowichan-Malahat-Langford",
                 "59026, 100, Esquimalt-Saanich-Sooke",
@@ -311,8 +283,8 @@
           "top_up_seats": 0,
           "new_ridings": [
             {
-              "riding_id": "CentralON",
-              "district_mag": 13,
+              "riding_id": "ON",
+              "district_mag": 121,
               "old_ridings": [
                 "35004, 100, Barrie-Innisfil",
                 "35005, 100, Barrie-Springwater-Oro-Medonte",
@@ -326,13 +298,7 @@
                 "35083, 100, Perth-Wellington",
                 "35084, 100, Peterborough-Kawartha",
                 "35100, 100, Simcoe North",
-                "35099, 100, Simcoe-Grey"
-              ]
-            },
-            {
-              "riding_id": "EasternON",
-              "district_mag": 15,
-              "old_ridings": [
+                "35099, 100, Simcoe-Grey",
                 "35088, 100, Carleton",
                 "35031, 100, Glengarry-Prescott-Russell",
                 "35039, 100, Hastings-Lennox and Addington",
@@ -347,13 +313,7 @@
                 "35079, 100, Ottawa West-Nepean",
                 "35078, 100, Ottawa-Vanier",
                 "35086, 100, Renfrew-Nipissing-Pembroke",
-                "35102, 100, Stormont-Dundas-South Glengarry"
-              ]
-            },
-            {
-              "riding_id": "HamNiaBrant",
-              "district_mag": 10,
-              "old_ridings": [
+                "35102, 100, Stormont-Dundas-South Glengarry",
                 "35015, 100, Burlington",
                 "35030, 100, Flamborough-Glanbrook",
                 "35035, 100, Hamilton Centre",
@@ -363,13 +323,7 @@
                 "35066, 100, Niagara Centre",
                 "35067, 100, Niagara Falls",
                 "35068, 100, Niagara West",
-                "35089, 100, St. Catharines"
-              ]
-            },
-            {
-              "riding_id": "NOntario",
-              "district_mag": 9,
-              "old_ridings": [
+                "35089, 100, St. Catharines",
                 "35002, 100, Algoma-Manitoulin-Kapuskasing",
                 "35042, 100, Kenora",
                 "35069, 100, Nickel Belt",
@@ -378,13 +332,7 @@
                 "35103, 100, Sudbury",
                 "35105, 100, Thunder Bay-Rainy River",
                 "35106, 100, Thunder Bay-Superior North",
-                "35107, 100, Timmins-James Bay"
-              ]
-            },
-            {
-              "riding_id": "NorthToronto",
-              "district_mag": 12,
-              "old_ridings": [
+                "35107, 100, Timmins-James Bay",
                 "35019, 100, Don Valley East",
                 "35020, 100, Don Valley North",
                 "35021, 100, Don Valley West",
@@ -396,13 +344,7 @@
                 "35081, 100, Parkdale-High Park",
                 "35115, 100, Willowdale",
                 "35118, 100, York Centre",
-                "35120, 100, York South-Weston"
-              ]
-            },
-            {
-              "riding_id": "PeelHalton",
-              "district_mag": 16,
-              "old_ridings": [
+                "35120, 100, York South-Weston",
                 "35008, 100, Brampton Centre",
                 "35009, 100, Brampton East",
                 "35010, 100, Brampton North",
@@ -418,13 +360,7 @@
                 "35063, 100, Mississauga-Streetsville",
                 "35072, 100, Oakville",
                 "35073, 100, Oakville North-Burlington",
-                "35113, 100, Wellington-Halton Hills"
-              ]
-            },
-            {
-              "riding_id": "SWOntario",
-              "district_mag": 18,
-              "old_ridings": [
+                "35113, 100, Wellington-Halton Hills",
                 "35013, 100, Brantford-Brant",
                 "35016, 100, Cambridge",
                 "35017, 100, Chatham-Kent-Leamington",
@@ -442,13 +378,7 @@
                 "35091, 100, Sarnia-Lambton",
                 "35112, 100, Waterloo",
                 "35117, 100, Windsor West",
-                "35116, 100, Windsor-Tecumseh"
-              ]
-            },
-            {
-              "riding_id": "ScarCentralToronto",
-              "district_mag": 13,
-              "old_ridings": [
+                "35116, 100, Windsor-Tecumseh",
                 "35007, 100, Beaches-East York",
                 "35018, 100, Davenport",
                 "35094, 100, Scarborough Centre",
@@ -461,13 +391,7 @@
                 "35108, 100, Toronto Centre",
                 "35109, 100, Toronto-Danforth",
                 "35090, 100, Toronto-St. Paul's",
-                "35110, 100, University-Rosedale"
-              ]
-            },
-            {
-              "riding_id": "YorkDurham",
-              "district_mag": 15,
-              "old_ridings": [
+                "35110, 100, University-Rosedale",
                 "35001, 100, Ajax",
                 "35003, 100, Aurora-Oak Ridges-Richmond Hill",
                 "35023, 100, Durham",
@@ -518,8 +442,8 @@
           "top_up_seats": 0,
           "new_ridings": [
             {
-              "riding_id": "CentralQ",
-              "district_mag": 12,
+              "riding_id": "QC",
+              "district_mag": 78,
               "old_ridings": [
                 "24006, 100, Avignon-La Mitis-Matane-Matapédia",
                 "24007, 100, Beauce",
@@ -532,13 +456,7 @@
                 "24047, 100, Mégantic-L'Érable",
                 "24061, 100, Richmond-Arthabaska",
                 "24018, 100, Rimouski-Neigette-Témiscouata-Les Basques",
-                "24066, 100, Saint-Hyacinthe-Bagot"
-              ]
-            },
-            {
-              "riding_id": "Laurentides",
-              "district_mag": 15,
-              "old_ridings": [
+                "24066, 100, Saint-Hyacinthe-Bagot",
                 "24001, 100, Abitibi-Baie-James-Nunavik-Eeyou",
                 "24002, 100, Abitibi-Témiscamingue",
                 "24005, 100, Argenteuil-La Petite-Nation",
@@ -553,13 +471,7 @@
                 "24062, 100, Rivière-des-Mille-Îles",
                 "24063, 100, Rivière-du-Nord",
                 "24075, 100, Terrebonne",
-                "24013, 100, Thérèse-De Blainville"
-              ]
-            },
-            {
-              "riding_id": "MonteregieEstrie",
-              "district_mag": 15,
-              "old_ridings": [
+                "24013, 100, Thérèse-De Blainville",
                 "24011, 100, Beloeil-Chambly",
                 "24016, 100, Brome-Missisquoi",
                 "24017, 100, Brossard-Saint-Lambert",
@@ -574,13 +486,7 @@
                 "24071, 100, Salaberry-Suroît",
                 "24072, 100, Shefford",
                 "24073, 100, Sherbrooke",
-                "24074, 100, Vaudreuil-Soulanges"
-              ]
-            },
-            {
-              "riding_id": "MontrealEast",
-              "district_mag": 11,
-              "old_ridings": [
+                "24074, 100, Vaudreuil-Soulanges",
                 "24004, 100, Alfred-Pellan",
                 "24015, 100, Bourassa",
                 "24028, 100, Hochelaga",
@@ -591,13 +497,7 @@
                 "24055, 100, Papineau",
                 "24064, 100, Rosemont-La Petite-Patrie",
                 "24069, 100, Saint-Léonard-Saint-Michel",
-                "24078, 100, Vimy"
-              ]
-            },
-            {
-              "riding_id": "MontrealWest",
-              "district_mag": 11,
-              "old_ridings": [
+                "24078, 100, Vimy",
                 "24003, 100, Ahuntsic-Cartierville",
                 "24024, 100, Dorval-Lachine-LaSalle",
                 "24037, 100, LaSalle-Émard-Verdun",
@@ -608,13 +508,7 @@
                 "24054, 100, Outremont",
                 "24056, 100, Pierrefonds-Dollard",
                 "24068, 100, Saint-Laurent",
-                "24077, 100, Ville-Marie-Le Sud-Ouest-Île-des-Surs"
-              ]
-            },
-            {
-              "riding_id": "QuebecCity",
-              "district_mag": 14,
-              "old_ridings": [
+                "24077, 100, Ville-Marie-Le Sud-Ouest-Île-des-Surs",
                 "24020, 100, Beauport-Côte-de-Beaupré-Île d'Orléans-Charlevoix",
                 "24008, 100, Beauport-Limoilou",
                 "24012, 100, Berthier-Maskinongé",

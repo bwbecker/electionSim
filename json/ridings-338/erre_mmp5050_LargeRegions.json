@@ -17,6 +17,7 @@
       "gropued those pairs into regions."
     ]
   ],
+  "comment": "It would be nice to do RcRUPR here, but that's not really honest because it does it's calculations at the provincial level and this design isn't that.",
   "election_strategies": [
     "MMP_FPTP",
     "MMP_AV"

@@ -18,7 +18,8 @@
   ],
   "election_strategies": [
     "MMP_FPTP",
-    "MMP_AV"
+    "MMP_AV",
+    "RcRUPR"
   ],
   "provinces": [
     {

@@ -35,6 +35,7 @@ object DesignName extends EnumP[DesignName] {
   // Try to keep these names to 6 characters or less to fit in Overview table.
   case object fptp extends DesignName("FP", "338 single-member ridings")
 
+  case object stv_huge extends DesignName("", "")
   case object stv_med extends DesignName("SM", "STV with medium-sized multi-member ridings")
 
   case object stv_small extends DesignName("SS", "STV with small multi-member ridings")
