@@ -44,6 +44,32 @@ case class Sim(//fptpRidings: Map[RidingId, Riding],
     s"${dn}-${sme}-${mme}"
   }
 
+  def pctSingleMbrSeats: Double = {
+    val numSM = newRidingsVec.foldLeft(0) { (a, r) ⇒ a + (if (r.districtMagnitude == 1) 1 else 0) }
+    numSM / newRidingsVec.length.toDouble
+  }
+
+  def pctMultiMbrSeats: Double = {
+    val numMM = newRidingsVec.foldLeft(0) { (a, r) ⇒ a + (if (r.districtMagnitude > 1) 1 else 0) }
+    numMM / newRidingsVec.length.toDouble
+  }
+
+  /**
+    * How many regions are in the average province?  Territories are explicitly excluded.
+    */
+  def avgRegionsPerProv: Double = {
+    val provinces = design.provinces.filter(p ⇒ p.prov.isProvince)
+    provinces.foldLeft(0) { (a, p) ⇒ a + p.regions.length } / provinces.length.toDouble
+  }
+
+  /**
+    * How many adjustment seats are in an average region?  Hmmm... This depends on the election
+    * algorithm, which we don't have....
+    */
+  def avgAdjustmentSeatsPerRegion: Double = {
+    0.0
+  }
+
   /**
     * A List[(cumPop:Double, area:Int)] where cumPop percentage of the population
     * lives in a riding no bigger than area km2.

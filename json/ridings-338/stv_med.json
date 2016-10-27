@@ -12,9 +12,9 @@
       "Fair Voting BC."
     ]
   ],
+  "comment": "Does RcRUPR make sense here?",
   "election_strategies": [
-    "STV",
-    "RcRUPR"
+    "STV"
   ],
   "provinces": [
     {

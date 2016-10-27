@@ -16,10 +16,9 @@
       "This division of current ridings into pairs is from Wilf Day."
     ]
   ],
+  "comment": "MMP_AV gives the same results as MMP_FPTP;  Using RcRUPR to force an MP into each riding seems useful but confusing at this point.",
   "election_strategies": [
-    "MMP_FPTP",
-    "MMP_AV",
-    "RcRUPR"
+    "MMP_FPTP"
   ],
   "provinces": [
     {

@@ -6,6 +6,7 @@ import scalatags.Text.all._
 import stv._
 import stv.Analysis.StatsByParty
 import stv.Party._
+import stv.electionStrategy.ElectionStrategyEnum
 
 
 /**
@@ -65,17 +66,17 @@ abstract class AbstractOverview extends Page {
         thead(
           tr(
             th(cls := "name")(""),
-            th(sortByNum, cls:= "num3")(""),
-            th(sortByNum, cls:= "num3")(""),
-            th(sortByNum, cls:= "colPct0")(""),
-            th(sortByNum, cls:= "colPct0")(""),
-            th(sortByNum, cls:= "colPct0")(""),
-            th(sortByNum, cls:= "colPct0")(""),
-            th(sortByNum, cls:= "colPct0")(""),
-            th(sortByNum, cls:= "colPct1")(""),
-            th(sortByNum, cls:= "colPct1")(""),
-            th(sortByNum, cls:= "colPct0")(""),
-            th(sortByNum, cls:= "colPct0")(""),
+            th(sortByNum, cls := "num3")(""),
+            th(sortByNum, cls := "num3")(""),
+            th(sortByNum, cls := "colPct0")(""),
+            th(sortByNum, cls := "colPct0")(""),
+            th(sortByNum, cls := "colPct0")(""),
+            th(sortByNum, cls := "colPct0")(""),
+            th(sortByNum, cls := "colPct0")(""),
+            th(sortByNum, cls := "colPct1")(""),
+            th(sortByNum, cls := "colPct1")(""),
+            th(sortByNum, cls := "colPct0")(""),
+            th(sortByNum, cls := "colPct0")(""),
             th(cls := "shortName")("")
           )
         ),
@@ -213,7 +214,8 @@ abstract class AbstractOverview extends Page {
 
     def propertiesTable = table(
       thead(
-        img(cls := "hdr")(src := "../img/PropertiesTableHeader.svg")
+        img(cls := "hdr")(src := "../img/PropertiesTableHeader.svg"),
+        p("This needs fixing!")
       ),
       tbody(
         tableRows(sims, sim ⇒
@@ -221,16 +223,19 @@ abstract class AbstractOverview extends Page {
             td(colName)(a(href := s"../${
               sim.params.outDir
             }/index.html")(sim.params.title)),
-            td(colNumMPs)(sim.numRidingMPs),
-            td(colNumMPs)(sim.numRegionalMPs),
+            td(colNumMPs)(f"${sim.numRidingMPs} ${sim.numRidingMPs / sim.numMPs.toDouble * 100}%5.0f%%"),
+            td(colNumMPs)(f"${sim.numRegionalMPs} ${sim.numRegionalMPs / sim.numMPs.toDouble * 100}%5.0f%%"),
             td(colNumMPs)(sim.numMPs),
 
             td(coldd_d)(dd_dFmt.format(sim.avgMPsPerRiding)),
             td(coldd_d)(dFmtOrBlank(sim.avgTopUpMPsPerRegion)),
             td(coldd_d)(dFmtOrBlank(sim.avgTotalMPsPerRegion)),
-            td(colArea)(commaFmt.format(sim.avgPopPerLocalMP)),
-            td(colArea)(commaFmt.format(sim.medianLocalMPRidingArea)),
-            td(cls := "shortName")(sim.shortName)
+            //td(coldd_d)(dFmtOrBlank(0)),
+            //td(colArea)(commaFmt.format(sim.avgPopPerLocalMP)),
+            //td(colArea)(commaFmt.format(sim.medianLocalMPRidingArea)),
+            fmtGallagher(sim.analysis.gallagherIndex),
+            fmtGallagher(sim.compositeGallagher),
+            td(cls := "shortName")()
           )
         )
       )
@@ -376,7 +381,9 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
     div(cls := "overview")(
       introduction,
       resultsTable,
+      modelSummary,
       tableII,
+      ridingDesignSummary,
       properties(this.sims),
       descriptions(sims),
       script("""new Tablesort(document.getElementById('tableII'));"""),
@@ -444,6 +451,110 @@ case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: St
           }
         )
       )
+    )
+  }
+
+  def ridingDesignSummary = {
+    div(cls := "results")(
+      h2("Riding Design Summary"),
+      table(id := "ridingDesignSummary")(
+        thead(
+          tr(td("System Name"),
+            td("Pct Riding Seats"),
+            td("Pct Region Seats"),
+            td("Avg Riding Seats"),
+            td("Avg Region Seats")
+          )
+        ),
+        tbody(
+          for {
+            sim ← sims.sortBy(s ⇒ (
+              s.params.designName.toString,
+              s.params.electionStrat.sm.name,
+              s.params.electionStrat.mm.name,
+              s.params.year
+              ))
+            parms = sim.params
+
+          } yield {
+            tr(td(cls := "name")(
+              a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
+              td(f"${sim.numRidingMPs / sim.numMPs.toDouble * 100}%5.1f%%"),
+              td(f"${sim.numRegionalMPs / sim.numMPs.toDouble * 100}%5.1f%%"),
+              td(f"${sim.avgMPsPerRiding}%5.1f"),
+              td(f"${sim.avgTopUpMPsPerRegion}%5.1f"))
+          }
+        )
+      )
+    )
+  }
+
+
+  def modelSummary = {
+
+    val header = thead(
+      tr(td("Region"),
+        td("# Tot Seats"),
+        td("% Seats"),
+        td("Avg # Seats/Region"),
+        td("Avg #Reg/Prov"),
+        td("Avg Adjust Seats / Region"),
+        td()
+      ),
+      tr(td("Riding"),
+        td("# Tot Seats"),
+        td("% Seats"),
+        td("Avg # Seats/Riding"),
+        td("% Single"),
+        td("% Multiple"),
+        td("Comp. Gallagher")
+      )
+    )
+
+    val body = tbody(
+      (for {
+        (sim, idx) ← sims.sortBy(s ⇒ (
+          s.params.designName.toString,
+          s.params.electionStrat.sm.name,
+          s.params.electionStrat.mm.name,
+          s.params.year
+          )).zipWithIndex
+        ana = sim.analysis
+        parms = sim.params
+      } yield {
+        val avgAdjSeatsPerRegion = if (parms.electionStrat == ElectionStrategyEnum.RcRUPR) {
+          dd_dFmt.format(sim.avgTopUpMPsPerRegion)
+        } else {
+          "n/a"
+        }
+
+        val rowCls = if (idx % 2 == 0) {cls := "even"} else {cls := "odd"}
+
+        Seq(
+          tr(rowCls)(
+            td(cls := "name")(a(href := s"../${sim.params.outDir}/index.html")(sim.design.design_name.entryName)),
+            td(sim.numRegionalMPs),
+            td(pctFmt.format(sim.numRegionalMPs / sim.numMPs.toDouble)),
+            td(dd_dFmt.format(sim.avgTotalMPsPerRegion)),
+            td(dd_dFmt.format(sim.avgRegionsPerProv)),
+            td(avgAdjSeatsPerRegion),
+            td()
+          ),
+          tr(rowCls)(
+            td(parms.electionStrat.entryName),
+            td(sim.numRidingMPs),
+            td(pctFmt.format(sim.numRidingMPs / sim.numMPs.toDouble)),
+            td(dd_dFmt.format(sim.avgMPsPerRiding)),
+            td(pctFmt.format(sim.pctSingleMbrSeats)),
+            td(pctFmt.format(sim.pctMultiMbrSeats)),
+            td(dd_dFmt.format(sim.compositeGallagher * 100))
+          )
+        )
+      })
+    )
+
+    div(cls := "modelSummary")(
+      table(width := "100%")(header, body)
     )
   }
 

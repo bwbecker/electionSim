@@ -1,8 +1,17 @@
 {
   "design_name": "erre_ru_singles",
-  "description": "338 ridings total.  Topups taken out of larger multi-member ridings.  Emphasis on singles.",
-  "is_proportional": true,
-  "election_strategies": ["RcSTV", "MultiMbrList", "STVplus"],
+  "description": [
+    [
+      "Current 338 ridings grouped into a mix of single- and multi-member ridings ",
+      "allowing more single-member ridings.  Compensatory seats are gained by reducing the ",
+      "number of seats in the largest multi-member ridings."
+    ]
+  ],
+  "election_strategies": [
+    "RcRUPR",
+    "MultiMbrList",
+    "STVplus"
+  ],
   "provinces": [
     {
       "prov": "AB",
