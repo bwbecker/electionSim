@@ -92,15 +92,29 @@ case class Design(
           riding = baseRiding.swingVotes(voteSwing)
         } {
           val eStrategy = electionStrat.get(riding)
-          val (e, u) = eStrategy.runElection(riding.candidates0, riding.districtMagnitude)
-          regionElected = regionElected ++ e
-          regionUnelected = regionUnelected ++ u
+          try {
+            val (e, u) = eStrategy.runElection(riding.candidates0, riding.districtMagnitude)
+            regionElected = regionElected ++ e
+            regionUnelected = regionUnelected ++ u
+          } catch {
+            case e: java.lang.Exception ⇒ throw new Exception(
+              s"${electionStrat.entryName} failed for riding ${riding.name} with dm ${riding.districtMagnitude} in " +
+                s"design ${this.design_name}."
+            )
+          }
         }
         if (this.numTopupRegions > 0 && electionStrat != ElectionStrategyEnum.RcRUPR) {
           // Regional-level adjustments
-          topup = topup ++ electionStrat.topup.runElection(
-            region.regionId,
-            regionElected ++ regionUnelected, region.topUpSeats, 0.01)
+          try {
+            topup = topup ++ electionStrat.topup.runElection(
+              region.regionId,
+              regionElected ++ regionUnelected, region.topUpSeats, 0.01)
+          } catch {
+            case e: java.lang.Exception ⇒ throw new Exception(
+              s"${electionStrat.entryName} failed for region ${region.regionId} with ${region.topUpSeats} topup seats" +
+                s" in design ${this.design_name}.\n" + e.getMessage
+            )
+          }
         }
 
         provElected = provElected ++ regionElected

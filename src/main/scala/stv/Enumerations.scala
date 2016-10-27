@@ -135,35 +135,35 @@ object Party extends EnumP[Party] {
 
 }
 
-sealed abstract class ProvName(val longName: String) extends EnumEntry
+sealed abstract class ProvName(val longName: String, val isProvince:Boolean) extends EnumEntry
 
 object ProvName extends EnumP[ProvName] {
   val values = findValues
 
-  case object AB extends ProvName("Alberta")
+  case object AB extends ProvName("Alberta", true)
 
-  case object BC extends ProvName("British Columbia")
+  case object BC extends ProvName("British Columbia", true)
 
-  case object MB extends ProvName("Manitoba")
+  case object MB extends ProvName("Manitoba", true)
 
-  case object NB extends ProvName("New Brunswick")
+  case object NB extends ProvName("New Brunswick", true)
 
-  case object NL extends ProvName("Newfoundland & Labrador")
+  case object NL extends ProvName("Newfoundland & Labrador", true)
 
-  case object NS extends ProvName("Nova Scotia")
+  case object NS extends ProvName("Nova Scotia", true)
 
-  case object NT extends ProvName("Northwest Territories")
+  case object NT extends ProvName("Northwest Territories", false)
 
-  case object NU extends ProvName("Nunavut")
+  case object NU extends ProvName("Nunavut", false)
 
-  case object ON extends ProvName("Ontario")
+  case object ON extends ProvName("Ontario", true)
 
-  case object PE extends ProvName("Prince Edward Island")
+  case object PE extends ProvName("Prince Edward Island", true)
 
-  case object QC extends ProvName("Quebec")
+  case object QC extends ProvName("Quebec", true)
 
-  case object SK extends ProvName("Saskatchewan")
+  case object SK extends ProvName("Saskatchewan", true)
 
-  case object YT extends ProvName("Yukon Territories")
+  case object YT extends ProvName("Yukon Territories", false)
 
 }
