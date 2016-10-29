@@ -244,6 +244,10 @@ h4 {
   border-bottom: 1px solid @accentColor;
 }
 
+h1, h2 {
+  padding-top:  15px;
+}
+
 a {
   text-decoration: none;
 }
@@ -536,19 +540,58 @@ div.centreColumn {
     }
   }
 
+  // Two-row/model summary of regions and ridings.
   .modelSummary {
-    width:  8in;
+    width:  100%;
+    @lightBorderColor: #e3e3e3;
+    @darkBorderColor: lightgray;
+    @backColor: whitesmoke;
 
     table {
       width:  100%;
     }
 
-    td  {
-      .colRight;
+    thead {
+      background-color: @backColor;
+      border-bottom: 3px solid @darkBorderColor;
+      td {
+        border-top: 1px solid @darkBorderColor;
+        vertical-align: bottom;
+      }
     }
 
-    .even {
-      background-color: #DEE4CD;
+    td  {
+      .colRight;
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+
+    .bottomRow td:first-child {
+      // hide the line -- but can't say none because then row css takes over
+      border-top: 1px solid @backColor;
+    }
+    .topRow td:first-child {
+      border-bottom: 1px solid @backColor;
+    }
+
+
+    td:first-child {
+      border-right: 1px solid @darkBorderColor;
+      width: 200px;
+    }
+
+    .odd {
+      background-color: whitesmoke;
+    }
+
+    .topRow {
+      border-top: 2px solid @darkBorderColor;
+      border-bottom: 1px solid @lightBorderColor;
+    }
+
+    .bottomRow {
+      border-top: 1px solid @lightBorderColor;
+      border-bottom: 2px solid @darkBorderColor;
     }
 
   }

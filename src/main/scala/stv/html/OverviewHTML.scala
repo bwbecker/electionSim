@@ -10,7 +10,7 @@ import stv.electionStrategy.ElectionStrategyEnum
 
 
 /**
-  * There are two overview pages, one with all the simulations and one with just the "featured" sims.
+  * There are several overview pages, one with all the simulations and one with just the "featured" sims.
   * This is the common code.
   */
 abstract class AbstractOverview extends Page {
@@ -22,6 +22,14 @@ abstract class AbstractOverview extends Page {
   val commaFmt = new java.text.DecimalFormat("###,###,###")
   val dd_dFmt = new java.text.DecimalFormat("##0.0")
 
+
+  def resultsTable(sims: List[Sim]) = {
+    div(id := "proportionality", cls := "results")(
+      h2("Proportionality"),
+      generateResultsTable(sims),
+      resultsTableFootnotes
+    )
+  }
 
   /**
     * Turn a list of sims into table rows, properly sorted, using function f.
@@ -86,7 +94,8 @@ abstract class AbstractOverview extends Page {
 
             tr(cls := "row")(
               td(cls := "name")(
-                a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
+                a(href := s"../${sim.params.outDir}/index.html")(
+                  raw(sim.params.title.replace("(", "<br>(")))),
               td(cls := "num3")(sim.numRidingMPs),
               td(cls := "num3")(sim.numRegionalMPs),
               fmtOverRep(statsByParty.get(Lib)),
@@ -98,7 +107,7 @@ abstract class AbstractOverview extends Page {
               fmtGallagher(sim.compositeGallagher),
               fmtPrefParty(sim.pctVotersWithPreferredPartyLocally),
               fmtPrefParty(sim.pctVotersWithPreferredPartyRegionally),
-              td(cls := "shortName")(sim.shortName)
+              td(cls := "shortName")(sim.params.year)
             )
           }
           )
@@ -108,7 +117,7 @@ abstract class AbstractOverview extends Page {
   }
 
 
-  def resultsTableFootnotes = div(cls := "footnotes")(
+  def resultsTableFootnotes = div(cls := "blockIndent footnotes")(
     p("Footnotes"),
     ol(
       li(strong("Number of Local MPs"), " is the total number of MPs representing specific ridings.  " +
@@ -191,7 +200,7 @@ abstract class AbstractOverview extends Page {
     )
   )
 
-  def properties(sims: List[Sim]) = {
+  def representationSummary(sims: List[Sim]) = {
 
     val propDescr = div(
       p("The Representation table focuses on how voters are represented by MP.")
@@ -212,36 +221,32 @@ abstract class AbstractOverview extends Page {
       }
     }
 
-    def propertiesTable = table(
+    def repTable = table(
       thead(
-        img(cls := "hdr")(src := "../img/PropertiesTableHeader.svg"),
-        p("This needs fixing!")
+        img(cls := "hdr")(src := "../img/PropertiesTableHeader.svg")
       ),
       tbody(
         tableRows(sims, sim ⇒
-          tr(
-            td(colName)(a(href := s"../${
-              sim.params.outDir
-            }/index.html")(sim.params.title)),
-            td(colNumMPs)(f"${sim.numRidingMPs} ${sim.numRidingMPs / sim.numMPs.toDouble * 100}%5.0f%%"),
-            td(colNumMPs)(f"${sim.numRegionalMPs} ${sim.numRegionalMPs / sim.numMPs.toDouble * 100}%5.0f%%"),
+          tr(cls := "row")(
+            td(colName)(a(href := s"../${sim.params.outDir}/index.html")(sim.params.title)),
+            td(colNumMPs)(commaFmt.format(sim.numRidingMPs)),
+            td(colNumMPs)(commaFmt.format(sim.numRegionalMPs)),
             td(colNumMPs)(sim.numMPs),
 
             td(coldd_d)(dd_dFmt.format(sim.avgMPsPerRiding)),
             td(coldd_d)(dFmtOrBlank(sim.avgTopUpMPsPerRegion)),
             td(coldd_d)(dFmtOrBlank(sim.avgTotalMPsPerRegion)),
-            //td(coldd_d)(dFmtOrBlank(0)),
-            //td(colArea)(commaFmt.format(sim.avgPopPerLocalMP)),
-            //td(colArea)(commaFmt.format(sim.medianLocalMPRidingArea)),
-            fmtGallagher(sim.analysis.gallagherIndex),
-            fmtGallagher(sim.compositeGallagher),
+            td(colArea)(commaFmt.format(sim.avgPopPerLocalMP)),
+            td(colArea)(commaFmt.format(sim.medianLocalMPRidingArea)),
+            //            fmtGallagher(sim.analysis.gallagherIndex),
+            //            fmtGallagher(sim.compositeGallagher),
             td(cls := "shortName")()
           )
         )
       )
     )
 
-    def footnotes = div(cls := "footnotes")(
+    def footnotes = div(cls := "blockIndent footnotes")(
       p("Footnotes"),
       ol(
         li(strong("Number of Local MPs"), " is the total number of MPs representing a specific riding.  " +
@@ -272,39 +277,176 @@ abstract class AbstractOverview extends Page {
     div(cls := "properties")(
       h2("Representation"),
       propDescr,
-      propertiesTable,
+      repTable,
       footnotes
     )
   }
 
-
-  def descriptions(sims: List[Sim]) = div(cls := "modelDescriptions")(
-    h2("Descriptions"),
-    for (param ← sims.map(_.params)) yield {
+  def designDescriptions(sims: List[Sim]) = div(id := "designDescriptions", cls := "modelDescriptions")(
+    h2("Riding Design Descriptions"),
+    sims.map { s ⇒ s.design }.distinct.sortBy(d ⇒ d.design_name.entryName).map { d ⇒
       div(
-        h3(param.title),
-        div(cls := "blockIndent")(
-          p(param.description),
-          p("Elections in single-member ridings are conducted with ", param.electionStrat.sm.name),
-          p("Elections in multi-member ridings are conducted with ", param.electionStrat.mm.name)
-        )
+        h3(d.design_name.entryName),
+        div(cls := "blockIndent")(d.description)
       )
     }
+  )
+
+  def electionAlgorithmDescriptions(sims: List[Sim]) = {
+
+    div(id := "electionStratDescr")(
+      h2("Election Strategy Descriptions"),
+      div(cls := "blockIndent")(
+        p("""Election strategies are the specifics of how ballots are counted to determine which candidate fills
+        a seat.  Each strategy has three parts:  how single-member ridings are handled, how multi-member ridings
+        are handled, and finally how top-up or adjustment seats are handled.""")
+      ),
+
+      sims.flatMap { s ⇒ s.design.electionStrategies }.distinct.sortBy(es ⇒ es.entryName).map { es ⇒
+        div(
+          h3(es.entryName),
+          div(cls := "blockIndent")(
+            p(strong("Single-Member Ridings: "), es.sm.description),
+            p(strong("Multi-Member Ridings: "), es.mm.description),
+            p(strong("Top-up or Adjustments: "), es.topup.description)
+          )
+        )
+      }
+
+    )
+  }
+
+  //  def descriptions(sims: List[Sim]) = div(cls := "modelDescriptions")(
+  //    h2("Descriptions"),
+  //    for (param ← sims.map(_.params)) yield {
+  //      div(
+  //        h3(param.title),
+  //        div(cls := "blockIndent")(
+  //          p(param.description),
+  //          p("Elections in single-member ridings are conducted with ", param.electionStrat.sm.name),
+  //          p("Elections in multi-member ridings are conducted with ", param.electionStrat.mm.name)
+  //        )
+  //      )
+  //    }
+  //  )
+
+  /**
+    * Summarize the parameters for each model
+    */
+  def modelSummary(sims: List[Sim]) = {
+
+    val header = thead(
+      tr(td("Region"),
+        td(),
+        td("# Tot Seats"),
+        td("% Seats"),
+        td("Avg # Seats/Region"),
+        td("Avg #Reg/Prov"),
+        td("Avg Adjust Seats / Region"),
+        td()
+      ),
+      tr(td("Riding"),
+        td("Year"),
+        td("# Tot Seats"),
+        td("% Seats"),
+        td("Avg # Seats/Riding"),
+        td("% Single"),
+        td("% Multiple"),
+        td("Comp. Gallagher")
+      )
+    )
+
+    val body = tbody(
+      (for {
+        (sim, idx) ← sims.sortBy(s ⇒ (
+          s.params.designName.toString,
+          s.params.electionStrat.sm.name,
+          s.params.electionStrat.mm.name,
+          s.params.year
+          )).zipWithIndex
+        ana = sim.analysis
+        parms = sim.params
+      } yield {
+        val avgAdjSeatsPerRegion = if (parms.electionStrat == ElectionStrategyEnum.RcRUPR) {
+          dd_dFmt.format(sim.avgTopUpMPsPerRegion)
+        } else {
+          ""
+        }
+
+        val rowCls = if (idx % 2 == 0) {"even"} else {"odd"}
+
+        Seq(
+          tr(cls := rowCls + " topRow")(
+            td(cls := "name")(a(href := s"../${sim.params.outDir}/index.html")(sim.design.design_name.entryName)),
+            td(),
+            td(sim.numRegionalMPs),
+            td(pctFmt.format(sim.numRegionalMPs / sim.numMPs.toDouble)),
+            td(dd_dFmt.format(sim.avgTotalMPsPerRegion)),
+            td(dd_dFmt.format(sim.avgRegionsPerProv)),
+            td(avgAdjSeatsPerRegion),
+            td()
+          ),
+          tr(cls := rowCls + " bottomRow")(
+            td(parms.electionStrat.entryName),
+            td(parms.year),
+            td(sim.numRidingMPs),
+            td(pctFmt.format(sim.numRidingMPs / sim.numMPs.toDouble)),
+            td(dd_dFmt.format(sim.avgMPsPerRiding)),
+            td(pctFmt.format(sim.pctSingleMbrSeats)),
+            td(pctFmt.format(sim.pctMultiMbrSeats)),
+            fmtGallagher(sim.compositeGallagher)
+          )
+        )
+      })
+    )
+
+    div(id := "modelSummary", cls := "modelSummary")(
+      h2("Model Summary"),
+      div(cls := "blockIndent")(
+        p("""Proportional electoral systems have many design parameters that can be tweaked.  This table has two
+        rows for each model.  The bottom row applies to the riding; the top row applies to the region."""),
+        p("""The first column of that table gives the name of the riding design (top) and the election algorithm
+        used and the year of the election it's based on (bottom).  The riding design specifies a particular
+        mapping from old (e.g. 2015) ridings to new
+        ridings, how the new ridings are gathered into regions, and finally how the regions are gathered
+        by province.  Riding designs are described in more detail at the bottom of this page and by following
+        the riding design link.""")
+      ),
+      table(width := "100%")(header, body)
+    )
+  }
+
+
+  protected def toc = div(cls := "blockIndent")(p("This page:"),
+    ul(
+      li(a(href := "#proportionality")("Proportionality of each model")),
+      li(a(href := "#modelSummary")("Summary of each model's parameters")),
+      li(a(href := "#designDescriptions")("Riding Design Descriptions")),
+      li(a(href := "#electionStratDescr")("Election Strategy Descriptions"))
+    )
   )
 
 
 }
 
-case class OverviewFeaturedHTML(sims: List[Sim], numAllSims: Int, val pgTitle: String, val outFile: String) extends
-  AbstractOverview {
+
+/** ************************************
+  *
+  * ************************************/
+case class OverviewFeaturedHTML(sims: List[Sim],
+                                numAllSims: Int,
+                                val pgTitle: String,
+                                val outFile: String) extends AbstractOverview {
 
   protected def content: TypedTag[String] = {
     div(cls := "overview")(
       introduction,
-      resultsTable,
+      resultsTable(sims),
       observations,
-      properties(this.sims),
-      descriptions(sims),
+      modelSummary(sims),
+      representationSummary(this.sims),
+      designDescriptions(this.sims),
+      electionAlgorithmDescriptions(this.sims),
       script("""new Tablesort(document.getElementById('overview'));""")
     )
   }
@@ -362,199 +504,26 @@ case class OverviewFeaturedHTML(sims: List[Sim], numAllSims: Int, val pgTitle: S
   )
 
 
-  def resultsTable = {
-    div(cls := "results")(
-      h2("Fairness"),
-      generateResultsTable(this.sims),
-      resultsTableFootnotes
-    )
-  }
-
 }
 
 /**
   * Created by bwbecker on 2016-06-29.
   */
-case class OverviewAllHTML(sims: List[Sim], val pgTitle: String, val outFile: String) extends AbstractOverview {
+case class OverviewSpecifiedSystemsHTML(sims: List[Sim],
+                                        val pgTitle: String,
+                                        val outFile: String,
+                                        intro: TypedTag[String]
+                                       ) extends AbstractOverview {
 
   protected def content: TypedTag[String] = {
     div(cls := "overview")(
-      introduction,
-      resultsTable,
-      modelSummary,
-      tableII,
-      ridingDesignSummary,
-      properties(this.sims),
-      descriptions(sims),
-      script("""new Tablesort(document.getElementById('tableII'));"""),
+      intro,
+      toc,
+      resultsTable(this.sims),
+      modelSummary(sims),
+      designDescriptions(this.sims),
+      electionAlgorithmDescriptions(this.sims),
       script("""new Tablesort(document.getElementById('overview'));""")
-    )
-  }
-
-  private val introduction = div(
-    h2("Introduction"),
-    div(cls := "blockIndent")(
-      s"""The tables below provide an overview of the ${sims.length} simulations performed.  Many
-        are only slight variations of each other.  For the systems that I consider most interesting,
-      please choose the \"""",
-      a(href := "index.html")("Featured Systems"), "\" item in the \"Overview\" menu, above."
-    )
-  )
-
-
-  def resultsTable = {
-    div(cls := "results")(
-      h2("Fairness"),
-      generateResultsTable(this.sims),
-      resultsTableFootnotes
-    )
-  }
-
-  def tableII = {
-    val sortByNum = "data-sort-method".attr := "number"
-
-    div(cls := "results")(
-      h2("More Details"),
-      table(id := "tableII")(
-        thead(
-          tr(
-            td("System Name"),
-            td("Riding Design"),
-            td("Single Mbr Riding Elections"),
-            td("Multi-Mbr Riding Elections"),
-            td(sortByNum)("Year"),
-            td(sortByNum)("Gallagher"),
-            td(sortByNum)("Composite Gallagher")
-          )
-        ),
-        tbody(
-          for {
-            sim ← sims.sortBy(s ⇒ (
-              s.params.designName.toString,
-              s.params.electionStrat.sm.name,
-              s.params.electionStrat.mm.name,
-              s.params.year
-              ))
-            ana = sim.analysis
-            parms = sim.params
-          } yield {
-            tr(cls := "row")(
-              td(cls := "name")(
-                a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
-              td(parms.designName.toString),
-              td(parms.electionStrat.sm.name),
-              td(parms.electionStrat.mm.name),
-              td(parms.year),
-              fmtGallagher(ana.gallagherIndex),
-              fmtGallagher(sim.compositeGallagher)
-            )
-          }
-        )
-      )
-    )
-  }
-
-  def ridingDesignSummary = {
-    div(cls := "results")(
-      h2("Riding Design Summary"),
-      table(id := "ridingDesignSummary")(
-        thead(
-          tr(td("System Name"),
-            td("Pct Riding Seats"),
-            td("Pct Region Seats"),
-            td("Avg Riding Seats"),
-            td("Avg Region Seats")
-          )
-        ),
-        tbody(
-          for {
-            sim ← sims.sortBy(s ⇒ (
-              s.params.designName.toString,
-              s.params.electionStrat.sm.name,
-              s.params.electionStrat.mm.name,
-              s.params.year
-              ))
-            parms = sim.params
-
-          } yield {
-            tr(td(cls := "name")(
-              a(href := s"../${sim.params.outDir}/index.html")(raw(sim.params.title.replace("(", "<br>(")))),
-              td(f"${sim.numRidingMPs / sim.numMPs.toDouble * 100}%5.1f%%"),
-              td(f"${sim.numRegionalMPs / sim.numMPs.toDouble * 100}%5.1f%%"),
-              td(f"${sim.avgMPsPerRiding}%5.1f"),
-              td(f"${sim.avgTopUpMPsPerRegion}%5.1f"))
-          }
-        )
-      )
-    )
-  }
-
-
-  def modelSummary = {
-
-    val header = thead(
-      tr(td("Region"),
-        td("# Tot Seats"),
-        td("% Seats"),
-        td("Avg # Seats/Region"),
-        td("Avg #Reg/Prov"),
-        td("Avg Adjust Seats / Region"),
-        td()
-      ),
-      tr(td("Riding"),
-        td("# Tot Seats"),
-        td("% Seats"),
-        td("Avg # Seats/Riding"),
-        td("% Single"),
-        td("% Multiple"),
-        td("Comp. Gallagher")
-      )
-    )
-
-    val body = tbody(
-      (for {
-        (sim, idx) ← sims.sortBy(s ⇒ (
-          s.params.designName.toString,
-          s.params.electionStrat.sm.name,
-          s.params.electionStrat.mm.name,
-          s.params.year
-          )).zipWithIndex
-        ana = sim.analysis
-        parms = sim.params
-      } yield {
-        val avgAdjSeatsPerRegion = if (parms.electionStrat == ElectionStrategyEnum.RcRUPR) {
-          dd_dFmt.format(sim.avgTopUpMPsPerRegion)
-        } else {
-          "n/a"
-        }
-
-        val rowCls = if (idx % 2 == 0) {cls := "even"} else {cls := "odd"}
-
-        Seq(
-          tr(rowCls)(
-            td(cls := "name")(a(href := s"../${sim.params.outDir}/index.html")(sim.design.design_name.entryName)),
-            td(sim.numRegionalMPs),
-            td(pctFmt.format(sim.numRegionalMPs / sim.numMPs.toDouble)),
-            td(dd_dFmt.format(sim.avgTotalMPsPerRegion)),
-            td(dd_dFmt.format(sim.avgRegionsPerProv)),
-            td(avgAdjSeatsPerRegion),
-            td()
-          ),
-          tr(rowCls)(
-            td(parms.electionStrat.entryName),
-            td(sim.numRidingMPs),
-            td(pctFmt.format(sim.numRidingMPs / sim.numMPs.toDouble)),
-            td(dd_dFmt.format(sim.avgMPsPerRiding)),
-            td(pctFmt.format(sim.pctSingleMbrSeats)),
-            td(pctFmt.format(sim.pctMultiMbrSeats)),
-            td(dd_dFmt.format(sim.compositeGallagher * 100))
-          )
-        )
-      })
-    )
-
-    div(cls := "modelSummary")(
-      table(width := "100%")(header, body)
     )
   }
 

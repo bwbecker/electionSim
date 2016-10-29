@@ -76,7 +76,7 @@ case class SummaryHTML(params: Params, sim: Sim, doVoteSwingAnalysis: Boolean) e
     div(cls := "blockIndent")(
       params.description.getOrElse(p(sim.design.description)),
       table(
-        tr(td(leftTable), td(rightTable))
+        tr(td(leftTable), td(width := "40px")(), td(rightTable))
       )
     )
   }
