@@ -64,6 +64,7 @@ trait Page {
           ul(
             li(a(href := s"${prefix}/overview/index.html")("Featured Systems")),
             li(a(href := s"${prefix}/overview/allSimulations.html")("All Systems")),
+            li(a(href := s"${prefix}/overview/erre.html")("ERRE Constrained Systems")),
             li(a(href := s"${prefix}/ModellingElections_en.pdf")("ERRE Submission"))
           )
         ),

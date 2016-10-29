@@ -58,6 +58,7 @@ object Input {
     assert(candidates.length > 250, s"Looks like candidates didn't get read; only found ${candidates.length}.")
 
     val fname = s"json/ridings-${numRidings}/${dName}.json"
+    println(s"Reading ${fname}.")
     try {
       fileToString(fname).map { json ⇒
         new DesignReader(json, ridings, candidates).read

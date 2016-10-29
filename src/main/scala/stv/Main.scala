@@ -8,6 +8,8 @@ import stv.electionStrategy.ElectionStrategyEnum._
 import stv.electionStrategy._
 import stv.io.Input.RawCandidate
 
+import java.time.Duration
+
 //import stv.html.OverviewHTML
 import stv.io.{Input, Output}
 
@@ -20,52 +22,54 @@ object Main {
   private val numRidingsByElectionYr = Map(2015 → 338, 2011 → 308, 2008 → 308, 2006 → 308)
 
   def main(args: Array[String]): Unit = {
-
+    val start = java.time.LocalTime.now()
 
     this.clArgParser.parse(args, CLArgs()) match {
       case Some(config) =>
         println(config)
 
 
-        val sims = for {
+        // Assemble the work we need to do
+        val work = for {
           year ← config.years
           candidates = Input.candidates(year)
           numRidings = numRidingsByElectionYr(year)
           ridings = Input.originalRidings(numRidings)
           designName ← config.designs
-          design ← Input.readDesign(designName, numRidings, ridings, candidates)
+          optDesign = Input.readDesign(designName, numRidings, ridings, candidates)
+          if (optDesign.nonEmpty)
+          electStrat ← optDesign.get.electionStrategies
         } yield {
 
+          val params = namedSystems.find(_.matches(designName, year, electStrat.sm, electStrat.mm))
+            .getOrElse {
+              val name = s"${designName}-${electStrat}"
+              Params(name, year, name, designName, name, None, electStrat)
+            }
 
-          // Seems like these ought to be included in the outer for; but gives a type error
-          for {
-            electStrat ← design.electionStrategies
-          } yield {
-            println(s"Running election for ${designName}-${year}.")
+          (optDesign.get, params, ridings)
+        }
 
-
-            val params = namedSystems.find(_.matches(designName, year, electStrat.sm, electStrat.mm))
-              .getOrElse {
-                val name = s"${designName}-${electStrat}"
-                Params(name, year, name, designName, name, None, electStrat)
-              }
-
+        // Do each simulation in parallel
+        val sims = work.par.map{ case (design, params, ridings) ⇒
+            println(s"Running election for ${params.designName}-${params.year}.")
             val sim = Sim(design, params, ridings)
-            Output.writeHtml(params, sim, config.voteSwing)
+            Output.writeHtml(params, sim, config.voteSwing)   // side effect!
+            println(s"...finished ${params.designName}-${params.year}.")
             sim
-          }
-
         }
 
+        // Write the overview
         if (config.overview) {
-          Output.writeOverview(sims.flatten.toList)
-          Output.copyLess(this.outdir)
+          Output.writeOverview(sims.toList)
         }
+        Output.copyLess(this.outdir)
 
       case None =>
       // arguments are bad, error message will have been displayed
     }
 
+    println(Duration.between(start, java.time.LocalTime.now()))
   }
 
 
@@ -113,6 +117,9 @@ object Main {
     opt[Unit]("erre").action((_, c) ⇒
       c.copy(years = Vector(2015),
         designs = Seq(
+          DesignName.stv_huge,
+          DesignName.stv_med,
+          DesignName.stv_small,
           DesignName.erre_mmp5050_ProvRegions,
           DesignName.erre_ru3367_ProvRegions,
           DesignName.erre_ru_multiples_20pct,
@@ -120,9 +127,6 @@ object Main {
           DesignName.erre_ru_multiples_10pct,
           DesignName.erre_mmp_5050_small,
           DesignName.erre_mmp_5050_large,
-          DesignName.stv_huge,
-          DesignName.stv_med,
-          DesignName.stv_small,
           //DesignName.erre_ru,
           DesignName.erre_ru_singles,
           DesignName.fptp
@@ -130,6 +134,19 @@ object Main {
         overview = true,
         voteSwing = true
       )).text("Simulations requested by ERRE.")
+
+    opt[Unit]("test").action((_, c) ⇒
+      c.copy(years = Vector(2015),
+        designs = Seq(
+          DesignName.erre_mmp5050_ProvRegions,
+          DesignName.erre_ru_multiples_15pct,
+          DesignName.erre_mmp_5050_small,
+          DesignName.stv_med,
+          DesignName.fptp
+        ),
+        overview = true,
+        voteSwing = true
+      )).text("A smaller set of ERRE sims for testing purposes.")
 
     //    checkConfig(c =>
     //      (c.all, c.years.length, c.designs.length) match {
@@ -384,13 +401,13 @@ object Main {
     Params("rup-338", 2015, "Rural-Urban PR (More Singles, 338 Seats)",
       DesignName.ru_singles, s"rup-338", Some(rup338Descr),
       //EkosAvRidingElectionStrategy, ListRidingElectionStrategy
-      MultiMbrList
+      AvList
     ),
 
     Params("rup-15pct", 2015, "Rural-Urban PR (More Singles, 389 Seats)",
       DesignName.ru_enlargeP, s"rup-15pct", Some(rup15PctDescr),
       //FptpRidingElectionStrategy, EkosStvRidingElectionStrategy
-      MultiMbrList
+      FptpList
     ),
 
     Params("rup-stv", 2015, "Rural-Urban PR (Few Singles)",
@@ -421,7 +438,7 @@ object Main {
     Params("rup-338-list", 2015, "Rural-Urban PR (More Singles, 338 Seats, ListPR)",
       DesignName.ru_singles, s"rup-338-list", Some(rup338ListDescr),
       //FptpRidingElectionStrategy, ListRidingElectionStrategy
-      MMbrList
+      FptpList
     ),
 
     Params("rup-15pct-stv", 2015, "Rural-Urban PR (More Singles, More Seats)",

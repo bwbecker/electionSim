@@ -92,10 +92,23 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
     TopupStrategy
   )
 
-  case object MultiMbrList extends ElectionStrategyEnum(
+  case object FptpList extends ElectionStrategyEnum(
     FptpRidingElectionStrategy,
     ListRidingElectionStrategy,
     TopupStrategy
   )
+
+  /* This combination was used on the public web site's featured
+   * models list.  Probably shouldn't have been. Continue using
+   * it to avoid question of why it changed.  Don't use it for
+   * anything but ru-singles.
+   */
+  case object AvList extends ElectionStrategyEnum(
+    EkosAvRidingElectionStrategy,
+    ListRidingElectionStrategy,
+    TopupStrategy
+  )
+
+
 
 }
