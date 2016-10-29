@@ -1,8 +1,17 @@
 {
     "design_name": "ru_singles",
-    "description": "308 redistricted ridings to give single- and -multi-member ridings plus top-ups.",
-    "is_proportional": true,
-    "election_strategies": [],
+    "description": [
+        [
+            "A Rural-Urban design with an emphasis on preserving sparsely populated areas ",
+            "as single-member ridings.  It combines existing ridings and parts of existing ",
+            "ridings to free up compensatory seats.  The total number of seats in the House ",
+            "is maintained at 308 ridings, as used from 2006-2011."
+        ]
+    ],
+    "election_strategies": [
+        "STVplus",
+        "FptpList"
+    ],
     "provinces": [
         {
             "prov": "AB",

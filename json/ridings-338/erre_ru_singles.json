@@ -9,7 +9,7 @@
   ],
   "election_strategies": [
     "RcRUPR",
-    "MultiMbrList",
+    "FptpList",
     "STVplus"
   ],
   "provinces": [
