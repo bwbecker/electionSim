@@ -26,20 +26,23 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
       The topup algorithm selects a candidate from an empty old riding (ie the adjustment seat).""")
   )
 
-  override val debug = false
+  override implicit val debug = true
 
 
   /** Find the candidate with the fewest effective votes that still has someone else from
     * their local riding that's in the race.
     */
-  def candidateToCut(remaining: Seq[Candidate]): Option[Candidate] = {
+  def candidateToCut(remaining: Seq[Candidate], protectLast: Boolean): Option[Candidate] = {
     def helper(c: Seq[Candidate]): Option[Candidate] = {
       c match {
-        case head +: tail if (tail.find(c ⇒ c.oldRidingId == head.oldRidingId).isDefined) ⇒ Some(head)
-        case _ +: tail                                                                    ⇒ helper(tail)
-        case Seq()                                                                        ⇒ None
+        case head +: tail if (!protectLast)             ⇒ Some(head)
+        case head +: tail if (tail.find(c ⇒
+          c.oldRidingId == head.oldRidingId).isDefined) ⇒ Some(head)
+        case _ +: tail                                  ⇒ helper(tail)
+        case Seq()                                      ⇒ None
       }
     }
+
     helper(remaining.sortBy(c ⇒ c.effVotes))
   }
 
@@ -50,50 +53,88 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
     */
   def transferVotes(cut: Candidate, remaining: Seq[Candidate]): Seq[Candidate] = {
 
-    for {
-      (party, candList) ← remaining.filterNot(c ⇒ c == cut).groupBy(_.party).toSeq
-      num = candList.length
-      cand ← candList
-      xferPct = voteXfer.xfer(cut.party, party)
-    } yield {
-      if (cand.party == cut.party) {
-        cand.copy(effVotes = cand.effVotes + cut.effVotes / num)
-      } else if (xferPct > 0) {
-        cand
-        //cand.copy(effVotes = cand.effVotes + cut.effVotes * xferPct / num)
-      } else {
-        cand
+    val (sameParty, otherParties) = remaining.partition(c ⇒ c.party == cut.party)
+    if (sameParty.length > 1) {
+      val n = sameParty.length - 1
+      sameParty.filterNot(c ⇒ c == cut)
+        .map(c ⇒ c.copy(effVotes = c.effVotes + cut.effVotes / n)) ++ otherParties
+
+    } else {
+      for {
+        (party, candList) ← remaining.filterNot(c ⇒ c == cut).groupBy(_.party).toSeq
+        num = candList.length
+        cand ← candList
+        xferPct = voteXfer.xfer(cut.party, party)
+      } yield {
+        if (cand.party == cut.party) {
+          cand.copy(effVotes = cand.effVotes + cut.effVotes / num)
+        } else if (xferPct > 0) {
+          cand.copy(effVotes = cand.effVotes + cut.effVotes * xferPct / num)
+        } else {
+          cand
+        }
       }
     }
+
   }
 
 
+  /**
+    * Return (a, b, c) where a is the list of elected candidates, b is the list
+    * of remaining unelected candidates, and c is the id of the old riding which
+    * becomes the adjustment riding.
+    */
   def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
+
+    var protectLastCandidateInOldRiding = false
 
 
     // Return (list of elected, list of unelected)
     def helper(remaining: Seq[Candidate], notElected: Seq[Candidate]): (Seq[Candidate], Seq[Candidate]) = {
+
+      def assembleResult: (Seq[Candidate], Seq[Candidate]) = {
+        val n = notElected.length
+        val rLen = remaining.length
+
+        val candByPriority = remaining.sortBy(c ⇒ -c.effVotes).zipWithIndex
+        val take = candByPriority.take(dm).map { t ⇒
+          t._1.copy(winner = true, order = n + rLen - t._2)
+        }
+        val leave = candByPriority.drop(dm).map { t ⇒
+          t._1.copy(order = n + rLen - t._2)
+        }
+
+
+        assert(take.length + leave.length == remaining.length)
+        //          println(take.map(c ⇒ c.order).mkString(", ") + " | " +
+        //            leave.map(c ⇒ c.order).mkString(", ") + " | " +
+        //            notElected.map(c ⇒ c.order).mkString(", ")
+        //          )
+        (take, leave ++ notElected)
+
+      }
+
       // Keep cutting candidates until we're down to one for each old riding.  Then take
       // the dm candidates with the most votes.
-      candidateToCut(remaining) match {
-        case None ⇒
-          val n = notElected.length
-          val candByPriority = remaining.sortBy(c ⇒ -c.effVotes).zipWithIndex
-          val take = candByPriority.take(dm).map { t ⇒
-            t._1.copy(winner = true, order = n + dm - t._2)
-          }
-          val leave = candByPriority.drop(dm).map { t ⇒
-            t._1.copy(order = n + dm - t._2)
-          }
-          assert(take.length + leave.length == remaining.length)
-          (take, leave ++ notElected)
+      if (remaining.length == dm) {
+        assembleResult
+      } else {
+        candidateToCut(remaining, protectLastCandidateInOldRiding) match {
+          case None ⇒ assembleResult
 
-        case Some(cut) ⇒ helper(transferVotes(cut, remaining), cut.copy(order = notElected.length + 1) +: notElected)
+          case Some(cut) ⇒
+            dp(s"Cutting ${cut.name} with ${cut.effVotes} votes")
+            // Was this the last one?
+            protectLastCandidateInOldRiding = protectLastCandidateInOldRiding ||
+              !remaining.exists(c ⇒ c.oldRidingId == cut.oldRidingId)
+            helper(transferVotes(cut, remaining), cut.copy(order = notElected.length + 1) +: notElected)
+        }
       }
     }
 
     val (elected, unelected) = helper(candidates, Vector[Candidate]())
     assert(elected.length + unelected.length == candidates.length)
+    assert(elected.length == dm)
     (elected, unelected)
   }
 

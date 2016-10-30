@@ -15,6 +15,13 @@ trait ElectionStrategy {
   val description: TypedTag[String]
   val debug = false
 
+  // dbug print
+  protected def dp(s: String)(implicit debug: Boolean): Unit = {
+    if (debug) {
+      println(s)
+    }
+  }
+
 }
 
 /**

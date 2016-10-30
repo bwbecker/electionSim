@@ -88,7 +88,7 @@ object DesignInputTest extends TestSuite {
         }
         "with correct number of votes" - {
           val votes = rC.candidates0.map { c ⇒ c.votes }
-          assert(votes == Vector(30, 20, 10))
+          assert(votes == Vector(30, 24, 10))
         }
         "with effective votes = votes" - {
           assert(rC.candidates0.forall { c ⇒ c.votes == c.effVotes })
@@ -112,7 +112,7 @@ object DesignInputTest extends TestSuite {
           val votes = rB.candidates0.map { c ⇒ c.votes }
           assert(votes == Vector(30 * .4, 20 * .4, 10 * .4,
             50, 60, 10,
-            20 * .5, 30 * .5, 20 * .5))
+            20 * .5, 34 * .5, 22 * .5))
         }
         "candidate objects are not shared (later mutated)" - {
           val r0C1C = d1.regions(0).ridings(0).candidates0.find(_.name == "C1-C")

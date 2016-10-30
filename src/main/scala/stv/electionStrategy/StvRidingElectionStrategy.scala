@@ -115,13 +115,6 @@ class StvRidingElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionSt
   }
 
 
-  // dbug print
-  private def dp(s: String)(implicit debug: Boolean): Unit = {
-    if (debug) {
-      println(s)
-    }
-  }
-
 
   /**
     * Count the votes for this election.

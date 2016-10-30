@@ -20,6 +20,7 @@ case class Design(
 
   val regions: Vector[Region] = this.provinces.flatMap(p => p.regions)
   val ridings: Vector[Riding] = this.regions.flatMap(r ⇒ r.ridings)
+  lazy val candidates: Vector[Candidate] = this.ridings.flatMap(r ⇒ r.candidates0)
 
   val numSingleMemberRidings = ridings.count(r ⇒ r.districtMagnitude == 1)
   val numMultiMemberRidings = ridings.count(r ⇒ r.districtMagnitude > 1)
