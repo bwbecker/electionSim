@@ -8,7 +8,8 @@
   ],
   "election_strategies": [
     "STV",
-    "MMbrList"
+    "MMbrList",
+    "RcRUPR"
   ],
   "provinces": [
     {

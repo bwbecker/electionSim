@@ -85,6 +85,11 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
     NotApplicableTopupElectionStrategy
   )
 
+  case object RcRUPR2 extends ElectionStrategyEnum(
+    EkosAvRidingElectionStrategy,
+    new RcStvElectionStrategy(EkosXfer),
+    TopupStrategy
+  )
 
   case object STVplus extends ElectionStrategyEnum(
     EkosAvRidingElectionStrategy,

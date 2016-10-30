@@ -61,6 +61,8 @@ object DesignName extends EnumP[DesignName] {
   case object ru_multiples extends DesignName("RM", "Rural-Urban with more multi-member ridings and fewer " +
     "single-member ridings")
 
+  case object ru_multiples_rc extends DesignName("", "")
+
   case object kingsley extends DesignName("Ki", "Kingsley's model (similar to Rural-Urban, but with no top-up seats)")
 
   //case object markbc_best extends DesignName("MBC", "Mark BC's STV+ Best Regions")
@@ -74,18 +76,14 @@ object DesignName extends EnumP[DesignName] {
   case object erre_ru_multiples_20pct extends DesignName("", "")
 
   case object erre_ru_multiples_15pct extends DesignName("", "")
+
   case object erre_ru_multiples_10pct extends DesignName("", "")
-
-
-  case object erre_mmp_5050_small extends DesignName("ER", "ERRE MMP that gets top-ups from twinned 2015 ridings; " +
-    "smaller regions")
-
-  case object erre_mmp_5050_large extends DesignName("ER", "ERRE MMP that gets top-ups from twinned 2015 ridings; " +
-    "larger regions")
 
   case object erre_mmp5050_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
 
   case object erre_mmp5050_LargeRegions extends DesignName("XX", "DesignName parameter not filled in.")
+
+  case object erre_mmp5050_SmallRegions extends DesignName("XX", "DesignName parameter not filled in.")
 
   case object erre_ru3367_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
 
@@ -135,7 +133,7 @@ object Party extends EnumP[Party] {
 
 }
 
-sealed abstract class ProvName(val longName: String, val isProvince:Boolean) extends EnumEntry
+sealed abstract class ProvName(val longName: String, val isProvince: Boolean) extends EnumEntry
 
 object ProvName extends EnumP[ProvName] {
   val values = findValues

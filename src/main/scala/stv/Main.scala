@@ -117,17 +117,17 @@ object Main {
     opt[Unit]("erre").action((_, c) ⇒
       c.copy(years = Vector(2015),
         designs = Seq(
+          DesignName.kingsley,
           DesignName.stv_huge,
           DesignName.stv_med,
           DesignName.stv_small,
           DesignName.erre_mmp5050_ProvRegions,
+          DesignName.erre_mmp5050_LargeRegions,
+          DesignName.erre_mmp5050_SmallRegions,
           DesignName.erre_ru3367_ProvRegions,
           DesignName.erre_ru_multiples_20pct,
           DesignName.erre_ru_multiples_15pct,
           DesignName.erre_ru_multiples_10pct,
-          DesignName.erre_mmp_5050_small,
-          DesignName.erre_mmp_5050_large,
-          //DesignName.erre_ru,
           DesignName.erre_ru_singles,
           DesignName.fptp
         ),
@@ -140,7 +140,6 @@ object Main {
         designs = Seq(
           DesignName.erre_mmp5050_ProvRegions,
           DesignName.erre_ru_multiples_15pct,
-          DesignName.erre_mmp_5050_small,
           DesignName.stv_med,
           DesignName.fptp
         ),
