@@ -26,8 +26,6 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
       The topup algorithm selects a candidate from an empty old riding (ie the adjustment seat).""")
   )
 
-  override implicit val debug = false
-
 
   /** Find the candidate with the fewest effective votes that still has someone else from
     * their local riding that's in the race.
@@ -86,7 +84,13 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
     */
   def runElection(candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
 
-    var protectLastCandidateInOldRiding = false
+    //debug = candidates.head.ridingId == "BC.Richmond"
+
+    // This is an adjustment riding if dm is less than the number of old ridings.
+    // If it's not an adjustment riding, we need 1 MP per old riding and thus set the protection flag
+    val isAdjustmentRiding = dm < candidates.map(c ⇒ c.oldRidingId).distinct.length
+    var protectLastCandidateInOldRiding = !isAdjustmentRiding
+
 
 
     // Return (list of elected, list of unelected)
@@ -106,6 +110,8 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
 
 
         assert(take.length + leave.length == remaining.length)
+        // no duplicate old ridings
+        assert(take.map(c ⇒ c.oldRidingId).distinct.length == take.length)
         //          println(take.map(c ⇒ c.order).mkString(", ") + " | " +
         //            leave.map(c ⇒ c.order).mkString(", ") + " | " +
         //            notElected.map(c ⇒ c.order).mkString(", ")
@@ -123,7 +129,11 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
           case None ⇒ assembleResult
 
           case Some(cut) ⇒
-            dp(s"Cutting ${cut.name} with ${cut.effVotes} votes")
+            dp(f"Cutting ${cut.name.take(18)}%-20s with ${cut.effVotes}%7.1f votes")
+            if (debug && remaining.length < dm + 3) {
+              println("  Remaining = " + remaining.map(c ⇒
+                f"${c.name.take(18)}%-20s ${c.effVotes}%7.1f").mkString("\n\t"))
+            }
             // Was this the last one?
             protectLastCandidateInOldRiding = protectLastCandidateInOldRiding ||
               !remaining.exists(c ⇒ c != cut && c.oldRidingId == cut.oldRidingId)
@@ -168,8 +178,8 @@ object RcStvProvAdjustment {
       }
 
       if (adjustMPs.size == mpsNeeded) {
-//        println("adjustMPs: returning " + adjustMPs)
-        adjustMPs.toVector.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat))
+        //        println("adjustMPs: returning " + adjustMPs)
+        adjustMPs.toVector
       } else {
         val a = new Analysis(
           alreadyElected ++ adjustMPs ++ notElected, // status of all the MPs
@@ -183,14 +193,14 @@ object RcStvProvAdjustment {
             adjustMPs.count(c ⇒ c.party == s.party)))
             .party
 
-//        println("partyAdvantages = " + a.statsByParty
-//          .filter(s ⇒ s.party.mainStream)
-//          .map(s ⇒ s"${s.party}: ${s.deservedMPs} - (${alreadyElected.count(c ⇒ c.party == s.party)} + " +
-//            s"${adjustMPs.count(c ⇒ c.party == s.party)}) = ${
-//              s.deservedMPs - (alreadyElected.count(c ⇒ c.party == s.party) +
-//                adjustMPs.count(c ⇒ c.party == s.party))
-//            }")
-//        )
+        //        println("partyAdvantages = " + a.statsByParty
+        //          .filter(s ⇒ s.party.mainStream)
+        //          .map(s ⇒ s"${s.party}: ${s.deservedMPs} - (${alreadyElected.count(c ⇒ c.party == s.party)} + " +
+        //            s"${adjustMPs.count(c ⇒ c.party == s.party)}) = ${
+        //              s.deservedMPs - (alreadyElected.count(c ⇒ c.party == s.party) +
+        //                adjustMPs.count(c ⇒ c.party == s.party))
+        //            }")
+        //        )
 
         // Candidate in the right party and a riding with no MP that has the most votes.
         val candList = notElected.filter(c ⇒

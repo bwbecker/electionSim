@@ -96,7 +96,7 @@ object RcRUPRElectionStrategyTest extends TestSuite with Common {
         (3, C4, Con, 75, 75)              //1 cut (not protected); 75 to C0
 
          */
- 
+
         val candidates = this.candidates :+
           Candidate("1", 2, "R1", AB, "C3", Lib, 125, 125, false, RidingSeat, 0) :+
           Candidate("1", 3, "R1", AB, "C4", Con, 75, 75, false, RidingSeat, 0)
