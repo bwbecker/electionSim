@@ -23,7 +23,7 @@ object Analysis {
                           numRidingMPs: Int,
                           numTopupMPs: Int) {
     override def toString = f"Stats(${party}: ${popVote}%,8d ${pctVote * 100}%5.2f  ${mps}%2d  " +
-      f"${pctMPs * 100}%,5.2f  ${pctVote * 100 - pctMPs * 100}%5.2f"
+      f"${pctMPs * 100}%,5.2f  ${pctVote * 100 - pctMPs * 100}%5.2f)"
   }
 
 

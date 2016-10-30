@@ -26,7 +26,7 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
       The topup algorithm selects a candidate from an empty old riding (ie the adjustment seat).""")
   )
 
-  override implicit val debug = true
+  override implicit val debug = false
 
 
   /** Find the candidate with the fewest effective votes that still has someone else from
@@ -126,7 +126,7 @@ class RcStvElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrate
             dp(s"Cutting ${cut.name} with ${cut.effVotes} votes")
             // Was this the last one?
             protectLastCandidateInOldRiding = protectLastCandidateInOldRiding ||
-              !remaining.exists(c ⇒ c.oldRidingId == cut.oldRidingId)
+              !remaining.exists(c ⇒ c != cut && c.oldRidingId == cut.oldRidingId)
             helper(transferVotes(cut, remaining), cut.copy(order = notElected.length + 1) +: notElected)
         }
       }
@@ -168,33 +168,41 @@ object RcStvProvAdjustment {
       }
 
       if (adjustMPs.size == mpsNeeded) {
+//        println("adjustMPs: returning " + adjustMPs)
         adjustMPs.toVector.map(c ⇒ c.copy(winner = true, seatType = SeatType.AdjustmentSeat))
       } else {
-        val a = new Analysis(alreadyElected ++ adjustMPs ++ notElected, mpsNeeded, false)
-        val mostDisadvantagedParty = if (true) {
-          // Favour larger parties
+        val a = new Analysis(
+          alreadyElected ++ adjustMPs ++ notElected, // status of all the MPs
+          mpsNeeded + alreadyElected.length, // total MPs to elect
+          false)
+
+        val mostDisadvantagedParty =
           a.statsByParty
             .filter(s ⇒ s.party.mainStream) // filter out small parties
-            .minBy(s ⇒ s.pctMPs - s.pctVote)
+            .maxBy(s ⇒ s.deservedMPs - (alreadyElected.count(c ⇒ c.party == s.party) +
+            adjustMPs.count(c ⇒ c.party == s.party)))
             .party
-        } else {
-          // Favour smaller parties
-          a.statsByParty
-            .filter(s ⇒ s.party.mainStream) // filter out small parties
-            .maxBy(s ⇒ 1 - (s.numRidingMPs + s.numTopupMPs) / s.deservedMPs)
-            .party
-        }
+
+//        println("partyAdvantages = " + a.statsByParty
+//          .filter(s ⇒ s.party.mainStream)
+//          .map(s ⇒ s"${s.party}: ${s.deservedMPs} - (${alreadyElected.count(c ⇒ c.party == s.party)} + " +
+//            s"${adjustMPs.count(c ⇒ c.party == s.party)}) = ${
+//              s.deservedMPs - (alreadyElected.count(c ⇒ c.party == s.party) +
+//                adjustMPs.count(c ⇒ c.party == s.party))
+//            }")
+//        )
 
         // Candidate in the right party and a riding with no MP that has the most votes.
         val candList = notElected.filter(c ⇒
           c.party == mostDisadvantagedParty &&
             oldRidingsWithNoMP.contains(c.oldRidingId))
 
+        //println(s"   Choose MP for ${mostDisadvantagedParty} from ${candList}")
 
         val cand = if (candList.nonEmpty) {
           candList.maxBy(c ⇒ c.votes)
         } else {
-          println(s"\n*** Can't find a riding without an MP for with a candidate from ${mostDisadvantagedParty}.")
+          //println(s"\n*** Can't find a riding without an MP for with a candidate from ${mostDisadvantagedParty}.")
           // Construct an imaginary Candidate for now that is consistent in most respects.
           val oldRidingId = oldRidingsWithNoMP.head
           val modelCandidate = notYetElected.find(c ⇒ c.oldRidingId == oldRidingId).get // could bomb...
