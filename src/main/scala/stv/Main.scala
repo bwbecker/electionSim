@@ -51,12 +51,12 @@ object Main {
         }
 
         // Do each simulation in parallel
-        val sims = work.par.map{ case (design, params, ridings) ⇒
-            println(s"Running election for ${params.designName}-${params.year}.")
-            val sim = Sim(design, params, ridings)
-            Output.writeHtml(params, sim, config.voteSwing)   // side effect!
-            println(s"...finished ${params.designName}-${params.year}.")
-            sim
+        val sims = work.par.map { case (design, params, ridings) ⇒
+          println(s"Running election for ${params.designName}-${params.year}.")
+          val sim = Sim(design, params, ridings)
+          Output.writeHtml(params, sim, config.voteSwing) // side effect!
+          println(s"...finished ${params.designName}-${params.year}.")
+          sim
         }
 
         // Write the overview
@@ -371,6 +371,67 @@ object Main {
       model enlarges the ridings to keep the number of MPs constant at 338.""")
   )
 
+  val ridingCentricDescr = div(
+    p(strong("""Riding-Centric Rural Urban Proportional"""), """ (need a better name!) is an exciting new electoral
+    systems
+    model that builds on the Rural-Urban model with ideas from """,
+      a(href := "http://www.parl.gc.ca/Content/HOC/Committee/421/ERRE/Brief/BR8457966/br-external/ElbertLeonid-e.pdf")
+      ("Local Transferable Vote"),
+      """ by Leonid A. Elbert.  An intermediate step was developed by Antony Hodgson and Byron Weber Becker with
+      the last tweaks by Byron Weber Becker."""),
+    p("""This model offers the following advantages:"""),
+    ul(
+      li(strong("""Excellent proportionality"""), """:  It has a composite Gallagher score of 2.2.  Out of the
+      roughly 50 models
+      currently on this web site, only 5 have a better cGallagher score -- and one of those is a variant of this
+      one!  Furthermore, I'm quite sure this score can be improved with some redistricting; see below."""),
+      li(strong("""An elected MP in every current riding"""), """:  This model keeps our current, 2015, ridings
+      intact (exactly the same size as now) and guarantees that an MP is elected in each one.  This provides
+      easy access to MPs for constituency service needs."""),
+      li(strong("""Multi-member ridings"""), """:  Electing multiple MPs to serve a geographical area helps ensure that
+      most voters have at least one MP who understands and can advocate for their policy positions.  The need
+      for candidates to attract 2nd and 3rd choice votes keeps political life more civil and encourages
+      moderating positions.  Multi-member ridings are also associated with electing more women and minority groups."""),
+      li(strong("""Easy redistricting"""), """:  Many models require Elections Canada to redraw riding boundaries.
+      This one
+      does not.  It just requires that existing ridings be grouped into multi-member ridings of 4 to 6 and
+      that those multi-member ridings be grouped into regions of about 5.  It also requires adding 42
+      new seats to the House of Commons -- an increase of about 12.5%.  This would put Canada at about 92,500
+      voters per MP -- well above the average of Germany (127,700), New Zealand (37,000), UK (43,800),
+      and France (71,400)."""),
+      li(strong("Few compensatory seats"), """: This model has only 42 compensatory seats, or about 12%.  MMP,
+      in contrast, does not have a competative cGallagher index unless roughly 50% of the seats are compensatory
+      and the regions are twice as large.""")
+    ),
+
+    p("How it works:"),
+    ul(
+      li("""Add 42 compensatory seats.  The existing seat proportions among the provinces would be almost
+      identical to the 2015 allocations if we made the quotient (used in legislation to describe how
+      seats are redistributed) was cut from the current value of 111,166 to 98,000 and then add 1 more seat
+      to the 1985 minimum redistribution numbers.  See the """,
+        a(href := "../ERRE_ModellingWithConstraints.pdf")("report to the ERRE Committee"),
+        """ under "Relaxing Constraints" for more details. """),
+
+      li("""Group our current 338 ridings into multi-member ridings of about 4-5 seats each."""),
+
+      li("""Put multi-member ridings into 3 regions in Ontario and 2 regions in Quebec.  Everywhere else
+      the region is the same as the province."""),
+
+      li("""Conduct elections with a ballot similar to the following:"""),
+
+      li("To be finished....")
+
+    ),
+
+    p("""There is one down side to Riding-Centric Rural-Urban:  the 42 additional compensatory seats
+    violate the constraints stipulated in a motion passed by the ERRE Committee on October 20.  The combination
+    of the constraints in that motion are extremely restrictive.  It's my hope that they were exploratory
+    only and that the Committee will see fit to relax one of them to achieve a better result."""),
+
+    hr
+  )
+
 
   val featuredSystems = List(
 
@@ -416,7 +477,7 @@ object Main {
     ),
 
     Params("ru_multiples_rc2", 2015, "Riding Centric Rural-Urban PR",
-      DesignName.ru_multiples_rc2, s"ru_multiples_rc2", None,
+      DesignName.ru_multiples_rc2, s"ru_multiples_rc2", Some(ridingCentricDescr),
       RcRUPR2
     )
   )

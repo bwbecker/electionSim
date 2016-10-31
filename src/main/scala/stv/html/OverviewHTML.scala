@@ -462,7 +462,10 @@ case class OverviewFeaturedHTML(sims: List[Sim],
         "Swing Analysis graphs. Adjusted the Summary Statistics to account for constitutional considerations on " +
         "provinces for the Proportional MPs column."),
       p(strong("2016-10-30"), ": Added a ", a(href := "erre.html")("number of systems"),
-        " at the request of the ERRE Committee that meet a specific set of constraints.")
+        " at the request of the ERRE Committee that meet a specific set of constraints."),
+      p(strong("2016-10-31"), ": Added an ", strong("exciting new system"), ", ",
+        a(href := "../ru_multiples_rc2/index.html")("Riding-Centric Rural Urban Proportional"),
+        ".  Follow the link to read it's many advantages.")
     )
 
 
