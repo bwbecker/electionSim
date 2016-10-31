@@ -460,7 +460,9 @@ case class OverviewFeaturedHTML(sims: List[Sim],
         " page."),
       p(strong("2016-10-12"), ": Added AV+ to the list of featured systems.  Several changes to the Vote " +
         "Swing Analysis graphs. Adjusted the Summary Statistics to account for constitutional considerations on " +
-        "provinces for the Proportional MPs column.")
+        "provinces for the Proportional MPs column."),
+      p(strong("2016-10-30"), ": Added a ", a(href := "erre.html")("number of systems"),
+        " at the request of the ERRE Committee that meet a specific set of constraints.")
     )
 
 

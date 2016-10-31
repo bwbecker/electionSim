@@ -21,9 +21,8 @@
       "This division of current ridings into pairs and triples is from Wilf Day."
     ]
   ],
+  "comment": "Could be used with STVplus or RcRUPR",
   "election_strategies": [
-    "STVplus",
-    "RcRUPR"
   ],
   "provinces": [
     {

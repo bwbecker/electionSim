@@ -94,6 +94,6 @@ object Output {
     requires a top-up layer such as MMP or RU-PR is hard."""),
       p("""This page summarizes the systems developed for ERRE."""),
       p("""The report submitted to the Committee is """, a(href := "../ERRE_ModellingWithConstraints.pdf")("here"),
-        """.  It's still a bit rough, given the deadlines involved.""")
+        """.""")
     ))
 }

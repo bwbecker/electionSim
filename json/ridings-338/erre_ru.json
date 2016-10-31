@@ -6,9 +6,8 @@
       "reduce by 2 m-m ridings with 8 or more."
     ]
   ],
+  "comment": "Could be used iwth STVplus or RptpList.  Gives cGallaghers of 6.9 and 4.5, respectively.",
   "election_strategies": [
-    "STVplus",
-    "FptpList"
   ],
   "provinces": [
     {

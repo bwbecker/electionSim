@@ -6,9 +6,8 @@
       "populated areas;  no top-ups."
     ]
   ],
+  "comment": "Could also use MMbrList or STV.",
   "election_strategies": [
-    "STV",
-    "MMbrList",
     "RcRUPR"
   ],
   "provinces": [

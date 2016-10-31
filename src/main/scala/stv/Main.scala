@@ -413,6 +413,11 @@ object Main {
       DesignName.ru_multiples, s"rup-stv", Some(stvPlusDescr),
       STVplus
       //EkosAvRidingElectionStrategy, EkosStvRidingElectionStrategy
+    ),
+
+    Params("ru_multiples_rc2", 2015, "Riding Centric Rural-Urban PR",
+      DesignName.ru_multiples_rc2, s"ru_multiples_rc2", None,
+      RcRUPR2
     )
   )
 

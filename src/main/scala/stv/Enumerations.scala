@@ -63,6 +63,8 @@ object DesignName extends EnumP[DesignName] {
 
   case object ru_multiples_rc extends DesignName("", "")
 
+  case object ru_multiples_rc2 extends DesignName("", "")
+
   case object kingsley extends DesignName("Ki", "Kingsley's model (similar to Rural-Urban, but with no top-up seats)")
 
   //case object markbc_best extends DesignName("MBC", "Mark BC's STV+ Best Regions")

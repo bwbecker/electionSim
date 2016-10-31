@@ -83,6 +83,7 @@ object Input {
       Some(rawJson)
     } else {
       //throw new FileNotFoundException(s"Didn't find ${fileName}.")
+      println(s"Couldn't find ${fileName}.  Skipping.")
       None
     }
   }
