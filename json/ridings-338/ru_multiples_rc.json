@@ -113,7 +113,7 @@
       "regions": [
         {
           "region_id": "R_BC",
-          "top_up_seats": 6,
+          "top_up_seats": 5,
           "new_ridings": [
             {
               "riding_id": "BC.North",
@@ -226,7 +226,7 @@
       "regions": [
         {
           "region_id": "R_MB",
-          "top_up_seats": 2,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "MB.Brandon",
@@ -302,7 +302,7 @@
       "regions": [
         {
           "region_id": "R_NL",
-          "top_up_seats": 2,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "NL.Lab",
@@ -338,7 +338,7 @@
       "regions": [
         {
           "region_id": "R_NS",
-          "top_up_seats": 2,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "NS.North",
@@ -378,7 +378,7 @@
       "regions": [
         {
           "region_id": "R_ON",
-          "top_up_seats": 17,
+          "top_up_seats": 16,
           "new_ridings": [
             {
               "riding_id": "ON.Barrie",
@@ -681,7 +681,7 @@
       "regions": [
         {
           "region_id": "R_QC",
-          "top_up_seats": 12,
+          "top_up_seats": 10,
           "new_ridings": [
             {
               "riding_id": "QC.Drummond",
@@ -872,7 +872,7 @@
       "regions": [
         {
           "region_id": "R_SK",
-          "top_up_seats": 2,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "SK.PrinceAlbert",
