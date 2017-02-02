@@ -109,7 +109,7 @@ case class Design(
           try {
             topup = topup ++ electionStrat.topup.runElection(
               region.regionId,
-              regionElected ++ regionUnelected, region.topUpSeats, 0.01)
+              regionElected ++ regionUnelected, region.topUpSeats, 0.03)
           } catch {
             case e: java.lang.Exception ⇒ throw new Exception(
               s"${electionStrat.entryName} failed for region ${region.regionId} with ${region.topUpSeats} topup seats" +

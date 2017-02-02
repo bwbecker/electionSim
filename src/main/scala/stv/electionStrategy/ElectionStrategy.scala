@@ -80,10 +80,11 @@ object TopupStrategy extends TopupElectionStrategy {
         topups //.reverse
       } else {
         val a = new Analysis(allCandidates ++ topups, numRidingSeats + numTopupSeats)
-        val stats = a.statsByParty.filter(s ⇒ s.pctVote >= threshhold)
+        val stats = a.statsByParty.filter(s ⇒ s.pctVote >= threshhold || s.party == Party.Grn)
 
 
         val disadvantaged = stats.maxBy(s ⇒ s.deservedMPs - s.mps)
+        //val disadvantaged = stats.minBy(s ⇒ s.pctMPs/s.pctVote)
 
         val cand = Candidate("", 0, regionId, allCandidates.head.provName, "Topup Candidate", disadvantaged.party, 0.0,
           0.0, true, SeatType.TopupSeat, order)

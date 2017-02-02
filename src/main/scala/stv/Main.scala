@@ -479,6 +479,11 @@ object Main {
     Params("ru_multiples_rc2", 2015, "Riding Centric Rural-Urban PR",
       DesignName.ru_multiples_rc2, s"ru_multiples_rc2", Some(ridingCentricDescr),
       RcRUPR2
+    ),
+
+    Params("ru_multiples_rc3", 2015, "Riding Centric Rural-Urban PR (no top-up)",
+      DesignName.ru_multiples_rc3, s"ru_multiples_rc3", Some(ridingCentricDescr),
+      RcRUPR2
     )
   )
 

@@ -64,6 +64,7 @@ object DesignName extends EnumP[DesignName] {
   case object ru_multiples_rc extends DesignName("", "")
 
   case object ru_multiples_rc2 extends DesignName("", "")
+  case object ru_multiples_rc3 extends DesignName("", "")
 
   case object kingsley extends DesignName("Ki", "Kingsley's model (similar to Rural-Urban, but with no top-up seats)")
 
@@ -88,7 +89,7 @@ object DesignName extends EnumP[DesignName] {
   case object erre_mmp5050_SmallRegions extends DesignName("XX", "DesignName parameter not filled in.")
 
   case object erre_ru3367_ProvRegions extends DesignName("XX", "DesignName parameter not filled in.")
-  
+
   case object smpa extends DesignName("XX", "DesignName parameter not filled in.")
 
 }
