@@ -566,7 +566,7 @@ case class SummaryHTML(params: Params, sim: Sim, doVoteSwingAnalysis: Boolean) e
     var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ${data.map(s ⇒ f"'${s.shift * 100}%4.0f%%'").mkString("[", ", ", "]")},
+        labels: ${data.indices.map{i ⇒ s"'E${i+1}'"}.mkString("[", ", ", "]")},
         datasets: [
         {
             label: 'Gallagher',
@@ -693,8 +693,7 @@ case class SummaryHTML(params: Params, sim: Sim, doVoteSwingAnalysis: Boolean) e
             }],
             xAxes: [{
                 scaleLabel: {
-                  labelString: "%Votes Shifted from ${toPartyName} to ${fromPartyName}" +
-                  "                %Votes shifted from ${fromPartyName} to ${toPartyName}",
+                  labelString: "Elections",
                   display: true
                   }
                }
@@ -717,7 +716,7 @@ case class SummaryHTML(params: Params, sim: Sim, doVoteSwingAnalysis: Boolean) e
         val avgGallagher = data.foldLeft(0.0)(_ + _.gallagher) / data.length
         val canvasId = s"c$fromParty$toParty"
         div(
-          h3(s"Voters shift between ${fromPartyName} and ${toPartyName}"),
+          h3(s"Voters shift from ${fromPartyName} to ${toPartyName}"),
           canvas(id := canvasId, width := 400.px, height := 400.px),
 
           sensitivityGraph(canvasId, fromPartyName, toPartyName, data),
