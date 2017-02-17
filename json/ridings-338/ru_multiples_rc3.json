@@ -11,7 +11,7 @@
     ]
   ],
   "election_strategies": [
-    "RcRUPR2"
+    "LPR", "STV"
   ],
   "provinces": [
     {

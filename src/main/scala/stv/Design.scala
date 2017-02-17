@@ -100,7 +100,8 @@ case class Design(
           } catch {
             case e: java.lang.Exception ⇒ throw new Exception(
               s"${electionStrat.entryName} failed for riding ${riding.name} with dm ${riding.districtMagnitude} in " +
-                s"design ${this.design_name}."
+                s"design ${this.design_name}.",
+              e
             )
           }
         }

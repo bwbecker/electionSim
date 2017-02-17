@@ -106,7 +106,6 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
     }
 
 
-
     val oldRidings = riding.mapping.sortBy(r ⇒ r.ridingId).zipWithIndex
 
     def cName(c: Candidate): String = {
@@ -119,9 +118,10 @@ case class RidingResultsHTML(params: Params, sim: Sim) extends Page {
 
     def optCheck(c: Candidate): Text.RawFrag = {
       (c.winner, c.seatType) match {
-        case (true, SeatType.RidingSeat)     ⇒ raw("&#10004;")
-        case (true, SeatType.AdjustmentSeat) ⇒ raw("A")
-        case (_, _)                          ⇒ raw("")
+        case (true, SeatType.RidingSeat) if c.protect ⇒ raw("P")
+        case (true, SeatType.RidingSeat)              ⇒ raw("&#10004;")
+        case (true, SeatType.AdjustmentSeat)          ⇒ raw("A")
+        case (_, _)                                   ⇒ raw("")
       }
     }
 

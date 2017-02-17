@@ -91,6 +91,15 @@ object ElectionStrategyEnum extends EnumP[ElectionStrategyEnum] {
     TopupStrategy
   )
 
+  /**
+   * Local Proportional Representation
+   */
+  case object LPR extends ElectionStrategyEnum(
+    EkosAvRidingElectionStrategy,
+    new LPR_ElectionStrategy(EkosXfer),
+    NotApplicableTopupElectionStrategy
+  )
+
   case object STVplus extends ElectionStrategyEnum(
     EkosAvRidingElectionStrategy,
     EkosStvRidingElectionStrategy,
