@@ -51,7 +51,8 @@ object Main {
         }
 
         // Do each simulation in parallel
-        val sims = work.par.map { case (design, params, ridings) ⇒
+        //val sims = work.par.map { case (design, params, ridings) ⇒
+        val sims = work.map { case (design, params, ridings) ⇒
           println(s"Running election for ${params.designName}-${params.year}.")
           val sim = Sim(design, params, ridings)
           Output.writeHtml(params, sim, config.voteSwing) // side effect!

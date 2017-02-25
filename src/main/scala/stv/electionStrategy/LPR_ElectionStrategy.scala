@@ -26,10 +26,20 @@ class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrateg
 
     def withVotes(votes: Double): Cand = Cand(candidate.copy(effVotes = votes), protect)
 
+    def withOrder(o:Int):Cand = Cand(candidate.copy(order = o), protect)
+
     def name = candidate.name
   }
 
   type CandSeq = Seq[Cand]
+
+
+  private var order = 0
+
+  def nextOrder: Int = {
+    this.order = this.order + 1
+    this.order
+  }
 
   val name: String = "Local-PR"
   val shortName: String = "LPR"
@@ -68,7 +78,7 @@ class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrateg
       if (this.needsProtecting(toCut, winners, other)) {
         // protect toCut and look for someone else
         dp(s"Protecting ${toCut.name}")
-        candToCut(winners, toCut.copy(protect = true) +: minus(hopeful, toCut))
+        candToCut(winners, toCut.copy(protect = true).withOrder(this.nextOrder) +: minus(hopeful, toCut))
       } else {
         (Some(toCut), minus(hopeful, toCut))
       }
@@ -151,8 +161,6 @@ class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrateg
 
     val quota = sumVotes(candidates) / (dm + 1) + 1
 
-    var order = 0
-
     def helper(winners: CandSeq,
                hopeful: CandSeq,
                losers: CandSeq): (CandSeq, CandSeq) = {
@@ -169,11 +177,11 @@ class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrateg
               dp(s"\n*** 2nd winner in old riding ${newWinner.name} ${newWinner.ridingId}\n")
               helper(winners,
                 transferVotes(newWinner.effVotes, newWinner.party, minus(hopeful, newWinner)),
-                newWinner +: losers
+                newWinner.withOrder(this.nextOrder) +: losers
               )
             } else {
               val remainingHopefuls = minus(hopeful, newWinner)
-              helper(newWinner.withVotes(quota) +: winners,
+              helper(newWinner.withVotes(quota).withOrder(this.nextOrder) +: winners,
                 transferVotes(newWinner.effVotes - quota, newWinner.party, remainingHopefuls),
                 losers
               )
@@ -183,7 +191,7 @@ class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrateg
             val (toCut, remainingHopefuls) = candToCut(winners, hopeful)
             toCut match {
               case Some(cut) ⇒
-                helper(winners, transferVotes(cut.effVotes, cut.party, remainingHopefuls), cut +: losers)
+                helper(winners, transferVotes(cut.effVotes, cut.party, remainingHopefuls), cut.withOrder(this.nextOrder) +: losers)
               case None      ⇒
                 dp("No one to cut!")
                 (winners ++: remainingHopefuls, losers)
