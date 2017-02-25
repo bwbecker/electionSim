@@ -12,7 +12,7 @@
     ]
   ],
   "election_strategies": [
-    "RcRUPR2"
+    "RcRUPR2", "ToppedUpLPR"
   ],
   "provinces": [
     {
