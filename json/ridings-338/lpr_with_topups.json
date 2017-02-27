@@ -1,17 +1,16 @@
 {
-  "design_name": "ru_multiples_rc3",
+  "design_name": "lpr_with_topups",
   "description": [
     [
-      "A mash-up of Rural-Urban and Riding-Centric.  This design started life as ru_multiples_rc2.  All the",
-      "adjustment seats were removed to make it more acceptable to MPs."
+      "This is the same as LPR_no_topups except that there are top-up seats added, similar to MMP and RU-PR, ",
+      "to enhance proportionality.  The top-up seats enlarge the House following a suggestion by Ryan Campbell."
     ],
     [
-      "In addition, the STV rules were tweaked to force the election of one MP in each riding that makes up the ",
-      "multi-member ridings."
+      "The structure of the ridings and top-up are the same as ru_multiples_rc2 but the election rules are different."
     ]
   ],
   "election_strategies": [
-    "LPR", "STV"
+    "ToppedUpLPR"
   ],
   "provinces": [
     {
@@ -19,7 +18,7 @@
       "regions": [
         {
           "region_id": "R_AB",
-          "top_up_seats": 0,
+          "top_up_seats": 5,
           "new_ridings": [
             {
               "riding_id": "AB.Calgary1",
@@ -118,7 +117,7 @@
       "regions": [
         {
           "region_id": "R_BC",
-          "top_up_seats": 0,
+          "top_up_seats": 5,
           "new_ridings": [
             {
               "riding_id": "BC.North",
@@ -231,7 +230,7 @@
       "regions": [
         {
           "region_id": "R_MB",
-          "top_up_seats": 0,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "MB.Brandon",
@@ -274,7 +273,7 @@
       "regions": [
         {
           "region_id": "R_NB",
-          "top_up_seats": 0,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "NB.AcaMirMadTob",
@@ -307,7 +306,7 @@
       "regions": [
         {
           "region_id": "R_NL",
-          "top_up_seats": 0,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "NL.Lab",
@@ -343,7 +342,7 @@
       "regions": [
         {
           "region_id": "R_NS",
-          "top_up_seats": 0,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "NS.North",
@@ -383,7 +382,7 @@
       "regions": [
         {
           "region_id": "R_ON.Toronto",
-          "top_up_seats": 0,
+          "top_up_seats": 5,
           "numRidings": 46,
           "new_ridings": [
             {
@@ -473,7 +472,7 @@
         },
         {
           "region_id": "R_ON.North",
-          "top_up_seats": 0,
+          "top_up_seats": 5,
           "numRidings": 38,
           "new_ridings": [
             {
@@ -572,7 +571,7 @@
         },
         {
           "region_id": "R_ON.South",
-          "top_up_seats": 0,
+          "top_up_seats": 6,
           "numRidings": 37,
           "new_ridings": [
             {
@@ -680,7 +679,7 @@
       "regions": [
         {
           "region_id": "R_PE",
-          "top_up_seats": 0,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "PE.Island",
@@ -701,7 +700,7 @@
       "regions": [
         {
           "region_id": "R_QC_1",
-          "top_up_seats": 0,
+          "top_up_seats": 5,
           "new_ridings": [
             {
               "riding_id": "QC.Papineau",
@@ -798,7 +797,7 @@
         },
         {
           "region_id": "R_QC_2",
-          "top_up_seats": 0,
+          "top_up_seats": 5,
           "new_ridings": [
             {
               "riding_id": "QC.Drummond",
@@ -899,7 +898,7 @@
       "regions": [
         {
           "region_id": "R_SK",
-          "top_up_seats": 0,
+          "top_up_seats": 1,
           "new_ridings": [
             {
               "riding_id": "SK.PrinceAlbert",

@@ -10,7 +10,7 @@ import stv.{Candidate, Party, VoteXfer}
   */
 class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrategy {
 
-  debug = true
+  //debug = true
 
   case class Cand(candidate: Candidate,
                   protect: Boolean = false) {
@@ -26,7 +26,7 @@ class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrateg
 
     def withVotes(votes: Double): Cand = Cand(candidate.copy(effVotes = votes), protect)
 
-    def withOrder(o:Int):Cand = Cand(candidate.copy(order = o), protect)
+    def withOrder(o: Int): Cand = Cand(candidate.copy(order = o), protect)
 
     def name = candidate.name
   }
@@ -156,47 +156,49 @@ class LPR_ElectionStrategy(val voteXfer: VoteXfer) extends RidingElectionStrateg
     * @return (elected candidates, not-elected candidates)
     */
   def runElection(orig_candidates: Seq[Candidate], dm: Int): (Seq[Candidate], Seq[Candidate]) = {
-    dp(s"""\n\nRunning Election\n""")
+    dp(s"""\n\nRunning Election for ${orig_candidates.head.ridingId}\n""")
     val candidates = orig_candidates.sortBy(c ⇒ c.effVotes).map(c ⇒ Cand(c))
 
     val quota = sumVotes(candidates) / (dm + 1) + 1
+
+    def handleNewWinner(newWinner: Cand, winners: CandSeq, hopeful: CandSeq, losers: CandSeq): (CandSeq, CandSeq) = {
+      val (sameRiding, others) = minus(hopeful, newWinner).partition(c ⇒ c.oldRidingId == newWinner.oldRidingId)
+      dp(s"${newWinner.name} (${newWinner.party}) => elimination of ${sameRiding.map(c ⇒ c.name).mkString(" : ")}")
+      val moreHopeful = sameRiding.foldRight(others)((c, h) ⇒ transferVotes(c.effVotes, c.party, h))
+
+      helper(newWinner.withVotes(quota).withOrder(this.nextOrder) +: winners,
+        transferVotes(newWinner.effVotes - quota, newWinner.party, moreHopeful),
+        sameRiding.map(c ⇒ c.withOrder(this.nextOrder)) ++: losers
+      )
+    }
+
+    def handleCut(winners: CandSeq, hopeful: CandSeq, losers: CandSeq): (CandSeq, CandSeq) = {
+      val (toCut, remainingHopefuls) = candToCut(winners, hopeful)
+      toCut match {
+        case Some(cut) ⇒
+          helper(winners, transferVotes(cut.effVotes, cut.party, remainingHopefuls),
+            cut.withOrder(this.nextOrder) +: losers)
+        case None      ⇒
+          dp("No one to cut!")
+          (winners ++: remainingHopefuls.map(c ⇒ if (c.protect) c else c.withOrder(this.nextOrder)), losers)
+      }
+    }
 
     def helper(winners: CandSeq,
                hopeful: CandSeq,
                losers: CandSeq): (CandSeq, CandSeq) = {
 
       dp(currentSituation(winners, hopeful, losers))
-      if (winners.length == dm || hopeful.count(c ⇒ !c.protect) == 0) {
+      if (winners.length == dm || hopeful.forall(c ⇒ c.protect)) {
         val (protect, others) = hopeful.partition(c ⇒ c.protect)
         (winners ++: protect, others ++: losers)
       } else {
         hasSurplus(hopeful, quota) match {
           case Some(newWinner) ⇒
-            if (winners.exists(w ⇒ w.oldRidingId == newWinner.oldRidingId)) {
-              // This one can't win because we only allow one winner per riding
-              dp(s"\n*** 2nd winner in old riding ${newWinner.name} ${newWinner.ridingId}\n")
-              helper(winners,
-                transferVotes(newWinner.effVotes, newWinner.party, minus(hopeful, newWinner)),
-                newWinner.withOrder(this.nextOrder) +: losers
-              )
-            } else {
-              val remainingHopefuls = minus(hopeful, newWinner)
-              helper(newWinner.withVotes(quota).withOrder(this.nextOrder) +: winners,
-                transferVotes(newWinner.effVotes - quota, newWinner.party, remainingHopefuls),
-                losers
-              )
-            }
+            handleNewWinner(newWinner, winners, hopeful, losers)
 
           case None ⇒
-            val (toCut, remainingHopefuls) = candToCut(winners, hopeful)
-            toCut match {
-              case Some(cut) ⇒
-                helper(winners, transferVotes(cut.effVotes, cut.party, remainingHopefuls), cut.withOrder(this.nextOrder) +: losers)
-              case None      ⇒
-                dp("No one to cut!")
-                (winners ++: remainingHopefuls, losers)
-            }
-
+            handleCut(winners, hopeful, losers)
         }
 
       }

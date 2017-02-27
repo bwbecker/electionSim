@@ -1,18 +1,19 @@
 {
-  "design_name": "ru_multiples_rc2",
+  "design_name": "lpr_no_topup",
   "description": [
     [
-      "A mash-up of Rural-Urban and Riding-Centric.  This design started life as erre_ru_multiples_15pct.  All the ",
-      "adjustment seats were added back to the multi-member ridings and explicit made top-ups by enlarging the House.",
-      "The numbers of top-ups follow as suggestion by Ryan Campbell."
+      "Local Proportional Representation:  cluster ridings into regions of (ideally) 4-8 ridings.  Run an ",
+      "STV-like algorithm to elect as many MPs as ridings in the region.  The difference is that a candidate ",
+      "who is the last one left in his or her riding can't be eliminated.  This guarantees that each existing ",
+      "riding will have an MP to represent it."
     ],
     [
-      "In addition, the STV rules were tweaked to force the election of one MP in each riding that makes up the ",
-      "multi-member ridings."
+      "For comparison, the same mapping of ridings to regions was also simulated using STV to see the ",
+      "effects of the special rule described above."
     ]
   ],
   "election_strategies": [
-    "RcRUPR2"
+    "LPR", "STV"
   ],
   "provinces": [
     {
@@ -20,7 +21,7 @@
       "regions": [
         {
           "region_id": "R_AB",
-          "top_up_seats": 5,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "AB.Calgary1",
@@ -119,7 +120,7 @@
       "regions": [
         {
           "region_id": "R_BC",
-          "top_up_seats": 5,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "BC.North",
@@ -232,7 +233,7 @@
       "regions": [
         {
           "region_id": "R_MB",
-          "top_up_seats": 1,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "MB.Brandon",
@@ -275,7 +276,7 @@
       "regions": [
         {
           "region_id": "R_NB",
-          "top_up_seats": 1,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "NB.AcaMirMadTob",
@@ -308,7 +309,7 @@
       "regions": [
         {
           "region_id": "R_NL",
-          "top_up_seats": 1,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "NL.Lab",
@@ -344,7 +345,7 @@
       "regions": [
         {
           "region_id": "R_NS",
-          "top_up_seats": 1,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "NS.North",
@@ -384,7 +385,7 @@
       "regions": [
         {
           "region_id": "R_ON.Toronto",
-          "top_up_seats": 5,
+          "top_up_seats": 0,
           "numRidings": 46,
           "new_ridings": [
             {
@@ -474,7 +475,7 @@
         },
         {
           "region_id": "R_ON.North",
-          "top_up_seats": 5,
+          "top_up_seats": 0,
           "numRidings": 38,
           "new_ridings": [
             {
@@ -573,7 +574,7 @@
         },
         {
           "region_id": "R_ON.South",
-          "top_up_seats": 6,
+          "top_up_seats": 0,
           "numRidings": 37,
           "new_ridings": [
             {
@@ -681,7 +682,7 @@
       "regions": [
         {
           "region_id": "R_PE",
-          "top_up_seats": 1,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "PE.Island",
@@ -702,7 +703,7 @@
       "regions": [
         {
           "region_id": "R_QC_1",
-          "top_up_seats": 5,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "QC.Papineau",
@@ -799,7 +800,7 @@
         },
         {
           "region_id": "R_QC_2",
-          "top_up_seats": 5,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "QC.Drummond",
@@ -900,7 +901,7 @@
       "regions": [
         {
           "region_id": "R_SK",
-          "top_up_seats": 1,
+          "top_up_seats": 0,
           "new_ridings": [
             {
               "riding_id": "SK.PrinceAlbert",

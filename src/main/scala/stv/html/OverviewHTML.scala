@@ -465,7 +465,12 @@ case class OverviewFeaturedHTML(sims: List[Sim],
         " at the request of the ERRE Committee that meet a specific set of constraints."),
       p(strong("2016-10-31"), ": Added an ", strong("exciting new system"), ", ",
         a(href := "../ru_multiples_rc2/index.html")("Riding-Centric Rural Urban Proportional"),
-        ".  Follow the link to read it's many advantages.")
+        ".  Follow the link to read it's many advantages."),
+      p(strong("2017-02-26"), ": Added a made-in-Canada model that offers many advantages. See ",
+        a(href := "../LPR_no_topup/index.html")("Local Proportional Representation (no topups)"), " and ",
+        a(href := "../LPR_with_topups/index.html")("Local Proportional Represenation (with topups)"), " for ",
+        "more details."
+      )
     )
 
 

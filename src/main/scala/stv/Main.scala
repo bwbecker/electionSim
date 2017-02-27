@@ -51,8 +51,7 @@ object Main {
         }
 
         // Do each simulation in parallel
-        //val sims = work.par.map { case (design, params, ridings) ⇒
-        val sims = work.map { case (design, params, ridings) ⇒
+        val sims = work.par.map { case (design, params, ridings) ⇒
           println(s"Running election for ${params.designName}-${params.year}.")
           val sim = Sim(design, params, ridings)
           Output.writeHtml(params, sim, config.voteSwing) // side effect!
@@ -482,9 +481,14 @@ object Main {
       RcRUPR2
     ),
 
-    Params("ru_multiples_rc3", 2015, "Riding Centric Rural-Urban PR (no top-up)",
-      DesignName.ru_multiples_rc3, s"ru_multiples_rc3", Some(ridingCentricDescr),
-      RcRUPR2
+    Params("lpr_no_topup", 2015, "Local Proportional Representation (no top-up)",
+      DesignName.lpr_no_topup, s"LPR_no_topup", None,
+      LPR
+    ),
+
+    Params("lpr_with_topups", 2015, "Local Proportional Representation (with top-ups)",
+      DesignName.lpr_with_topups, s"LPR_with_topups", None,
+      ToppedUpLPR
     )
   )
 
